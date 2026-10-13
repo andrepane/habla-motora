@@ -1,19 +1,20 @@
-# habla-motora — hito 1
+# habla-motora — hitos 1 y 2
 
 Nombre técnico provisional. Herramienta experimental de medición del habla motora
-orientada a una futura presentación a COLOAN. Este hito contiene únicamente un
-smoke test de infraestructura con Praat. Sin frontend ni interpretación clínica.
+orientada a una futura presentación a COLOAN. El proyecto contiene el smoke test
+del hito 1 y el módulo experimental de F0 del hito 2. Sin frontend ni interpretación clínica.
 
 ## Qué hace
 
 Recibe un WAV PCM mono, 16/24/32-bit, 44.100/48.000 Hz, hasta 10 MiB. Ejecuta el
 script fijo `praat/smoke_test.praat` y devuelve la duración del archivo completo.
-No detecta el segmento de vocal ni implementa F0, jitter, shimmer, HNR o CPP/CPPS.
+El smoke test no detecta el segmento de vocal ni calcula F0. El endpoint /pitch
+calcula F0 media, DT y cobertura. Jitter, shimmer, HNR y CPP/CPPS no están implementados.
 
 Cada resultado incluye versión exacta de Praat, versión del protocolo y
 configuración, SHA-256 de los bytes exactos de configuración, del WAV y del script.
-Cobertura de F0 y ciclos aceptados son obligatorios y permanecen `null` con motivo
-`not_implemented`. Los fallos devuelven error, nunca medidas 0. No hay métricas
+En el smoke test, cobertura de F0 y ciclos aceptados permanecen `null` con motivo
+`not_implemented`; en /pitch se calcula cobertura y los ciclos siguen `null`. Los fallos devuelven error, nunca medidas 0. No hay métricas
 acústicas validadas ni etiquetas diagnósticas.
 
 ## Ejecutar con Docker (Linux amd64)
