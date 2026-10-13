@@ -40,7 +40,8 @@ El módulo pitch_v1 registra module_version, output_schema_version y warnings_ve
 Las consultas estadísticas conservan exactamente la semántica de Praat; no se
 atribuyen fórmulas propias ni se interpolan huecos de tracking_frames.
 Jitter local se incorpora como módulo experimental jitter_v1. Shimmer local se incorpora
-como módulo experimental shimmer_v1. HNR y CPP/CPPS no se han implementado. El recuento opcional de pares de jitter
+como módulo experimental shimmer_v1. HNR se incorpora como hnr_v1 experimental.
+CPP/CPPS no se han implementado. El recuento opcional de pares de jitter
 permanece null/not_implemented; se utilizan las consultas de Praat para valor
 y períodos aceptados, sin sobreescribir un valor finito por pocos pulsos.
 
@@ -125,3 +126,84 @@ La referencia finita se calcula sobre la secuencia seleccionada y sobre las
 muestras PCM reales; el nominal no sustituye la referencia. Alternar amplitudes
 puede inducir periodicidad doble: cualquier error se caracteriza sin corregirlo.
 No existe validación en voz humana ni interpretación clínica automatizada.
+
+## Hito 5: HNR experimental — protocolo corregido y criterios previos
+
+La medida oficial hnr_mean_db procede EXCLUSIVAMENTE de Harmonicity: Get mean,
+con su semántica temporal nativa de Praat. No se describe ni se reimplementa
+como una media aritmética simple de los frames exportados. La documentación
+oficial la define como media temporal de la curva, ignorando indefinidos.
+Los frames son auditoría. COBERTURA y mecanismo de MEDIA son distintos.
+No se exige coincidencia con una media aritmética simple calculada en Python.
+
+Sound completo -> To Harmonicity (cc): 0.01, 75, 0.1, 4.5 -> Get mean: inicio, fin.
+Misma ventana central de 3 s; sin normalización ni filtros. No depende de Pitch
+ni PointProcess y no hereda el techo de 600 Hz de F0. HNR en dB; cero y valores
+negativos finitos pueden ser válidos. undefined -> null; todos los valores
+finitos conservan estado experimental, sin interpretación clínica.
+
+Auditoría de frames con centro inclusivamente dentro del intervalo:
+frame_index, time_s, praat_raw_hnr_db, hnr_db, valid, reason y numerical_limit.
+Get value in frame, sin interpolación. Praat 6.4.27 almacena -200 como marcador
+non-sounding: se conserva como valor bruto para auditoría, pero hnr_db=null.
+Los límites numéricos nativos +/-150 dB se conservan con advertencia: no son
+precisión demostrada. Cobertura = 100 * frames válidos / frames interiores.
+Sin frames: cobertura null; con frames pero ninguno válido: cobertura 0.
+La media undefined devuelve null sin convertirla en cero ni sustituirla por
+una estadística de frames. No hay umbral de rechazo por cobertura.
+
+Versiones separadas: hnr_v1, hnr_output_v1, hnr_warnings_v1. experimental_v1
+permanece byte a byte. Registro obligatorio de motor/protocolo/configuración,
+hash WAV/configuración/script HNR y script auxiliar de duración. scope es histórico.
+Advertencias: periodicidad no verificada, no calculable, cobertura incompleta,
+frames excluidos por el motor, límites numéricos, posible clipping y RMS <10
+pasos PCM (aviso de cuantificación, sin rechazo). No se infiere silencio de
+un marcador no válido ni se clasifica ruido a partir de HNR. El umbral 0.1 es
+relativo al máximo del archivo completo, incluso fuera del intervalo analizado.
+
+Tolerancias fijadas ANTES de ejecutar las nuevas pruebas; diferencias absolutas
+expresadas en dB, excepto la cobertura:
+
+- Objetos controlados: error <=0.00000001 dB cuando se pueda establecer el
+  resultado exactamente respetando la semántica nativa (curva constante y
+  exclusiones con valor constante restante, o todos los valores no válidos).
+  Objetos no constantes y bordes desplazados: caracterización de la consulta
+  nativa; no se asigna una referencia por media aritmética simple de frames.
+- Integración frente a script Praat separado, con la misma consulta Get mean:
+  error de media y por frame <=0.000001 dB; mismos índices y estados válidos.
+- Recuentos y cobertura: exactos según la definición operacional anterior.
+  Se calcula el cociente de enteros, no se aproxima duración / paso temporal.
+- Ganancia x0.1/x2 sobre tono+ruido a 20 dB: cambio <=0.1 dB y mismos estados
+  de validez. Se escala conjuntamente tono y ruido, sin clipping.
+- Tono limpio de período exacto en muestras: cobertura 100 %, media >=40 dB.
+  Objetivo sintético de ingeniería, sin umbral clínico ni valor HNR ideal finito.
+- Veinte realizaciones de ruido (semillas enteras 5000 a 5019), compartidas entre
+  niveles: media entre realizaciones estrictamente creciente para SNR
+  0 -> 10 -> 20 -> 30 -> 40 dB. Se publican dispersión y cobertura; no se
+  descartan realizaciones para obtener la tendencia. Si falta una media,
+  se registra como incumplimiento, no se elimina silenciosamente.
+- Otras condiciones difíciles: caracterización, sin exigir HNR=SNR ni recuperar
+  el HNR de una señal anterior al ruido, clipping o cuantificación.
+
+Señales de 6 s y selección 1.5-4.5 s: tonos 100/200/400 Hz, tono+ruido gaussiano
+40/30/20/10/0 dB, silencio, ruido solo, tono-silencio-tono, ganancias x0.1/x2,
+x0.001/x0.0001, clipping, 50/74/76/700 Hz, armónicos enteros controlados,
+fundamental débil y componente no armónica. PCM16/44100 y 48000 donde proceda;
+48 kHz permite período exacto en muestras a 100/200/400 Hz.
+Se prueba efecto del máximo global con y sin fragmento fuerte exterior.
+
+Validación separada: (1) consulta sobre Harmonicity controlado creado mediante
+Matrix, sin detector, con referencias inequívocas constantes; (2) otro script
+Praat, integración; (3) WAV con componentes conocidas y correlación independiente
+al período verdadero sin búsqueda del máximo. Esta última caracteriza el
+estimador, no reimplementa Praat ni determina la medida oficial. Para señal
+periódica estacionaria más ruido independiente, r(T0) se aproxima a Ps/(Ps+Pn),
+pero ventanas finitas, selección de máximos, espectro, cuantificación y media
+en dB impiden exigir igualdad exacta HNR=SNR. Un tono perfecto tiene relación
+ideal infinita; se caracteriza el valor finito del motor sin forzarlo.
+
+Los cuatro xfail históricos se conservan íntegros. Ningún criterio se relaja
+tras los resultados. No hay validación en voz humana ni implementación CPP/CPPS.
+
+La etiqueta congelada harmonicity.aggregation = mean_db_valid_frames se conserva
+como descripción inicial; no autoriza a sustituir Get mean por una estadística propia.

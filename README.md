@@ -1,4 +1,4 @@
-# habla-motora — hitos 1, 2, 3 y 4
+# habla-motora — hitos 1, 2, 3, 4 y 5
 
 Nombre técnico provisional. Herramienta experimental de medición del habla motora
 orientada a una futura presentación a COLOAN. El proyecto contiene el smoke test
@@ -9,7 +9,7 @@ del hito 1 y el módulo experimental de F0 del hito 2. Sin frontend ni interpret
 Recibe un WAV PCM mono, 16/24/32-bit, 44.100/48.000 Hz, hasta 10 MiB. Ejecuta el
 script fijo `praat/smoke_test.praat` y devuelve la duración del archivo completo.
 El smoke test no detecta el segmento de vocal ni calcula F0. El endpoint /pitch
-calcula F0 media, DT y cobertura. El endpoint /jitter añade jitter local experimental. El endpoint /shimmer añade shimmer local experimental. HNR y CPP/CPPS no están implementados.
+calcula F0 media, DT y cobertura. El endpoint /jitter añade jitter local experimental. El endpoint /shimmer añade shimmer local experimental. El endpoint /hnr mide HNR mediante Harmonicity (cc). CPP/CPPS no están implementados.
 
 Cada resultado incluye versión exacta de Praat, versión del protocolo y
 configuración, SHA-256 de los bytes exactos de configuración, del WAV y del script.
@@ -187,3 +187,32 @@ Los tres niveles de validación y tolerancias completas, en puntos porcentuales,
 están en docs/protocolo_v1.md. Los resultados exactos de Docker están en
 docs/verificacion_hito4.md. Configuración v1 y cuatro xfail anteriores intactos.
 No se implementan HNR ni CPP/CPPS; no se avanza al hito 5.
+
+
+## Hito 5: HNR experimental
+
+CLI: `python -m backend.hnr archivo.wav --emission-start 0 --emission-end 6`.
+API: POST `/hnr`, mismos campos multipart para seleccionar la emisión y usar
+su ventana central de 3 s. Ruta independiente: Sound completo -> Harmonicity (cc)
+con 0.01 s, 75 Hz, silence threshold 0.1, periods per window 4.5. No ejecuta
+Pitch/PointProcess y no adopta el techo de 600 Hz del módulo F0.
+
+hnr_mean_db procede exclusivamente de Harmonicity: Get mean, conservando la
+semántica temporal nativa. Los frames exportados son auditoría; no se calcula
+una media aritmética simple para reemplazar o validar la consulta oficial.
+La cobertura cuenta separadamente frames válidos con centro en el intervalo.
+-200 es marcador nativo no válido: hnr_db=null, con valor bruto en auditoría.
+undefined -> null; valores finitos negativos o cero se conservan. No hay
+clasificación de silencio, ruido, patología ni fiabilidad de voz humana.
+Versiones hnr_v1, hnr_output_v1, hnr_warnings_v1 y hashes completos.
+
+```bash
+docker run --rm habla-motora:smoke-v1 python -m tests.report_hnr
+docker run --rm habla-motora:smoke-v1 python -m pytest -q
+```
+
+Protocolo corregido y tolerancias previas en docs/protocolo_v1.md; resultados
+exactos, nuevos incumplimientos si aparecen y límites en docs/verificacion_hito5.md.
+No se modifica experimental_v1 ni se relajan los cuatro xfail anteriores.
+Un HNR alto puede coexistir con clipping o tracking incorrecto; no demuestra
+voz estable ni validez clínica. CPP/CPPS siguen fuera del proyecto implementado.

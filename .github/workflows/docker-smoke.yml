@@ -1,4 +1,4 @@
-name: Verify Docker milestones 1, 2, 3 and 4
+name: Verify Docker milestones 1, 2, 3, 4 and 5
 on:
   push:
     paths:
@@ -40,6 +40,10 @@ jobs:
         run: |
           docker run --rm habla-motora:smoke-v1 python -m tests.report_shimmer > shimmer-result.json
           cat shimmer-result.json
+      - name: Synthetic HNR observations inside container
+        run: |
+          docker run --rm habla-motora:smoke-v1 python -m tests.report_hnr > hnr-result.json
+          cat hnr-result.json
       - name: Start API and verify endpoints over HTTP
         run: |
           docker run -d --name habla-api -p 127.0.0.1:8000:8000 habla-motora:smoke-v1
@@ -65,6 +69,11 @@ jobs:
           python -c 'from tests.synthetic_shimmer import source,wav_from_cycles; from pathlib import Path; t,a=source(.5); Path("shimmer-6s.wav").write_bytes(wav_from_cycles(t,a))'
           curl -fsS -F 'file=@shimmer-6s.wav' -F 'emission_start_s=0' -F 'emission_end_s=6' http://127.0.0.1:8000/shimmer > shimmer-api-result.json
           python -c 'import json; x=json.load(open("shimmer-api-result.json")); assert abs(x["acoustic"]["shimmer_local_percent"]["value"]-.5)<=.05; assert x["provenance"]["module_version"]=="shimmer_v1"; print("shimmer HTTP 200:",x["acoustic"]["shimmer_local_percent"])'
+      - name: Verify HNR HTTP endpoint
+        run: |
+          python -c 'from tests.synthetic_hnr import make_wav; from pathlib import Path; data,_=make_wav(snr_db=20); Path("hnr-6s.wav").write_bytes(data)'
+          curl -fsS -F 'file=@hnr-6s.wav' -F 'emission_start_s=0' -F 'emission_end_s=6' http://127.0.0.1:8000/hnr > hnr-api-result.json
+          python -c 'import json; x=json.load(open("hnr-api-result.json")); assert x["acoustic"]["hnr_mean_db"]["value"] is not None; assert x["provenance"]["module_version"]=="hnr_v1"; assert x["quality"]["hnr_coverage_percent"]["value"]==100; print("HNR HTTP 200:",x["acoustic"]["hnr_mean_db"])'
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -73,7 +82,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: milestone-4-docker-results
+          name: milestone-5-docker-results
           path: |
             smoke-result.json
             health.json
@@ -84,3 +93,5 @@ jobs:
             jitter-api-result.json
             shimmer-result.json
             shimmer-api-result.json
+            hnr-result.json
+            hnr-api-result.json
