@@ -1,4 +1,4 @@
-# habla-motora — hitos 1, 2 y 3
+# habla-motora — hitos 1, 2, 3 y 4
 
 Nombre técnico provisional. Herramienta experimental de medición del habla motora
 orientada a una futura presentación a COLOAN. El proyecto contiene el smoke test
@@ -9,7 +9,7 @@ del hito 1 y el módulo experimental de F0 del hito 2. Sin frontend ni interpret
 Recibe un WAV PCM mono, 16/24/32-bit, 44.100/48.000 Hz, hasta 10 MiB. Ejecuta el
 script fijo `praat/smoke_test.praat` y devuelve la duración del archivo completo.
 El smoke test no detecta el segmento de vocal ni calcula F0. El endpoint /pitch
-calcula F0 media, DT y cobertura. El endpoint /jitter añade jitter local experimental. Shimmer, HNR y CPP/CPPS no están implementados.
+calcula F0 media, DT y cobertura. El endpoint /jitter añade jitter local experimental. El endpoint /shimmer añade shimmer local experimental. HNR y CPP/CPPS no están implementados.
 
 Cada resultado incluye versión exacta de Praat, versión del protocolo y
 configuración, SHA-256 de los bytes exactos de configuración, del WAV y del script.
@@ -165,3 +165,25 @@ WAV con otro script Praat comprueba integración. No son la misma validación.
 Se conservan los objetivos incumplidos como xfail estrictos, sin relajarlos.
 Resultados y límites en docs/verificacion_hito3.md. No hay diagnóstico ni
 validación en voces humanas.
+
+
+## Hito 4: shimmer local experimental
+
+CLI: `python -m backend.shimmer archivo.wav --emission-start 0 --emission-end 6`.
+API: POST `/shimmer`, mismos campos multipart y selección central de 3 s que /jitter.
+Reutiliza la auditoría y resultados de F0/jitter y añade únicamente shimmer local.
+Sound + PointProcess: Get shimmer (local), períodos congelados, factores 1.3 y 1.6.
+Exporta amplitudes mediante To AmplitudeTier (period), RMS Hann de Praat;
+no son picos, SPL calibrado ni amplitudes clínicas. Pares usados: null/not_implemented.
+Cada valor finito conserva estado experimental; undefined -> null. Un shimmer bajo
+no demuestra tracking correcto ni estabilidad vocal.
+
+```bash
+docker run --rm habla-motora:smoke-v1 python -m tests.report_shimmer
+docker run --rm habla-motora:smoke-v1 python -m pytest -q
+```
+
+Los tres niveles de validación y tolerancias completas, en puntos porcentuales,
+están en docs/protocolo_v1.md. Los resultados exactos de Docker están en
+docs/verificacion_hito4.md. Configuración v1 y cuatro xfail anteriores intactos.
+No se implementan HNR ni CPP/CPPS; no se avanza al hito 5.
