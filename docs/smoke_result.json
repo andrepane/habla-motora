@@ -1,0 +1,29 @@
+{
+  "status": "infrastructure_smoke_test_only",
+  "provenance": {
+    "praat_version": "6.4.27",
+    "praat_version_output": "Praat 6.4.27 (January 27 2025)",
+    "protocol_version": "v1",
+    "configuration_version": "experimental_v1",
+    "configuration_sha256": "94b976f9c3e1f21d965df9ce547422953c6d780df64988cf2562cc8594520729",
+    "file_sha256": "666c692f98fe434bde26219f7ac62b7a69e835184f8ae40bf448f63168bfdd47",
+    "script_sha256": "398b209f700ee812f9670f45f3c0c8a672c6926a2251be07ff10325f9bf4749f"
+  },
+  "temporal": {
+    "file_duration_s": 2.0
+  },
+  "quality": {
+    "f0_coverage": {
+      "value": null,
+      "reason": "not_implemented"
+    },
+    "accepted_cycles": {
+      "value": null,
+      "reason": "not_implemented"
+    },
+    "technical_warnings": [
+      "Duration refers to the entire WAV, not a selected phonation segment.",
+      "Acoustic measures and quality assessment are not implemented."
+    ]
+  }
+}
