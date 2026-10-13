@@ -1,0 +1,53 @@
+name: Verify Docker milestone 1
+on:
+  push:
+    paths:
+      - 'Dockerfile'
+      - 'requirements.lock'
+      - 'pyproject.toml'
+      - 'backend/**'
+      - 'praat/**'
+      - 'configs/**'
+      - 'tests/**'
+      - '.github/workflows/docker-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  docker-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image including pytest
+        run: docker build --progress=plain -t habla-motora:smoke-v1 .
+      - name: Praat version and duration
+        run: |
+          docker run --rm habla-motora:smoke-v1 praat --version
+          docker run --rm habla-motora:smoke-v1 python -m backend.praat_runner tests/fixtures/tone_2s.wav | tee smoke-result.json
+          python -c 'import json; x=json.load(open("smoke-result.json")); assert x["temporal"]["file_duration_s"] == 2.0; assert x["provenance"]["praat_version"] == "6.4.27"'
+      - name: Repeat full pytest inside container
+        run: docker run --rm habla-motora:smoke-v1 python -m pytest -q
+      - name: Start API and verify endpoints over HTTP
+        run: |
+          docker run -d --name habla-api -p 127.0.0.1:8000:8000 habla-motora:smoke-v1
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8000/health > health.json; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8000/health | tee health.json
+          curl -fsS -F 'file=@tests/fixtures/tone_2s.wav' http://127.0.0.1:8000/smoke-test | tee api-result.json
+          python -c 'import json; h=json.load(open("health.json")); x=json.load(open("api-result.json")); assert h["status"] == "alive"; assert x["temporal"]["file_duration_s"] == 2.0; assert x["provenance"]["praat_version"] == "6.4.27"; assert x["quality"]["f0_coverage"]["value"] is None; assert x["quality"]["accepted_cycles"]["value"] is None; assert x["quality"]["technical_warnings"]'
+      - name: Container logs and cleanup
+        if: always()
+        run: |
+          docker logs habla-api 2>&1 || true
+          docker rm -f habla-api || true
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: milestone-1-docker-results
+          path: |
+            smoke-result.json
+            health.json
+            api-result.json
