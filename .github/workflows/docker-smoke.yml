@@ -1,4 +1,4 @@
-name: Verify Docker milestone 1
+name: Verify Docker milestones 1 and 2
 on:
   push:
     paths:
@@ -28,6 +28,10 @@ jobs:
           python -c 'import json; x=json.load(open("smoke-result.json")); assert x["temporal"]["file_duration_s"] == 2.0; assert x["provenance"]["praat_version"] == "6.4.27"'
       - name: Repeat full pytest inside container
         run: docker run --rm habla-motora:smoke-v1 python -m pytest -q
+      - name: Synthetic pitch observations inside container
+        run: |
+          docker run --rm habla-motora:smoke-v1 python -m tests.report_pitch > pitch-result.json
+          cat pitch-result.json
       - name: Start API and verify endpoints over HTTP
         run: |
           docker run -d --name habla-api -p 127.0.0.1:8000:8000 habla-motora:smoke-v1
@@ -38,6 +42,11 @@ jobs:
           curl -fsS http://127.0.0.1:8000/health | tee health.json
           curl -fsS -F 'file=@tests/fixtures/tone_2s.wav' http://127.0.0.1:8000/smoke-test | tee api-result.json
           python -c 'import json; h=json.load(open("health.json")); x=json.load(open("api-result.json")); assert h["status"] == "alive"; assert x["temporal"]["file_duration_s"] == 2.0; assert x["provenance"]["praat_version"] == "6.4.27"; assert x["quality"]["f0_coverage"]["value"] is None; assert x["quality"]["accepted_cycles"]["value"] is None; assert x["quality"]["technical_warnings"]'
+      - name: Verify pitch HTTP endpoint
+        run: |
+          python -c 'from tests.synthetic_pitch import wav_bytes; from pathlib import Path; Path("tone-6s.wav").write_bytes(wav_bytes())'
+          curl -fsS -F 'file=@tone-6s.wav' -F 'emission_start_s=0' -F 'emission_end_s=6' http://127.0.0.1:8000/pitch > pitch-api-result.json
+          python -c 'import json; x=json.load(open("pitch-api-result.json")); assert abs(x["acoustic"]["f0_mean_hz"]["value"]-200)<0.1; assert x["quality"]["f0_coverage_percent"]["value"]==100; assert x["provenance"]["module_version"]=="pitch_v1"; print("pitch HTTP 200, F0:",x["acoustic"])'
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -46,8 +55,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: milestone-1-docker-results
+          name: milestone-2-docker-results
           path: |
             smoke-result.json
             health.json
             api-result.json
+            pitch-result.json
+            pitch-api-result.json

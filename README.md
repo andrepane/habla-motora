@@ -110,3 +110,33 @@ logopeda. No se utilizan NeuroVoz ni datasets restringidos.
 
 Referencias: [Praat](https://www.praat.org/),
 [versión oficial 6.4.27](https://github.com/praat/praat.github.io/releases/tag/v6.4.27).
+
+
+## Hito 2: F0 experimental
+
+`praat/pitch_v1.praat` analiza el WAV completo con raw cross-correlation y todos
+los parámetros explícitos de experimental_v1. El JSON y su hash permanecen
+intactos; su bloque scope es histórico, no estado del programa.
+
+```bash
+docker run --rm habla-motora:smoke-v1 python -m tests.report_pitch
+docker run --rm habla-motora:smoke-v1 python -m pytest -q
+```
+
+CLI: `python -m backend.pitch archivo.wav --emission-start 0 --emission-end 6`.
+API: POST `/pitch`, multipart WAV y límites `emission_start_s`, `emission_end_s`.
+Si se omiten, se asume el archivo como emisión completa. La ventana es los tres
+segundos centrales; emisiones de menos de tres segundos producen HTTP 422.
+Los intervalos de diagnóstico explícitos solo están disponibles en Python y
+siempre se identifican como pruebas ajenas a la selección estándar.
+
+Salida: media y DT mediante consultas propias de Praat en Hertz, cobertura por
+centros de frames, valores por frame, motivos de null y advertencias técnicas.
+La cobertura no demuestra tracking correcto ni permite identificar silencio.
+No hay corrección de octavas, interpolación de huecos ni rechazo por cobertura.
+Una DT exactamente cero puede ser válida. Los ciclos glóticos siguen null.
+Se conservan /health y /smoke-test como comprobaciones del hito 1.
+
+El objetivo exploratorio de error máximo por frame <=0,5 Hz en la modulación
+no se cumple con v1: se mantiene como prueba xfail estricta, no se relaja.
+No implica validación clínica; véase docs/verificacion_hito2.md.
