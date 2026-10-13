@@ -1,4 +1,4 @@
-name: Verify Docker milestones 1 and 2
+name: Verify Docker milestones 1, 2 and 3
 on:
   push:
     paths:
@@ -32,6 +32,10 @@ jobs:
         run: |
           docker run --rm habla-motora:smoke-v1 python -m tests.report_pitch > pitch-result.json
           cat pitch-result.json
+      - name: Synthetic jitter observations inside container
+        run: |
+          docker run --rm habla-motora:smoke-v1 python -m tests.report_jitter > jitter-result.json
+          cat jitter-result.json
       - name: Start API and verify endpoints over HTTP
         run: |
           docker run -d --name habla-api -p 127.0.0.1:8000:8000 habla-motora:smoke-v1
@@ -47,6 +51,11 @@ jobs:
           python -c 'from tests.synthetic_pitch import wav_bytes; from pathlib import Path; Path("tone-6s.wav").write_bytes(wav_bytes())'
           curl -fsS -F 'file=@tone-6s.wav' -F 'emission_start_s=0' -F 'emission_end_s=6' http://127.0.0.1:8000/pitch > pitch-api-result.json
           python -c 'import json; x=json.load(open("pitch-api-result.json")); assert abs(x["acoustic"]["f0_mean_hz"]["value"]-200)<0.1; assert x["quality"]["f0_coverage_percent"]["value"]==100; assert x["provenance"]["module_version"]=="pitch_v1"; print("pitch HTTP 200, F0:",x["acoustic"])'
+      - name: Verify jitter HTTP endpoint
+        run: |
+          python -c 'from tests.synthetic_jitter import cycle_times,pulse_wav; from pathlib import Path; Path("jitter-6s.wav").write_bytes(pulse_wav(cycle_times(.5)))'
+          curl -fsS -F 'file=@jitter-6s.wav' -F 'emission_start_s=0' -F 'emission_end_s=6' http://127.0.0.1:8000/jitter > jitter-api-result.json
+          python -c 'import json; x=json.load(open("jitter-api-result.json")); assert abs(x["acoustic"]["jitter_local_percent"]["value"]-.5)<=.05; assert x["provenance"]["module_version"]=="jitter_v1"; print("jitter HTTP 200:",x["acoustic"]["jitter_local_percent"])'
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -55,10 +64,12 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: milestone-2-docker-results
+          name: milestone-3-docker-results
           path: |
             smoke-result.json
             health.json
             api-result.json
             pitch-result.json
             pitch-api-result.json
+            jitter-result.json
+            jitter-api-result.json

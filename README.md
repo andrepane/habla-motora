@@ -1,4 +1,4 @@
-# habla-motora — hitos 1 y 2
+# habla-motora — hitos 1, 2 y 3
 
 Nombre técnico provisional. Herramienta experimental de medición del habla motora
 orientada a una futura presentación a COLOAN. El proyecto contiene el smoke test
@@ -9,7 +9,7 @@ del hito 1 y el módulo experimental de F0 del hito 2. Sin frontend ni interpret
 Recibe un WAV PCM mono, 16/24/32-bit, 44.100/48.000 Hz, hasta 10 MiB. Ejecuta el
 script fijo `praat/smoke_test.praat` y devuelve la duración del archivo completo.
 El smoke test no detecta el segmento de vocal ni calcula F0. El endpoint /pitch
-calcula F0 media, DT y cobertura. Jitter, shimmer, HNR y CPP/CPPS no están implementados.
+calcula F0 media, DT y cobertura. El endpoint /jitter añade jitter local experimental. Shimmer, HNR y CPP/CPPS no están implementados.
 
 Cada resultado incluye versión exacta de Praat, versión del protocolo y
 configuración, SHA-256 de los bytes exactos de configuración, del WAV y del script.
@@ -141,3 +141,27 @@ Se conservan /health y /smoke-test como comprobaciones del hito 1.
 El objetivo exploratorio de error máximo por frame <=0,5 Hz en la modulación
 no se cumple con v1: se mantiene como prueba xfail estricta, no se relaja.
 No implica validación clínica; véase docs/verificacion_hito2.md.
+
+
+## Hito 3: jitter local experimental
+
+`praat/jitter_v1.praat`: Sound completo + Pitch raw cc -> PointProcess (cc).
+Get jitter (local), límites 0.8/600 y 1.25/75 s, factor máximo 1.3, porcentaje.
+Cada valor finito de Praat se conserva con fiabilidad de pulsos no verificada;
+undefined se convierte en null, nunca en cero. Se exportan pulsos completos y
+períodos candidatos de la ventana central. Get number of periods determina
+períodos aceptados. Pares utilizados: null/not_implemented; no se reimplementa
+ese contador en producción. Los recuentos no certifican cierres glóticos reales.
+
+```bash
+docker run --rm habla-motora:smoke-v1 python -m tests.report_jitter
+```
+
+CLI: `python -m backend.jitter archivo.wav --emission-start 0 --emission-end 6`.
+API: POST `/jitter`, mismos campos multipart que /pitch.
+Versiones: jitter_v1, jitter_output_v1, jitter_warnings_v1. Configuración v1 intacta.
+La prueba matemática usa tiempos conocidos sin detector; la comparación del
+WAV con otro script Praat comprueba integración. No son la misma validación.
+Se conservan los objetivos incumplidos como xfail estrictos, sin relajarlos.
+Resultados y límites en docs/verificacion_hito3.md. No hay diagnóstico ni
+validación en voces humanas.

@@ -39,4 +39,7 @@ El JSON experimental_v1 es inmutable y su bloque scope es información históric
 El módulo pitch_v1 registra module_version, output_schema_version y warnings_version.
 Las consultas estadísticas conservan exactamente la semántica de Praat; no se
 atribuyen fórmulas propias ni se interpolan huecos de tracking_frames.
-Jitter, shimmer, HNR y CPP/CPPS no se han implementado.
+Jitter local se incorpora como módulo experimental jitter_v1. Shimmer, HNR
+y CPP/CPPS no se han implementado. El recuento opcional de pares de jitter
+permanece null/not_implemented; se utilizan las consultas de Praat para valor
+y períodos aceptados, sin sobreescribir un valor finito por pocos pulsos.
