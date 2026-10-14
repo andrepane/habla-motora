@@ -28,10 +28,16 @@ def analyze_vowel(data, emission_start_s=0.0, emission_end_s=None):
     end = duration if emission_end_s is None else emission_end_s
     if not 0 <= emission_start_s < end <= duration or end-emission_start_s < 3:
         raise ValueError('Selected emission must contain at least 3 seconds within the WAV')
+    # The duration smoke script formats to 12 decimal places. For a selection
+    # ending at the WAV boundary, let each unchanged module use its own native
+    # duration instead of passing a sample-derived boundary a fraction of a
+    # picosecond beyond it. No extra analysis or audio conversion is performed.
+    native_file_end = math.isclose(end, duration, rel_tol=0, abs_tol=1e-12)
+    effective_end = None if native_file_end else emission_end_s
     modules = {}
     for name, analyze in (('shimmer', analyze_shimmer), ('hnr', analyze_hnr)):
         try:
-            result = analyze(data, emission_start_s, emission_end_s)
+            result = analyze(data, emission_start_s, effective_end)
             modules[name] = {'status': 'completed', 'result': result, 'error': None}
         except (AnalysisError, ValueError) as exc:
             modules[name] = {'status': 'failed', 'result': None,
@@ -56,6 +62,8 @@ def analyze_vowel(data, emission_start_s=0.0, emission_end_s=None):
     return {'schema_version': 'vowel_analysis_v1',
             'status': 'completed' if len(successes) == 2 else 'partial',
             'input': {'file_sha256': expected_hash, 'emission_start_s': emission_start_s,
-                      'emission_end_s': emission_end_s},
+                      'emission_end_s': emission_end_s,
+                      'effective_emission_end_s': effective_end,
+                      'end_selection': 'native_file_end' if native_file_end else 'explicit_limit'},
             'integrity': {'wav_hash_verified': True, 'cross_module_verified': len(successes) == 2},
             'analysis_interval': first['analysis_interval'], 'modules': modules}

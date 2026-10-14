@@ -152,6 +152,9 @@ try {
   check(capture.requested_constraints.autoGainControl === false);
   check([44100, 48000].includes(capture.audio_context_sample_rate));
   check(await page.locator("#downloadAudio").isVisible());
+  const recordedDownload = page.waitForEvent('download');
+  await page.locator('#downloadAudio').click();
+  await (await recordedDownload).saveAs('/tmp/habla-captured.wav');
   await page.locator("#analyze").click();
   await page.locator("#results").waitFor({ state: "visible" });
   check((await page.locator(".card").count()) === 5);

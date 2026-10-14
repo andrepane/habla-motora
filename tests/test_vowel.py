@@ -22,7 +22,7 @@ def result():
 def setup(monkeypatch, a=None, b=None):
     def module(value):
         def run(data, start, end):
-            assert data == DATA and start == 0 and end == 6
+            assert data == DATA and start == 0 and end is None
             if isinstance(value, Exception): raise value
             return copy.deepcopy(value if value is not None else result())
         return run
@@ -119,3 +119,32 @@ def test_invalid_wav_no_modules(monkeypatch):
     def forbidden(*args): raise AssertionError('must not execute modules')
     monkeypatch.setattr(vowel, 'analyze_shimmer', forbidden)
     with pytest.raises(ValueError): vowel.analyze_vowel(b'invalid', 0, 6)
+
+
+def test_fractional_file_end_uses_native_duration_without_metric_changes():
+    import io
+    import wave
+    original = wav_bytes(rate=44100)
+    with wave.open(io.BytesIO(original)) as wav:
+        pcm = wav.readframes(154368)
+    buffer = io.BytesIO()
+    with wave.open(buffer, 'wb') as wav:
+        wav.setnchannels(1); wav.setsampwidth(2); wav.setframerate(44100)
+        wav.writeframes(pcm)
+    data = buffer.getvalue()
+    with wave.open(io.BytesIO(data)) as wav:
+        duration = wav.getnframes() / wav.getframerate()
+    r = vowel.analyze_vowel(data, 0, duration)
+    assert r['status'] == 'completed'
+    assert r['input']['end_selection'] == 'native_file_end'
+    assert r['input']['emission_end_s'] == duration
+    assert r['input']['effective_emission_end_s'] is None
+
+
+def test_explicit_interior_end_is_forwarded_unchanged(monkeypatch):
+    def run(data, start, end):
+        assert end == 5 and start == 1
+        return result()
+    monkeypatch.setattr(vowel, 'analyze_shimmer', run)
+    monkeypatch.setattr(vowel, 'analyze_hnr', run)
+    assert vowel.analyze_vowel(DATA, 1, 5)['input']['effective_emission_end_s'] == 5

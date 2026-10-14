@@ -235,7 +235,11 @@ o los límites invalida los resultados y aborta la espera de la solicitud anteri
 POST `/vowel-analysis`: una subida multipart `file`, `emission_start_s` y
 `emission_end_s`. Orquesta `analyze_shimmer` y `analyze_hnr` sin modificar sus
 algoritmos. `/shimmer` ya incluye duración, F0, jitter y shimmer. El frontend
-no llama a los endpoints individuales. Se conservan sus respuestas completas
+no llama a los endpoints individuales. Si el final coincide con el límite del WAV (precisión de 12 decimales del
+script histórico de duración), los módulos resuelven el final con su duración
+nativa, usando `emission_end_s=None`. El JSON registra límite solicitado,
+límite efectivo y `end_selection`; evita errores por redondeo sin alterar
+ningún algoritmo. Se conservan sus respuestas completas
 bajo `modules.shimmer.result` y `modules.hnr.result`, con procedencia separada.
 
 - `status=completed`: ambos módulos completados y coherentes.
