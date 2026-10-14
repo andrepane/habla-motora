@@ -218,6 +218,10 @@ $("record").onclick = async () => {
     rec.stream = await navigator.mediaDevices.getUserMedia({
       audio: REQUESTED,
     });
+    if (state.recording !== rec) {
+      await dispose(rec);
+      return;
+    }
     rec.ctx = new AudioContext();
     if (![44100, 48000].includes(rec.ctx.sampleRate))
       throw Error(
@@ -233,6 +237,10 @@ $("record").onclick = async () => {
       observed_input_channels: [],
     };
     await rec.ctx.audioWorklet.addModule("/static/recorder-worklet.js");
+    if (state.recording !== rec) {
+      await dispose(rec);
+      return;
+    }
     rec.source = rec.ctx.createMediaStreamSource(rec.stream);
     rec.node = new AudioWorkletNode(rec.ctx, "pcm-recorder");
     rec.node.port.onmessage = (e) => {
@@ -250,10 +258,16 @@ $("record").onclick = async () => {
     rec.source.connect(rec.node);
     rec.node.connect(rec.ctx.destination);
     await rec.ctx.resume();
+    if (state.recording !== rec) {
+      await dispose(rec);
+      return;
+    }
     message("Grabando /a/…");
   } catch (e) {
-    state.recording = null;
+    const current = state.recording === rec;
+    if (current) state.recording = null;
     await dispose(rec);
+    if (!current) return;
     captureButtons(false);
     message(e.message, true);
   }

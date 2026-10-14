@@ -130,3 +130,18 @@ La interfaz solo evalúa los 3 s centrales: no detecta automáticamente la vocal
 ni muestra tracking fuera de esa ventana.
 
 Captura visual con tono sintético: [interfaz_vocal.png](interfaz_vocal.png).
+
+## Revisión posterior: cancelación durante la preparación del micrófono
+
+Revisión sobre ca3f29d, conservando la interfaz y el orquestador existentes.
+Se corrige una carrera al detener la captura mientras están pendientes el
+permiso, la carga del AudioWorklet o la activación del AudioContext. Una
+preparación cancelada libera sus recursos al finalizar y no puede reemplazar
+el estado ni los mensajes de una grabación posterior, incluso si falla.
+
+`npm run test:ui`: 13 pruebas aprobadas, incluidas seis regresiones con
+operaciones del navegador diferidas y los manejadores reales de app.js.
+Cinco de esas seis regresiones fallan con el código anterior a la corrección.
+Estas pruebas de ciclo de vida usan dobles del navegador; no certifican
+micrófonos físicos ni resultados acústicos. Los resultados Docker anteriores
+siguen asociados exclusivamente a dcd9b7e, no a esta corrección.
