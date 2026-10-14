@@ -1,0 +1,56 @@
+select {
+  padding: 8px;
+  border: 1px solid #bdd1d6;
+  border-radius: 7px;
+  font: inherit;
+  max-width: 100%;
+}
+.tableScroll {
+  overflow-x: auto;
+  margin: 18px 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+th,
+td {
+  border-bottom: 1px solid #dce6e8;
+  padding: 10px;
+  text-align: left;
+}
+caption {
+  text-align: left;
+  font-weight: 600;
+  padding: 10px 0;
+}
+td input[type="number"] {
+  width: 120px;
+}
+svg {
+  width: 100%;
+  background: #f6f9fa;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+svg [data-time] {
+  cursor: pointer;
+}
+.cards {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin: 16px 0;
+}
+nav {
+  margin-bottom: 12px;
+}
+[hidden] {
+  display: none !important;
+}
+.card,
+.notice,
+#stageState,
+#warnings {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

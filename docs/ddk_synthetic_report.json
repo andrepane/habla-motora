@@ -1,0 +1,274 @@
+{
+  "schema_version": "ddk_synthetic_report_v1",
+  "seed": 606,
+  "note": "Noise levels are generator amplitudes, NOT measured or calibrated SNR. Synthetic bursts are NOT speech.",
+  "cases": [
+    {
+      "case": "clean",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {},
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "weak",
+      "truth_event_count": 21,
+      "candidate_count": 0,
+      "matched_20ms": 0,
+      "false_positive": 0,
+      "missed": 21,
+      "max_matched_error_ms": null,
+      "status": "partial",
+      "rate": {
+        "value": null,
+        "reason": "no_evidence"
+      },
+      "rejections": {
+        "boundary_incomplete": 1
+      },
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "transients",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {
+        "minimum_separation": 21
+      },
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "noise_sigma_0.003",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {
+        "below_threshold": 150
+      },
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "noise_sigma_0.03",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {
+        "below_threshold": 157
+      },
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "noise_sigma_0.15",
+      "truth_event_count": 21,
+      "candidate_count": 0,
+      "matched_20ms": 0,
+      "false_positive": 0,
+      "missed": 21,
+      "max_matched_error_ms": null,
+      "status": "partial",
+      "rate": {
+        "value": null,
+        "reason": "no_evidence"
+      },
+      "rejections": {
+        "below_threshold": 191
+      },
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "clipping",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {},
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION",
+        "POSSIBLE_DIGITAL_CLIPPING"
+      ]
+    },
+    {
+      "case": "omission",
+      "truth_event_count": 20,
+      "candidate_count": 20,
+      "matched_20ms": 20,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.0,
+        "reason": null
+      },
+      "rejections": {},
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "doublet",
+      "truth_event_count": 22,
+      "candidate_count": 22,
+      "matched_20ms": 22,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.4,
+        "reason": null
+      },
+      "rejections": {},
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "pause_0.2",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {},
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "pause_0.5",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {},
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "pause_1",
+      "truth_event_count": 21,
+      "candidate_count": 21,
+      "matched_20ms": 21,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": 1.6666666666669272,
+      "status": "completed",
+      "rate": {
+        "value": 4.2,
+        "reason": null
+      },
+      "rejections": {},
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "silence",
+      "truth_event_count": 0,
+      "candidate_count": 0,
+      "matched_20ms": 0,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": null,
+      "status": "partial",
+      "rate": {
+        "value": null,
+        "reason": "no_evidence"
+      },
+      "rejections": {
+        "boundary_incomplete": 1
+      },
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    },
+    {
+      "case": "noise_only",
+      "truth_event_count": 0,
+      "candidate_count": 0,
+      "matched_20ms": 0,
+      "false_positive": 0,
+      "missed": 0,
+      "max_matched_error_ms": null,
+      "status": "partial",
+      "rate": {
+        "value": null,
+        "reason": "no_evidence"
+      },
+      "rejections": {
+        "below_threshold": 220
+      },
+      "warnings": [
+        "ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION"
+      ]
+    }
+  ]
+}
