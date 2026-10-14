@@ -5,10 +5,24 @@ on:
       - 'Dockerfile'
       - 'requirements.lock'
       - 'pyproject.toml'
+      - 'frontend/**'
+      - 'package*.json'
       - 'backend/**'
       - 'praat/**'
       - 'configs/**'
       - 'tests/**'
+      - '.github/workflows/docker-smoke.yml'
+  pull_request:
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'tests/**'
+      - 'Dockerfile'
+      - 'configs/**'
+      - 'praat/**'
+      - 'requirements.lock'
+      - 'pyproject.toml'
+      - 'package*.json'
       - '.github/workflows/docker-smoke.yml'
   workflow_dispatch:
 permissions:
@@ -74,6 +88,16 @@ jobs:
           python -c 'from tests.synthetic_hnr import make_wav; from pathlib import Path; data,_=make_wav(snr_db=20); Path("hnr-6s.wav").write_bytes(data)'
           curl -fsS -F 'file=@hnr-6s.wav' -F 'emission_start_s=0' -F 'emission_end_s=6' http://127.0.0.1:8000/hnr > hnr-api-result.json
           python -c 'import json; x=json.load(open("hnr-api-result.json")); assert x["acoustic"]["hnr_mean_db"]["value"] is not None; assert x["provenance"]["module_version"]=="hnr_v1"; assert x["quality"]["hnr_coverage_percent"]["value"]==100; print("HNR HTTP 200:",x["acoustic"]["hnr_mean_db"])'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Frontend unit and browser checks
+        run: |
+          npm ci
+          npm run test:ui
+          npx playwright install --with-deps chromium
+          TEST_WAV="$PWD/tone-6s.wav" SCREENSHOT="$PWD/vowel-interface.png" npm run test:browser
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -95,3 +119,4 @@ jobs:
             shimmer-api-result.json
             hnr-result.json
             hnr-api-result.json
+            vowel-interface.png

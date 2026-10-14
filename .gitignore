@@ -6,3 +6,5 @@ __pycache__/
 *.wav
 !tests/fixtures/tone_2s.wav
 results/
+
+node_modules/

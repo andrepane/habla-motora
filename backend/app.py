@@ -94,3 +94,34 @@ async def hnr(file: UploadFile = File(...), emission_start_s: float = Form(0.0),
         raise HTTPException(422, str(exc)) from exc
     except AnalysisError as exc:
         raise HTTPException(503, str(exc)) from exc
+
+
+@app.post('/vowel-analysis')
+async def vowel_analysis(file: UploadFile = File(...), emission_start_s: float = Form(0.0),
+                         emission_end_s: float | None = Form(None)):
+    from backend.vowel import analyze_vowel
+    try:
+        data = await file.read(MAX_BYTES + 1)
+    finally:
+        await file.close()
+    if len(data) > MAX_BYTES:
+        raise HTTPException(413, 'Maximum WAV size is 10 MiB')
+    try:
+        return await run_in_threadpool(analyze_vowel, data, emission_start_s, emission_end_s)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except AnalysisError as exc:
+        raise HTTPException(503, str(exc)) from exc
+
+
+from pathlib import Path
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
+app.mount('/static', StaticFiles(directory=FRONTEND), name='static')
+
+
+@app.get('/', include_in_schema=False)
+def interface():
+    return FileResponse(FRONTEND / 'index.html')
