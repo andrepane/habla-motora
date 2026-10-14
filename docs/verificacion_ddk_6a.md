@@ -129,10 +129,43 @@ frontend/API locales comprobados. No se ha relajado un umbral para pasar pruebas
 Caracterización documenta pérdidas fuera de señales limpias/separables.
 Seis xfail históricos siguen siendo incumplimientos de hitos anteriores, intactos.
 
-**Pendiente en esta revisión:** ejecución Docker/Actions de la rama; Preview en
-Vercel y verificación real remota. La API Vercel devuelve 403 para el equipo;
-no se dispone de CLI autenticada como alternativa. Estado y logs no se inventan.
-Se actualizará la evidencia con los resultados remotos observables.
+**Pendiente:** verificación funcional remota del Preview. Vercel informa READY en
+GitHub para el código 7e326e3; HTTP devuelve autenticación Vercel y el acceso
+autorizado mediante web_fetch_vercel_url devuelve 403 para el proyecto/equipo.
+No hay CLI autenticada disponible. No se desactiva la protección ni se presenta
+la prueba local como prueba remota. Requiere conexión con acceso al equipo
+andreapanepinto1995-gmailcoms-projects y proyecto habla-motora.
 
 **6A NO declarado cerrado.** Cierre y fusión requieren revisión final de Andrea.
 **6B pendiente**, sin criterio de reclutamiento humano obligatorio en 6A.
+
+
+## Docker/Actions y Preview — evidencia remota
+
+Código probado: 7e326e3ddcf4a56ba3b9e5df250526ab3ae66519.
+https://github.com/andrepane/habla-motora/actions/runs/38589345409
+SUCCESS; job 115939730544. Construcción: **310 passed, 6 xfailed, 1 warning
+in 312.77s (0:05:12)**. Segunda suite en contenedor: **310 passed, 6 xfailed,
+1 warning in 311.89s (0:05:11)**. Praat, informes F0/jitter/shimmer/HNR,
+caracterización DDK y todos los endpoints anteriores aprobados.
+Node 22: **19 pruebas JS aprobadas**, duración 105.613983 ms.
+Chromium contra contenedor: **35 comprobaciones DDK y 24 vocal aprobadas**.
+
+Artefacto con JSON de informes y capturas:
+https://github.com/andrepane/habla-motora/actions/runs/38589345409/artifacts/11906679947
+Digest sha256:9e9c45e69b19b0b95b3b2be6d19f497e4a657d25c125852276f0e625102b683c.
+El nombre histórico del artefacto milestone-5-docker-results se conserva.
+
+Preview READY según el bot y estado Vercel en GitHub:
+https://habla-motora-git-7b6931-andreapanepinto1995-gmailcoms-projects.vercel.app/ddk
+Deployment: CWQb9e8VsXWFY2JT6GWA21bDoPFx. No verificación funcional remota:
+la protección y los permisos 403 la bloquean. `tests/ddk-preview.mjs` contiene
+las 17 comprobaciones HTTP a repetir allí; por ahora pasaron solo en localhost.
+
+Los frames exportan centros temporales exactos en segundos del WAV. El paso
+nominal de 5 ms se redondea a muestras enteras: 220 muestras (4.9886621315 ms)
+a 44100 Hz, 240 muestras (5 ms) a 48000 Hz; ventana 882/960 muestras (20 ms).
+Todas las estadísticas usan los tiempos efectivos exportados, no el paso nominal.
+
+Este añadido solo documenta resultados; no cambia el motor ni sus pruebas.
+6A sigue pendiente de revisión final y verificación Vercel. 6B sigue pendiente.
