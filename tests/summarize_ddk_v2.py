@@ -1,5 +1,5 @@
 """Summarize frozen per-condition comparison without retuning the detector."""
-import argparse,json
+import argparse,json,gzip
 from pathlib import Path
 
 
@@ -32,5 +32,6 @@ def summarize(report):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('report');p.add_argument('output');a=p.parse_args()
-    summary=summarize(json.loads(Path(a.report).read_text()));Path(a.output).write_text(json.dumps(summary,indent=2)+'\n')
+    raw=gzip.decompress(Path(a.report).read_bytes()).decode() if a.report.endswith('.gz') else Path(a.report).read_text()
+    summary=summarize(json.loads(raw));Path(a.output).write_text(json.dumps(summary,indent=2)+'\n')
     print(json.dumps({k:v for k,v in summary.items() if k!='regressions'},indent=2));print('regressions',len(summary['regressions']))
