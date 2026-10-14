@@ -1,0 +1,11 @@
+{
+  "name": "habla-motora-ui-tests",
+  "private": true,
+  "scripts": {
+    "test:ui": "node --test tests/frontend.test.mjs tests/recording.test.mjs",
+    "test:browser": "node tests/browser.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.51.1"
+  }
+}

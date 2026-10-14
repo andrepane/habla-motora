@@ -1,8 +1,8 @@
-# habla-motora — hitos 1, 2, 3, 4 y 5
+# habla-motora — evaluación experimental de vocal sostenida
 
 Nombre técnico provisional. Herramienta experimental de medición del habla motora
-orientada a una futura presentación a COLOAN. El proyecto contiene el smoke test
-del hito 1 y el módulo experimental de F0 del hito 2. Sin frontend ni interpretación clínica.
+orientada a una futura presentación a COLOAN. El proyecto contiene los hitos acústicos 1–5 cerrados y una primera interfaz web
+para vocal sostenida. Sin interpretación clínica.
 
 ## Qué hace
 
@@ -186,7 +186,8 @@ docker run --rm habla-motora:smoke-v1 python -m pytest -q
 Los tres niveles de validación y tolerancias completas, en puntos porcentuales,
 están en docs/protocolo_v1.md. Los resultados exactos de Docker están en
 docs/verificacion_hito4.md. Configuración v1 y cuatro xfail anteriores intactos.
-No se implementan HNR ni CPP/CPPS; no se avanza al hito 5.
+Al cierre del hito 4 aún no se implementaba HNR; véase el hito 5 a continuación.
+CPP/CPPS siguen fuera del alcance.
 
 
 ## Hito 5: HNR experimental
@@ -216,3 +217,77 @@ exactos, nuevos incumplimientos si aparecen y límites en docs/verificacion_hito
 No se modifica experimental_v1 ni se relajan los cuatro xfail anteriores.
 Un HNR alto puede coexistir con clipping o tracking incorrecto; no demuestra
 voz estable ni validez clínica. CPP/CPPS siguen fuera del proyecto implementado.
+
+
+## Primera interfaz web: vocal sostenida
+
+Ejecutar el contenedor como se indica arriba y abrir **http://localhost:8000/**.
+La página se sirve junto con la API, sin servidor frontend adicional, CDN ni
+compilación. Dockerfile y dependencias acústicas permanecen intactos.
+
+Flujo: subir WAV compatible o grabar /a/ -> escuchar -> marcar la emisión
+mediante los límites de la forma de onda o los campos numéricos -> analizar.
+La emisión debe durar al menos 3 s. Se resaltan sus 3 segundos centrales.
+Se envía el WAV completo, sin recortar, filtrar ni normalizar. Cambiar el audio
+o los límites invalida los resultados y aborta la espera de la solicitud anterior
+(el trabajo ya iniciado en el backend puede terminar).
+
+POST `/vowel-analysis`: una subida multipart `file`, `emission_start_s` y
+`emission_end_s`. Orquesta `analyze_shimmer` y `analyze_hnr` sin modificar sus
+algoritmos. `/shimmer` ya incluye duración, F0, jitter y shimmer. El frontend
+no llama a los endpoints individuales. Si el final coincide con el límite del WAV (precisión de 12 decimales del
+script histórico de duración), los módulos resuelven el final con su duración
+nativa, usando `emission_end_s=None`. El JSON registra límite solicitado,
+límite efectivo y `end_selection`; evita errores por redondeo sin alterar
+ningún algoritmo. Se conservan sus respuestas completas
+bajo `modules.shimmer.result` y `modules.hnr.result`, con procedencia separada.
+
+- `status=completed`: ambos módulos completados y coherentes.
+- `status=partial`: un módulo fallido, identificado con error y `result=null`;
+  el otro resultado se conserva. HTTP 200 con estado parcial explícito.
+- HTTP 422: WAV o selección incompatibles. HTTP 413: más de 10 MiB.
+- HTTP 503: ambos módulos fallidos o incoherencia de hash/configuración/intervalo.
+- `integrity.cross_module_verified=false` en resultados parciales: no afirma
+  comparar contra un módulo fallido. El hash de cada resultado se comprueba
+  frente a los bytes recibidos, incluso si solo hay uno disponible.
+
+Las tarjetas muestran F0 media y DT, jitter local, shimmer local y HNR medio.
+Coberturas separadas, avisos, curvas nativas sin suavizado ni relleno de huecos,
+resumen copiable y JSON completo con auditoría. `null` se muestra como
+«No calculable» y su motivo; cero y HNR negativo se conservan. La presentación
+usa hasta tres decimales y notación científica para magnitudes no nulas <0,001,
+para no mostrarlas como ceros; el JSON conserva la precisión original.
+HNR medio sigue siendo exclusivamente `Harmonicity: Get mean`.
+
+### Grabación
+
+Requiere localhost o HTTPS, permiso de micrófono y Web Audio/AudioWorklet.
+Solicita `echoCancellation=false`, `noiseSuppression=false`, `autoGainControl=false`
+y un canal. Registra restricciones solicitadas, `getSettings()`,
+`getConstraints()`, frecuencia de AudioContext y canales observados.
+No garantiza ausencia de procesamiento del sistema, navegador o micrófono.
+
+Codifica muestras capturadas en WAV mono PCM16 a la frecuencia de AudioContext
+(44.100 o 48.000 Hz). Si llegan varios canales, usa el primero y lo registra.
+No remuestrea archivos subidos ni convierte formatos incompatibles.
+Web Audio puede adaptar internamente la captura a la frecuencia de AudioContext;
+se conservan los ajustes consultables y esto no certifica captura bit a bit.
+No hay calibración SPL. La cuantificación PCM16 y la limitación a [-1,1] son
+parte de la codificación de captura, no una normalización acústica.
+
+### Pruebas de interfaz
+
+```bash
+npm ci
+npm run test:ui
+npx playwright install --with-deps chromium
+python -c 'from tests.synthetic_pitch import wav_bytes; from pathlib import Path; Path("/tmp/vocal-6s.wav").write_bytes(wav_bytes())'
+# Con la API ejecutándose en otra terminal:
+npm run test:browser
+```
+
+Variables opcionales: `BASE_URL`, `TEST_WAV`, `SCREENSHOT`.
+La prueba de micrófono usa un dispositivo sintético de Chromium, sin voz real.
+Actions conserva todas las comprobaciones previas y añade estas pruebas al
+contenedor real ya iniciado. Se activa también en PR y cambios del frontend.
+No incorpora pacientes, historial, rangos clínicos, diagnóstico ni nuevas tareas.

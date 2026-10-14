@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Evaluación de vocal sostenida</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="brand">HABLA MOTORA</span
+        ><span class="badge">Experimental</span>
+        <h1>Evaluación de vocal sostenida</h1>
+        <p>
+          Una emisión. Cinco medidas. Revisa el audio y selecciona la vocal
+          antes de analizar.
+        </p>
+      </header>
+      <section>
+        <h2><span>01</span> Prepara el audio</h2>
+        <p>Mantén una /a/ cómoda y continua durante unos 5–6 segundos.</p>
+        <div class="actions">
+          <button id="record">● Grabar vocal</button
+          ><button id="stop" disabled>Detener</button
+          ><label class="upload"
+            >Subir WAV<input
+              id="file"
+              type="file"
+              accept=".wav,audio/wav" /></label
+          ><button id="reset">Repetir / limpiar</button>
+        </div>
+        <p class="muted">
+          WAV mono PCM 16/24/32 bits · 44.100 o 48.000 Hz · máximo 10 MiB
+        </p>
+        <p id="audioInfo">Todavía no hay audio.</p>
+        <audio id="player" controls hidden></audio
+        ><a id="downloadAudio" hidden>Descargar grabación WAV</a>
+        <details>
+          <summary>Condiciones de grabación</summary>
+          <p>
+            Se solicita desactivar cancelación de eco, reducción de ruido y
+            ganancia automática. El navegador o el dispositivo pueden no
+            respetarlo. Los ajustes consultados no certifican ausencia de
+            procesamiento.
+          </p>
+          <pre id="captureInfo">Sin grabación.</pre>
+        </details>
+      </section>
+      <section>
+        <h2><span>02</span> Selecciona la emisión</h2>
+        <p>
+          Marca el inicio y el final de la vocal. La zona azul indica los 3
+          segundos centrales que analizará Praat.
+        </p>
+        <canvas
+          id="wave"
+          height="160"
+          aria-label="Forma de onda y selección"
+        ></canvas>
+        <div class="limits">
+          <label
+            >Inicio (s)<input
+              id="start"
+              type="number"
+              min="0"
+              step="0.001"
+              disabled /></label
+          ><label
+            >Final (s)<input
+              id="end"
+              type="number"
+              min="0"
+              step="0.001"
+              disabled
+          /></label>
+        </div>
+        <p id="selection">Selecciona un audio para comenzar.</p>
+        <button id="analyze" disabled>Analizar vocal</button>
+        <p id="status" role="status" aria-live="polite"></p>
+      </section>
+      <section id="results" hidden>
+        <div class="resultHead">
+          <h2><span>03</span> Resultados</h2>
+          <div class="actions">
+            <button id="copy">Copiar resumen</button
+            ><button id="json">Descargar JSON</button>
+          </div>
+        </div>
+        <p id="resultState"></p>
+        <div id="cards" class="cards"></div>
+        <div id="coverage" class="coverage"></div>
+        <div id="warnings"></div>
+        <div class="charts">
+          <div>
+            <h3>Frecuencia fundamental · Hz</h3>
+            <svg
+              id="pitchChart"
+              viewBox="0 0 600 210"
+              role="img"
+              aria-label="Curva F0"
+            ></svg>
+          </div>
+          <div>
+            <h3>HNR · dB</h3>
+            <svg
+              id="hnrChart"
+              viewBox="0 0 600 210"
+              role="img"
+              aria-label="Curva HNR"
+            ></svg>
+          </div>
+        </div>
+        <p class="muted">
+          Valores nativos de Praat, sin interpolación ni suavizado. Los huecos
+          indican valores no disponibles. La cobertura no certifica voz ni
+          tracking correcto.
+        </p>
+        <details>
+          <summary>Detalles técnicos, versiones y auditoría</summary>
+          <pre id="technical"></pre>
+        </details>
+      </section>
+      <footer>
+        Medición experimental · Sin rangos normativos ni interpretación
+        diagnóstica.
+      </footer>
+    </main>
+    <script type="module" src="/static/app.js"></script>
+  </body>
+</html>
