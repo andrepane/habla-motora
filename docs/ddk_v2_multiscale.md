@@ -69,3 +69,7 @@ No frontend/API activation, no phonetic recognition, no automatic clinical group
 | Supplied human WAV | 12 stipulated syllables, no event timing truth | 24 | 13 | Eligible-only alternative 14; not validation |
 
 All six explicit numerical gates in the summary pass. No per-condition increase in synthetic extras or omissions was observed. Traceability and unmodified v1 are retained. The broader objective of reliably identifying every human syllable, and eliminating every internal double, is **not demonstrated**.
+
+## General-suite verification
+
+All 368 collected pytest cases were executed: 355 passed directly, six remained expected strict xfails, and seven hit Praat’s unchanged 15 s timeout during parallel execution. Repeating those seven in one process passed all seven. Final unique outcomes: **362 passed, 6 expected xfails, 0 unresolved failures**. All 52 v2-specific cases passed. `npm run test:ui`: **19 passed**. Host verification used Praat 6.4.27 from the archive whose SHA-256 matches the Dockerfile; Docker and browser suites were not rerun. See `ddk_v2_verification.json` and compressed raw logs for commands, counts and timeout/retry evidence. No timeout or acoustic algorithm was changed to obtain this result.
