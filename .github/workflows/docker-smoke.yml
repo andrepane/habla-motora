@@ -58,6 +58,8 @@ jobs:
         run: |
           docker run --rm habla-motora:smoke-v1 python -m tests.report_hnr > hnr-result.json
           cat hnr-result.json
+      - name: DDK synthetic characterization
+        run: docker run --rm habla-motora:smoke-v1 python -m tests.report_ddk > ddk-characterization.json
       - name: Start API and verify endpoints over HTTP
         run: |
           docker run -d --name habla-api -p 127.0.0.1:8000:8000 habla-motora:smoke-v1
@@ -97,6 +99,8 @@ jobs:
           npm ci
           npm run test:ui
           npx playwright install --with-deps chromium
+          python -c 'from tests.synthetic_ddk import signal; from pathlib import Path; Path("ddk-clean.wav").write_bytes(signal()[0])'
+          DDK_TEST_WAV="$PWD/ddk-clean.wav" DDK_SCREENSHOT="$PWD/ddk-interface.png" npm run test:ddk-browser
           TEST_WAV="$PWD/tone-6s.wav" SCREENSHOT="$PWD/vowel-interface.png" npm run test:browser
       - name: Container logs and cleanup
         if: always()
@@ -120,3 +124,5 @@ jobs:
             hnr-result.json
             hnr-api-result.json
             vowel-interface.png
+            ddk-interface.png
+            ddk-characterization.json

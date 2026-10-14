@@ -1,0 +1,16 @@
+{
+  "version": "ddk_experimental_v1",
+  "window_ms": 20,
+  "hop_ms": 5,
+  "digital_floor_db": -120,
+  "noise_percentile": 10,
+  "signal_percentile": 90,
+  "noise_margin_db": 6,
+  "signal_margin_db": 25,
+  "minimum_dip_db": 3,
+  "minimum_separation_ms": 50,
+  "minimum_intervals": 3,
+  "max_bytes": 4000000,
+  "max_file_duration_s": 15,
+  "human_speech_validation": "pending_6b"
+}

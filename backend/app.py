@@ -125,3 +125,34 @@ app.mount('/static', StaticFiles(directory=FRONTEND), name='static')
 @app.get('/', include_in_schema=False)
 def interface():
     return FileResponse(FRONTEND / 'index.html')
+
+
+@app.get('/ddk', include_in_schema=False)
+def ddk_interface():
+    return FileResponse(FRONTEND / 'ddk.html')
+
+
+@app.post('/ddk-analysis')
+async def ddk_analysis(file: UploadFile = File(...), emission_start_s: float = Form(0.0),
+                       emission_end_s: float | None = Form(None), anchor_id: str | None = Form(None),
+                       review_json: str | None = Form(None), expected_file_sha256: str | None = Form(None)):
+    import json
+    from backend.ddk import analyze_ddk, MAX_BYTES as DDK_MAX_BYTES
+    try:
+        data = await file.read(DDK_MAX_BYTES + 1)
+    finally:
+        await file.close()
+    if len(data) > DDK_MAX_BYTES:
+        raise HTTPException(413, 'DDK admite hasta 4.000.000 bytes.')
+    try:
+        if review_json is not None and len(review_json.encode('utf-8')) > 250000:
+            raise ValueError('Revisión demasiado grande.')
+        review = json.loads(review_json) if review_json is not None else None
+        if review_json is not None and not isinstance(review, dict):
+            raise ValueError('Revisión debe ser un objeto JSON.')
+        return await run_in_threadpool(analyze_ddk, data, emission_start_s, emission_end_s,
+                                       anchor_id, review, expected_file_sha256)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(503, 'El motor DDK no pudo completar la solicitud.') from exc

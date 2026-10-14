@@ -291,3 +291,40 @@ La prueba de micrófono usa un dispositivo sintético de Chromium, sin voz real.
 Actions conserva todas las comprobaciones previas y añade estas pruebas al
 contenedor real ya iniciado. Se activa también en PR y cambios del frontend.
 No incorpora pacientes, historial, rangos clínicos, diagnóstico ni nuevas tareas.
+
+
+## Hito 6A: motor técnico DDK (pendiente de revisión final)
+
+Abrir `/ddk` en el mismo servidor. Captura/subida, selección de TODO el tramo,
+detección de núcleos candidatos, anclaje opcional para tríadas candidatas, tasas
+automáticas estimadas, auditoría y revisión manual. No reconoce fonemas.
+Solo después de confirmar todas las etiquetas manuales se muestran sílabas/ciclos
+revisados. La revisión no valida el detector en habla humana: 6B sigue pendiente.
+
+`POST /ddk-analysis`: WAV multipart, emission_start_s/emission_end_s; anchor_id
+opcional. Para revisión, mismo WAV, expected_file_sha256 y review_json con
+operaciones ordenadas, confirmed y confirm_absence. Original automático,
+modificaciones y revisión separados. Estados específicos: detección
+completed/empty/failed; agrupación completed/not_requested/blocked; cálculo
+completed/partial/blocked; revisión not_requested/draft/completed. Una cifra null
+lleva motivo. El estado completed no cierra el hito ni demuestra validez clínica.
+
+Límite DDK 4.000.000 bytes y 15 s, margen respecto al multipart Vercel. El límite
+histórico de vocal (10 MiB) no cambia: sigue siendo superior al límite documentado
+de payload de Vercel (4.5 MB). No se atribuye ese tamaño a la plataforma.
+
+Configuración independiente `configs/ddk_experimental_v1.json`; stdlib Python,
+sin modificar dependencias, algoritmos, scripts Praat ni pruebas previas.
+Protocolo: `docs/protocolo_ddk_6a.md`; evidencia: `docs/verificacion_ddk_6a.md`.
+
+```bash
+python -m pytest tests/test_ddk.py -q
+python -m tests.report_ddk
+npm run test:ui
+python -c 'from tests.synthetic_ddk import signal; from pathlib import Path; Path("/tmp/ddk-clean.wav").write_bytes(signal()[0])'
+# Con la API iniciada:
+npm run test:ddk-browser
+```
+
+DDK_TEST_WAV, DDK_SCREENSHOT y BASE_URL configuran pruebas de navegador.
+No se incorporan personas, grabaciones humanas ni datasets clínicos.
