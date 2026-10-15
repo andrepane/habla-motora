@@ -328,3 +328,21 @@ npm run test:ddk-browser
 
 DDK_TEST_WAV, DDK_SCREENSHOT y BASE_URL configuran pruebas de navegador.
 No se incorporan personas, grabaciones humanas ni datasets clínicos.
+
+## Hito 7A: frase estandarizada
+
+Abrir `/phrase`. Lectura directa (`direct_reading_v1`) como condición principal para lectores funcionales. Frase fija: «La niña corta papel con tijeras y pega las tiras pequeñas sobre la mesa.»; 14 palabras / 25 sílabas canónicas de referencia, sin sinalefas. No son detecciones acústicas. Sin diagnóstico ni validación humana.
+
+Dos intentos independientes, subida WAV o grabación, selección manual por índices de muestra, revisión manual y cuatro tasas separadas. Sin ASR, pausas automáticas, alineación, reconocimiento fonético ni detector silábico. Exporta JSON con WAV originales integrados, revisiones y estados; exportar antes de cerrar la página. No agrega intentos/modalidades. Las variantes auditivas requieren un WAV de modelo explícito identificado por hash.
+
+`GET /phrase-protocol`; `POST /phrase-analysis`: multipart `file`, `context_json`, `review_json` opcional y `expected_file_sha256` obligatorio al revisar. Límite independiente 20 s / 4.000.000 bytes. Revisión ligada al hash del contexto. Protocolo completo y semántica de null/cero/error en `docs/protocolo_frase_7a_v1.md`.
+
+```bash
+python -m pytest tests/test_phrase.py -q
+npm run test:ui
+python -c 'from pathlib import Path; from tests.synthetic_phrase import wav; Path("/tmp/phrase-8s.wav").write_bytes(wav())'
+# Con la API en ejecución:
+npm run test:phrase-browser
+```
+
+La condición principal evita el modelo auditivo inmediato, pero lectura y seguimiento visual siguen siendo factores de confusión pendientes de validación humana. La frase no se presenta como clínicamente validada ni fonéticamente equilibrada. Hito 7B (pausas y velocidad articulatoria) fuera del alcance.

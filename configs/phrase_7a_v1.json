@@ -1,0 +1,23 @@
+{
+  "protocol_version": "phrase_7a_v1",
+  "stimulus": {
+    "id": "phrase_es_01_v1",
+    "language": "es",
+    "text": "La niña corta papel con tijeras y pega las tiras pequeñas sobre la mesa.",
+    "canonical_words": 14,
+    "canonical_syllables": 25,
+    "syllabification": ["La", "ni-ña", "cor-ta", "pa-pel", "con", "ti-je-ras", "y", "pe-ga", "las", "ti-ras", "pe-que-ñas", "so-bre", "la", "me-sa"],
+    "cross_word_synalepha": false,
+    "count_basis": "versioned_stimulus_not_acoustic_detection"
+  },
+  "primary_modality": "direct_reading_v1",
+  "modalities": ["direct_reading_v1", "auditory_model_with_text_v1", "auditory_model_only_v1"],
+  "instruction": "Lee esta frase en voz alta una vez, a tu ritmo habitual, intentando decirla completa y con claridad",
+  "max_duration_s": 20,
+  "max_bytes": 4000000,
+  "sample_rates": [44100, 48000],
+  "pcm_bits": [16, 24, 32],
+  "attempts": 2,
+  "rest_s": 20,
+  "human_validation": "pending"
+}

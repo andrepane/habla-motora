@@ -102,6 +102,8 @@ jobs:
           python -c 'from tests.synthetic_ddk import signal; from pathlib import Path; Path("ddk-clean.wav").write_bytes(signal()[0])'
           DDK_TEST_WAV="$PWD/ddk-clean.wav" DDK_SCREENSHOT="$PWD/ddk-interface.png" npm run test:ddk-browser
           TEST_WAV="$PWD/tone-6s.wav" SCREENSHOT="$PWD/vowel-interface.png" npm run test:browser
+          python -c 'from tests.synthetic_phrase import wav; from pathlib import Path; Path("phrase-8s.wav").write_bytes(wav())'
+          PHRASE_TEST_WAV="$PWD/phrase-8s.wav" PHRASE_SCREENSHOT="$PWD/phrase-interface.png" npm run test:phrase-browser
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -126,3 +128,4 @@ jobs:
             vowel-interface.png
             ddk-interface.png
             ddk-characterization.json
+            phrase-interface.png
