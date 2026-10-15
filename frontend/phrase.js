@@ -107,6 +107,8 @@ for (let id = 1; id <= 2; id++) {
       });
       s.invalidate(field, changeFields.has(field));
       if (field === "modality") {
+        q(".modelAudio").pause();
+        q(".modelAudio").currentTime = 0;
         s.modelPlayed = false;
         modality();
       }
@@ -241,6 +243,10 @@ for (let id = 1; id <= 2; id++) {
     if (get("modality").value !== "direct_reading_v1" && !s.modelPlayed) {
       q(".captureState").textContent = "Escucha primero el modelo completo.";
       return;
+    }
+    for (const slot of slots) {
+      slot.q(".audio").pause();
+      slot.q(".modelAudio").pause();
     }
     s.invalidate("recording", true);
     s.recording = true;
@@ -484,6 +490,8 @@ for (let i = 1; i <= 2; i++)
     if (busy) return;
     active = i;
     for (const s of slots) {
+      s.q(".audio").pause();
+      s.q(".modelAudio").pause();
       s.section.hidden = s.id !== i;
       $(`tab${s.id}`).setAttribute("aria-pressed", String(s.id === i));
     }

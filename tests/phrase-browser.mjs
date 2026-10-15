@@ -143,7 +143,12 @@ try {
   a = await audit();
   check(a.response.context.modality === "auditory_model_only_v1");
   check(a.response.context.administration.model_sha256 === hash(bytes));
+  await click("playModel");
+  await page.waitForFunction(
+    () => !document.querySelector("#attempt1 .modelAudio").paused,
+  );
   await field("modality").selectOption("direct_reading_v1");
+  check(await card.locator(".modelAudio").evaluate((el) => el.paused));
   check(await card.locator(".stimulus").isVisible());
   // Zero and absence: zero count, null rate, positive observation duration.
   await analyze();
