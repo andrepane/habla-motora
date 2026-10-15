@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-14",
+  "base_commit": "af1648ca6b1adeee18f2823e5627ebf76a17d947",
+  "runtime": {
+    "python": "3.12",
+    "praat": "6.4.27",
+    "praat_archive_sha256": "6f60fba398f7490881a569b874a1c66ca026e1f748946d50a6017941c4137f7e",
+    "execution": "host, not Docker"
+  },
+  "pytest": {
+    "collected": 368,
+    "specific_v2_cases": 52,
+    "distribution": "All collected node IDs partitioned by index modulo 6; no tests omitted.",
+    "initial_groups": [
+      {
+        "passed": 59,
+        "xfailed": 2,
+        "timeout_errors": 1,
+        "timeout_failures": 0
+      },
+      {
+        "passed": 60,
+        "xfailed": 1,
+        "timeout_errors": 1,
+        "timeout_failures": 0
+      },
+      {
+        "passed": 59,
+        "xfailed": 0,
+        "timeout_errors": 1,
+        "timeout_failures": 1
+      },
+      {
+        "passed": 60,
+        "xfailed": 0,
+        "timeout_errors": 1,
+        "timeout_failures": 0
+      },
+      {
+        "passed": 59,
+        "xfailed": 1,
+        "timeout_errors": 1,
+        "timeout_failures": 0
+      },
+      {
+        "passed": 58,
+        "xfailed": 2,
+        "timeout_errors": 1,
+        "timeout_failures": 0
+      }
+    ],
+    "initial_passed": 355,
+    "expected_xfailed": 6,
+    "initial_praat_timeout_tests": 7,
+    "sequential_retry_passed": 7,
+    "final_unique_passed": 362,
+    "unresolved_failures": 0,
+    "timeout_s_unchanged": 15,
+    "retry_command": "PRAAT_EXECUTABLE=<Praat-6.4.27> OMP_NUM_THREADS=1 python -m pytest -q tests/test_hnr.py::test_known_component_snr_construction tests/test_hnr.py::test_twenty_seed_noise_trend_fixed_target 'tests/test_hnr.py::test_separate_native_script_integration[noise_only-None]'",
+    "note": "The parallel pass was not green: seven Praat timeouts are preserved in logs. Every affected test passed in the sequential retry without algorithm/configuration/timeout changes. The six strict xfails remain expected."
+  },
+  "frontend": {
+    "command": "npm run test:ui",
+    "passed": 19,
+    "browser_and_docker_rerun": false,
+    "note": "No frontend/API changes."
+  },
+  "comparison": {
+    "compound_conditions_recovered": 2592,
+    "compound_sample_reexecuted_exact": 36,
+    "sample_seed": 20261014,
+    "characterization_reexecuted_exact": 14,
+    "clean_matrix_conditions": 36,
+    "clean_reference_events": 882,
+    "human_v1_exact_original_response": true,
+    "human_file_sha256": "b37f84e8278dea2074629e8b05fb169770710b5109e0e7a8cfc6221e775fa714"
+  },
+  "publication": {
+    "pull_request_opened": false,
+    "v2_activated_in_api_or_frontend": false
+  },
+  "test_log_sha256": [
+    "3215c0911dec439f01f914ea052682807eabd2009b5e75c1d8053a4af9ba8ec4",
+    "f5d3511046b30c2216682f5210305cc17f3fa59ec7fdc504fbc0f810cd594cba",
+    "67643db150dac7b63acce4f4a347c23f22bac3a2bcd160c13f45b03408e5dd29",
+    "9a201b62ecf059884cd36afae62ba08f21d0d27a3eec3ae75943129a36d07c94",
+    "da0b9c0ed43d737b386fd7e7715e0e43387d308c49fc42d3706d59c807124eea",
+    "806a9fd8281e2ffa95f24675b70a846e494441b98b965676b0c9c51c4ea6ee3b",
+    "9ad7a4809417914a63b7bff9426775e9d0e028dba598195db8b367515d992587"
+  ]
+}
