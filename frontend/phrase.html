@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Frase estandarizada · 7A</title>
+    <link rel="stylesheet" href="/static/phrase.css" />
+  </head>
+  <body>
+    <main>
+      <nav><a href="/">Vocal sostenida</a> · <a href="/ddk">DDK</a></nav>
+      <header>
+        <p class="eyebrow">Batería experimental · Hito 7A</p>
+        <h1>Frase estandarizada</h1>
+        <p>Duración y velocidad global con revisión manual del contenido.</p>
+      </header>
+      <p class="notice">
+        Validación técnica. Validación en habla humana pendiente. Sin
+        diagnóstico ni baremos. La lectura y el seguimiento visual pueden
+        afectar al tiempo medido.
+      </p>
+      <p>
+        Un ensayo de familiarización y dos intentos independientes, con 20
+        segundos de descanso recomendado. Conserva ambos; no elijas
+        automáticamente el más rápido. Los recuentos 14 palabras / 25 sílabas
+        canónicas pertenecen al estímulo, sin sinalefas; no son detecciones
+        acústicas.
+      </p>
+      <div class="tabs" role="group" aria-label="Intento">
+        <button id="tab1" aria-pressed="true">Intento 1</button
+        ><button id="tab2" aria-pressed="false">Intento 2</button>
+      </div>
+      <p id="rest" role="status"></p>
+      <div id="attempts"></div>
+      <button id="exportAll">
+        Exportar batería completa (JSON + WAV originales integrados)
+      </button>
+      <p id="globalStatus" role="status"></p>
+    </main>
+    <script type="module" src="/static/phrase.js"></script>
+  </body>
+</html>

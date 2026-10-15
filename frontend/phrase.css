@@ -1,0 +1,185 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #18333c;
+  background: #edf3f4;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 1080px;
+  margin: auto;
+  padding: 24px;
+}
+a {
+  color: #006875;
+}
+h1 {
+  font-size: 2.3rem;
+  margin: 0.2em 0;
+}
+h2 {
+  font-size: 1.25rem;
+}
+.eyebrow {
+  color: #38646c;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+section,
+fieldset {
+  background: white;
+  border: 1px solid #cfdee1;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 18px 0;
+  min-width: 0;
+}
+fieldset legend {
+  font-weight: 650;
+  padding: 0 6px;
+}
+.notice {
+  padding: 16px;
+  background: #fff4d6;
+  border-left: 4px solid #bd841a;
+  border-radius: 6px;
+}
+.stimulus {
+  font-size: 1.55rem;
+  line-height: 1.65;
+  background: #edf7f7;
+  padding: 20px;
+  border-radius: 8px;
+}
+label {
+  display: block;
+  margin: 12px 0;
+}
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+input[type="number"] {
+  width: 180px;
+  max-width: 100%;
+}
+input,
+select,
+textarea {
+  padding: 9px;
+  border: 1px solid #91aab0;
+  border-radius: 5px;
+}
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+button {
+  padding: 10px 16px;
+  background: #086b76;
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 4px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button[aria-pressed="true"] {
+  outline: 3px solid #c18e39;
+}
+audio {
+  width: 100%;
+  margin: 12px 0;
+}
+svg {
+  width: 100%;
+  height: 180px;
+  background: #f2f7f8;
+  touch-action: none;
+  cursor: crosshair;
+  border: 1px solid #cfdee1;
+}
+textarea {
+  width: 100%;
+  min-height: 80px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.metric {
+  padding: 16px;
+  border-radius: 8px;
+  background: #eff6f6;
+  overflow-wrap: anywhere;
+}
+.metric strong {
+  display: block;
+  font-size: 1.3rem;
+}
+.metric small {
+  display: block;
+}
+.state {
+  padding: 12px;
+  background: #edf3f4;
+  overflow-wrap: anywhere;
+}
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  max-height: 350px;
+  overflow: auto;
+}
+[hidden] {
+  display: none !important;
+}
+.error {
+  color: #a82020;
+}
+small {
+  line-height: 1.5;
+}
+nav {
+  margin-bottom: 18px;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 12px;
+  }
+  section,
+  fieldset {
+    padding: 12px;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  .stimulus {
+    font-size: 1.2rem;
+  }
+}
+input,
+select,
+button,
+audio {
+  max-width: 100%;
+}
+input[type="file"] {
+  width: 100%;
+}
+p,
+small {
+  overflow-wrap: anywhere;
+}

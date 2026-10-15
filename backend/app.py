@@ -156,3 +156,8 @@ async def ddk_analysis(file: UploadFile = File(...), emission_start_s: float = F
         raise HTTPException(422, str(exc)) from exc
     except Exception as exc:
         raise HTTPException(503, 'El motor DDK no pudo completar la solicitud.') from exc
+
+
+# Independent phrase 7A module: no changes to vowel or DDK handlers.
+from backend.phrase_routes import router as phrase_router
+app.include_router(phrase_router)
