@@ -31,7 +31,7 @@ Subida: WAV PCM mono 16/24/32, 44.100/48.000 Hz; máximo 20 s y 4.000.000 bytes.
 
 Interfaz `/phrase`, metadatos `/phrase-protocol`, endpoint independiente `POST /phrase-analysis`.
 
-Selección manual de toda la producción, primera a última emisión; incluye errores, pausas, fragmentos y reinicios interiores. No hay ventana central de 3 s ni selección por F0. Arrastre de onda, índices enteros o cursor del reproductor. Autoridad: intervalo `[start_sample,end_sample_exclusive)`, con 0 ≤ inicio < fin ≤ número de muestras. Los límites deben confirmarse; la selección completa por defecto no equivale a selección confirmada.
+Selección manual de toda la producción, primera a última emisión; incluye errores, pausas, fragmentos y reinicios interiores. No hay ventana central de 3 s ni selección por F0. Arrastre de onda, ampliación de la selección, vista de WAV completo, índices enteros o cursor del reproductor. Ampliar solo cambia la vista, no los límites ni las tasas; un campo de límite vacío se rechaza, no se convierte en cero. Autoridad: intervalo `[start_sample,end_sample_exclusive)`, con 0 ≤ inicio < fin ≤ número de muestras. Los límites deben confirmarse; la selección completa por defecto no equivale a selección confirmada.
 
 Coincidencia manual: `pending`, `exact_once`, `different`, `uncertain`. `exact_once` exige la secuencia textual completa una vez, sin omisiones, añadidos, sustituciones, fragmentos extra ni reinicios; no exige imitar el acento ni constituye un análisis fonético. Mismos recuentos con secuencia distinta no habilitan tasas de referencia. La interfaz no transcribe ni reconoce el contenido.
 

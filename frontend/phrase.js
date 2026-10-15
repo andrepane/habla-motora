@@ -35,7 +35,7 @@ for (let id = 1; id <= 2; id++) {
  <p class="instruction"></p><p class="stimulus"></p>
  <fieldset class="model" hidden><legend>Modelo auditivo identificado</legend><p>Variante separada. Aporta el mismo WAV de modelo en todos los intentos comparables. Su hash identifica el modelo; no se sintetiza ni se cambia su velocidad.</p><label>WAV del modelo <input data-f="model" type="file" accept=".wav,audio/wav"></label><audio class="modelAudio" controls></audio><button class="playModel">Escuchar modelo completo</button><p class="modelState">Modelo pendiente.</p></fieldset>
  <fieldset><legend>Grabación o subida del intento</legend><label>WAV original <input data-f="file" type="file" accept=".wav,audio/wav"></label><button class="record">Grabar</button><button class="stop" disabled>Detener</button><button class="cancel" disabled>Cancelar grabación</button><p class="captureState" role="status"></p><audio class="audio" controls></audio><button class="original" disabled>Descargar WAV original</button><label><input data-f="limit" type="checkbox"> La grabación se interrumpió por alcanzar el límite</label></fieldset>
- <fieldset><legend>Selección manual [inicio, fin)</legend><p>Arrastra sobre la onda o introduce índices de muestra. Incluye pausas, repeticiones y reinicios interiores.</p><svg class="wave" viewBox="0 0 800 180" aria-label="Forma de onda y selección manual"></svg><div class="grid"><label>Muestra inicial <input data-f="start" type="number" min="0" step="1"></label><label>Fin exclusivo <input data-f="end" type="number" min="1" step="1"></label></div><p class="times"></p><button class="markStart">Inicio en cursor de audio</button><button class="markEnd">Fin en cursor de audio</button><button class="playSelection">Escuchar selección</button><label><input data-f="selectionConfirmed" type="checkbox"> Confirmo que los límites incluyen toda la producción que quiero analizar</label><button class="analyze">Validar selección y obtener contexto</button></fieldset>
+ <fieldset><legend>Selección manual [inicio, fin)</legend><p>Arrastra sobre la onda o introduce índices de muestra. Incluye pausas, repeticiones y reinicios interiores.</p><svg class="wave" viewBox="0 0 800 180" aria-label="Forma de onda y selección manual"></svg><div class="grid"><label>Muestra inicial <input data-f="start" type="number" min="0" step="1"></label><label>Fin exclusivo <input data-f="end" type="number" min="1" step="1"></label></div><p class="times"></p><button class="zoomSelection">Ampliar selección</button><button class="zoomReset">Ver WAV completo</button><button class="markStart">Inicio en cursor de audio</button><button class="markEnd">Fin en cursor de audio</button><button class="playSelection">Escuchar selección</button><label><input data-f="selectionConfirmed" type="checkbox"> Confirmo que los límites incluyen toda la producción que quiero analizar</label><button class="analyze">Validar selección y obtener contexto</button></fieldset>
  <fieldset class="review"><legend>Revisión manual independiente</legend><label>Producción <select data-f="production"><option value="pending">Pendiente</option><option value="present">Hay producción</option><option value="absent">Ausencia confirmada</option></select></label><label>Coincidencia textual <select data-f="match"><option value="pending">Pendiente</option><option value="exact_once">Objetivo completo exactamente una vez</option><option value="different">Diferente del objetivo</option><option value="uncertain">Dudosa</option></select></label><div class="grid"><label>Palabras realmente producidas <input data-f="words" type="number" min="0" step="1" placeholder="Sin recuento"></label><label>Sílabas realmente producidas <input data-f="syllables" type="number" min="0" step="1" placeholder="Sin recuento"></label></div><label><input data-f="wordsConfirmed" type="checkbox"> Confirmo exclusivamente el recuento de palabras</label><label><input data-f="syllablesConfirmed" type="checkbox"> Confirmo exclusivamente el recuento de sílabas</label><p>Cuenta palabras completas, incluidas repeticiones. Los fragmentos no son fracciones de palabra; sus sílabas identificables sí pueden contarse manualmente. «pa-pa-papel»: 1 palabra completa y 4 sílabas. No se copian los recuentos del objetivo.</p><label>Acontecimientos: una línea por tipo y nota (tipo: nota)<textarea data-f="events" placeholder="omission: pequeñas&#10;repetition: papel&#10;substitution: ...&#10;fragment: ...&#10;restart: ..."></textarea></label><p>Tipos: omission, repetition, substitution, fragment, restart, addition, filled_pause, uncertain.</p><label>Notas o transcripción manual <textarea data-f="notes"></textarea></label><label><input data-f="reviewConfirmed" type="checkbox"> Confirmo esta revisión; cada recuento conserva su propia confirmación</label><button class="submitReview">Calcular con revisión manual</button></fieldset>
  <p class="state" role="status">Sin archivo.</p><div class="grid results"></div><details><summary>Auditoría completa de este intento</summary><pre class="audit"></pre></details>`;
   $("attempts").append(section);
@@ -138,6 +138,8 @@ for (let id = 1; id <= 2; id++) {
       s.file = file;
       s.buffer = buffer;
       s.wav = wav;
+      s.viewStart = 0;
+      s.viewEnd = wav.samples.length;
       s.url = URL.createObjectURL(file);
       q(".audio").src = s.url;
       q(".original").disabled = false;
@@ -267,6 +269,28 @@ for (let id = 1; id <= 2; id++) {
   q(".original").onclick = () => {
     if (s.file) download(s.file, `frase-intento-${id}.wav`);
   };
+  q(".zoomSelection").onclick = () => {
+    if (!s.wav) return;
+    const a = Number(get("start").value),
+      b = Number(get("end").value);
+    if (
+      Number.isInteger(a) &&
+      Number.isInteger(b) &&
+      a >= 0 &&
+      a < b &&
+      b <= s.wav.samples.length
+    ) {
+      s.viewStart = a;
+      s.viewEnd = b;
+      draw(s);
+    }
+  };
+  q(".zoomReset").onclick = () => {
+    if (!s.wav) return;
+    s.viewStart = 0;
+    s.viewEnd = s.wav.samples.length;
+    draw(s);
+  };
   q(".markStart").onclick = () => {
     if (s.wav) {
       get("start").value = Math.round(q(".audio").currentTime * s.wav.rate);
@@ -307,8 +331,8 @@ for (let id = 1; id <= 2; id++) {
   q(".wave").onpointerup = (e) => {
     if (down === null) return;
     const end = sampleAt(e, s);
-    get("start").value = Math.min(down, end);
-    get("end").value = Math.max(down + 1, end);
+    get("start").value = Math.min(s.wav.samples.length - 1, down, end);
+    get("end").value = Math.min(s.wav.samples.length, Math.max(down + 1, end));
     down = null;
     s.invalidate("selection", true);
     draw(s);
@@ -322,20 +346,26 @@ function sampleAt(e, s) {
     0,
     Math.min(
       s.wav.samples.length,
-      Math.round(((e.clientX - rect.left) / rect.width) * s.wav.samples.length),
+      Math.round(
+        s.viewStart +
+          ((e.clientX - rect.left) / rect.width) * (s.viewEnd - s.viewStart),
+      ),
     ),
   );
 }
 function draw(s) {
   if (!s.wav) return;
   const points = [];
-  const n = s.wav.samples.length;
+  const n = s.viewEnd - s.viewStart;
+  const offset = s.viewStart;
+  s.q(".wave").dataset.startSample = String(s.viewStart);
+  s.q(".wave").dataset.endSample = String(s.viewEnd);
   for (let x = 0; x < 800; x++) {
     let low = 0,
       high = 0;
     for (
-      let j = Math.floor((x * n) / 800);
-      j < Math.floor(((x + 1) * n) / 800);
+      let j = offset + Math.floor((x * n) / 800);
+      j < offset + Math.floor(((x + 1) * n) / 800);
       j++
     ) {
       low = Math.min(low, s.wav.samples[j]);
@@ -346,7 +376,7 @@ function draw(s) {
   const a = Number(s.get("start").value),
     b = Number(s.get("end").value);
   s.q(".wave").innerHTML =
-    `<rect x="${(a / n) * 800}" y="0" width="${Math.max(0, ((b - a) / n) * 800)}" height="180" fill="#d3eceb"/><path d="${points.join(" ")}" stroke="#176876" stroke-width="1"/>`;
+    `<rect x="${((a - offset) / n) * 800}" y="0" width="${Math.max(0, ((b - a) / n) * 800)}" height="180" fill="#d3eceb"/><path d="${points.join(" ")}" stroke="#176876" stroke-width="1"/>`;
   s.q(".times").textContent =
     `${s.wav.rate} Hz · [${a}, ${b}) muestras · ${(a / s.wav.rate).toFixed(6)}–${(b / s.wav.rate).toFixed(6)} s · Duración: ${((b - a) / s.wav.rate).toFixed(6)} s`;
 }
@@ -357,8 +387,10 @@ function context(s) {
     modality: mode,
     attempt: s.id,
     selection: {
-      start_sample: Number(s.get("start").value),
-      end_sample_exclusive: Number(s.get("end").value),
+      start_sample:
+        s.get("start").value === "" ? null : Number(s.get("start").value),
+      end_sample_exclusive:
+        s.get("end").value === "" ? null : Number(s.get("end").value),
     },
     selection_confirmed: s.get("selectionConfirmed").checked,
     recording_limit_reached: s.get("limit").checked,

@@ -101,6 +101,27 @@ try {
   await submit();
   a = await audit();
   check(a.response.stages.calculation.status === "completed");
+  await field("start").fill("48000");
+  await field("end").fill("96000");
+  await click("zoomSelection");
+  check(
+    (await card.locator(".wave").getAttribute("data-start-sample")) === "48000",
+  );
+  check(
+    (await card.locator(".wave").getAttribute("data-end-sample")) === "96000",
+  );
+  await click("zoomReset");
+  check(
+    (await card.locator(".wave").getAttribute("data-end-sample")) === "384000",
+  );
+  await field("start").fill("0");
+  await field("end").fill("384000");
+  await analyze();
+  await field("production").selectOption("present");
+  await field("words").fill("14");
+  await field("wordsConfirmed").check();
+  await field("syllables").fill("25");
+  await field("syllablesConfirmed").check();
   // Same counts but different sequence: manual mismatch gates references only.
   await field("match").selectOption("different");
   await field("events").fill("substitution: secuencia diferente");
@@ -188,6 +209,11 @@ try {
   check(hash(fs.readFileSync(await (await wd).path())) === hash(bytes));
   // Limits invalidate and redraw; HTTP failure is distinct from null or zero.
   await field("end").fill("0");
+  await click("analyze");
+  await card.locator(".state").filter({ hasText: "Error:" }).waitFor();
+  check((await card.locator(".results .metric").count()) === 0);
+  await field("end").fill("384000");
+  await field("start").fill("");
   await click("analyze");
   await card.locator(".state").filter({ hasText: "Error:" }).waitFor();
   check((await card.locator(".results .metric").count()) === 0);
