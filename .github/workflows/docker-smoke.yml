@@ -11,12 +11,14 @@ on:
       - 'praat/**'
       - 'configs/**'
       - 'tests/**'
+      - 'research/**'
       - '.github/workflows/docker-smoke.yml'
   pull_request:
     paths:
       - 'backend/**'
       - 'frontend/**'
       - 'tests/**'
+      - 'research/**'
       - 'Dockerfile'
       - 'configs/**'
       - 'praat/**'

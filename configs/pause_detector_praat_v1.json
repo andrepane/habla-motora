@@ -1,0 +1,10 @@
+{
+  "detector_version": "pause_detector_praat_comparator_v1",
+  "praat_version": "6.4.27",
+  "pitch_floor_hz": 100,
+  "time_step_s": 0.005,
+  "silence_threshold_db": -18,
+  "minimum_silent_s": 0.08,
+  "minimum_sounding_s": 1e-06,
+  "reference_truth": false
+}
