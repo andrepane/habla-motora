@@ -1,0 +1,8 @@
+{
+  "protocol_version": "phrase_pause_review_v1",
+  "minimum_pause_ms": 250,
+  "classification": ["pause", "below_threshold", "consonantal_closure", "uncertain", "other_nonverbal"],
+  "human_validation": "pending",
+  "automatic_candidates": false,
+  "filled_pauses_fragments_restarts": "retained_in_time_and_reviewed_counts"
+}

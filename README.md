@@ -346,3 +346,11 @@ npm run test:phrase-browser
 ```
 
 La condición principal evita el modelo auditivo inmediato, pero lectura y seguimiento visual siguen siendo factores de confusión pendientes de validación humana. La frase no se presenta como clínicamente validada ni fonéticamente equilibrada. Hito 7B (pausas y velocidad articulatoria) fuera del alcance.
+
+## Hito 7B.1 — pausas revisadas
+
+Panel manual adicional en `/phrase`, sobre el mismo WAV/selección/revisión de 7A; no cambia sus cálculos. Umbral operacional fijo de 250 ms, sin detector. Revisión global obligatoria: incertidumbre intrapalabra o interferencia no verbal bloquean todas las métricas globales. Tiempo residual y tasas articulatorias operacionales con recuentos manuales independientes, auditoría e historial/exportación por intento. No es articulación pura ni validación clínica; 7B.2 separado.
+
+Protocolo: [docs/protocolo_frase_7b1_v1.md](docs/protocolo_frase_7b1_v1.md).
+API: `GET /phrase-pause-protocol`, `POST /phrase-pause-analysis`.
+Pruebas: `python -m pytest tests/test_phrase_pauses.py -q`, `npm run test:ui`, `npm run test:phrase-pauses-browser` (API local, `PHRASE_TEST_WAV` PCM sintético de 8 s).

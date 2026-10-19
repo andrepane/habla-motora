@@ -161,3 +161,7 @@ async def ddk_analysis(file: UploadFile = File(...), emission_start_s: float = F
 # Independent phrase 7A module: no changes to vowel or DDK handlers.
 from backend.phrase_routes import router as phrase_router
 app.include_router(phrase_router)
+
+# 7B.1 is additive; 7A calculations and existing acoustic handlers stay unchanged.
+from backend.phrase_pause_routes import router as phrase_pause_router
+app.include_router(phrase_pause_router)

@@ -1,3 +1,4 @@
+import { mountPauses } from "./phrase-pauses.js";
 import { parseWav, metricText } from "./audio.js";
 import { PhraseRecorder } from "./phrase-recorder.js";
 import { AttemptState, parseEvents, changeFields } from "./phrase-state.js";
@@ -72,6 +73,7 @@ for (let id = 1; id <= 2; id++) {
   };
   s.invalidate = (reason, context = true) => {
     s.request?.abort();
+    s.pauses?.invalidate(`7A:${reason}`, true);
     s.state.invalidate(reason, context);
     if (context) {
       resetReview();
@@ -331,6 +333,11 @@ for (let id = 1; id <= 2; id++) {
   q(".wave").onpointerup = (e) => {
     if (down === null) return;
     const end = sampleAt(e, s);
+    if (s.pauses.editing) {
+      s.pauses.drag(down, end);
+      down = null;
+      return;
+    }
     get("start").value = Math.min(s.wav.samples.length - 1, down, end);
     get("end").value = Math.min(s.wav.samples.length, Math.max(down + 1, end));
     down = null;
@@ -339,6 +346,7 @@ for (let id = 1; id <= 2; id++) {
   };
   q(".analyze").onclick = () => send(s, false);
   q(".submitReview").onclick = () => send(s, true);
+  s.pauses = mountPauses(s, draw);
 }
 function sampleAt(e, s) {
   const rect = s.q(".wave").getBoundingClientRect();
@@ -379,6 +387,7 @@ function draw(s) {
     `<rect x="${((a - offset) / n) * 800}" y="0" width="${Math.max(0, ((b - a) / n) * 800)}" height="180" fill="#d3eceb"/><path d="${points.join(" ")}" stroke="#176876" stroke-width="1"/>`;
   s.q(".times").textContent =
     `${s.wav.rate} Hz · [${a}, ${b}) muestras · ${(a / s.wav.rate).toFixed(6)}–${(b / s.wav.rate).toFixed(6)} s · Duración: ${((b - a) / s.wav.rate).toFixed(6)} s`;
+  s.pauses?.overlay();
 }
 function context(s) {
   const mode = s.get("modality").value;
@@ -461,12 +470,14 @@ async function send(s, reviewed) {
       s.q(".state").textContent = `Error: ${e.message}`;
       s.q(".results").replaceChildren();
       s.state.result = null;
+      s.pauses.invalidate("7A:error", true);
       s.state.history.push({ event: "error", message: e.message, revision });
       audit(s);
     }
   }
 }
 function render(s, r) {
+  s.pauses.sourceUpdated();
   s.q(".state").textContent =
     `Selección: ${r.stages.selection.status} · Revisión: ${r.stages.review.status} · Cálculo: ${r.stages.calculation.status}`;
   s.q(".results").replaceChildren();
@@ -557,6 +568,7 @@ $("exportAll").onclick = () => {
       context_response: s.state.contextResult,
       history: s.state.history,
       results_current: !!s.state.result,
+      pause_review_7b1: s.pauses.exported(),
     })),
     aggregation: null,
   };
