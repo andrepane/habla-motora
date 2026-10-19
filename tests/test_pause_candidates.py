@@ -124,3 +124,36 @@ def test_manifests_disjoint_balanced_and_reference_durations_actual_samples():
 def test_blocked_runner_requires_frozen_gate(tmp_path):
     from research.pause_candidates.run_bank import run
     with pytest.raises(ValueError,match='frozen gate'):run('blocked',tmp_path)
+
+
+def test_B_path_is_live_and_does_not_classify_or_replace_manual(monkeypatch):
+    from research.pause_candidates import engine
+    data,sel,_=generate(case(family='no_pause'))
+    def controlled(x,rate,a,b,c,multi):
+        centers=np.arange(a,b,round(rate*.005));n=len(centers)
+        f=dict(center_sample=centers,level_dbfs=np.full(n,-20.),window_complete=np.ones(n,dtype=bool))
+        if multi:f.update(periodicity=np.full(n,.1),flatness=np.full(n,.8),spectral_flux=np.full(n,.05))
+        return f
+    monkeypatch.setattr(engine,'feature_frames',controlled)
+    assert engine.detect(data,sel,'fixture','energy')['automatic_candidates']==[]
+    out=engine.detect(data,sel,'fixture','multifeature')
+    assert len(out['automatic_candidates'])==1
+    assert out['automatic_candidates'][0]['proposal_reasons']==['B_aperiodic_spectral_stability']
+    assert out['automatic_candidates'][0]['status']=='unreviewed'
+    assert out['manual_final_result'] is None
+
+
+def test_freeze_rejects_incomplete_or_blocked_and_matches_sensitivity(tmp_path):
+    from research.pause_candidates.freeze_gate import freeze
+    from research.pause_candidates.bank import FAMILIES
+    path=tmp_path/'development.json';out=tmp_path/'gate.json'
+    path.write_text(json.dumps({'split':'blocked','limited_run':False,'wav_cases':3264}))
+    with pytest.raises(ValueError):freeze(path,out)
+    groups={}
+    for f in FAMILIES:
+        for v,recall,fp in [('energy',1.,15.),('multifeature',1.,30.),('praat',.1,0.)]:
+            groups[f'family/{f}/{v}']={'region_metrics':{'recall':recall},'pause_proxy_metrics':{'false_candidates_per_minute_distribution':{'p95':fp}}}
+    path.write_text(json.dumps(dict(split='development',limited_run=False,wav_cases=3264,runtime={'numpy':'2.3.5','python':'3.12.14'},manifest_sha256='development',groups=groups)))
+    freeze(path,out);gate=json.loads(out.read_text())
+    assert all(c['maximum_blocked_p95_false_candidates_per_minute']==15 for c in gate['family_burden_caps'].values())
+    assert all(c['sensitivity_matched_pool']==['energy','multifeature'] for c in gate['family_burden_caps'].values())

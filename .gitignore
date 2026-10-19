@@ -8,3 +8,6 @@ __pycache__/
 results/
 
 node_modules/
+
+# Reproducible bank summaries are versioned compressed; raw JSON is generated locally.
+reports/pause_candidates/*-summary.json

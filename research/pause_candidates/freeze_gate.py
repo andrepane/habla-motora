@@ -16,8 +16,12 @@ def freeze(development_path,output):
     for family in FAMILIES:
         values={v:dev['groups'][f'family/{family}/{v}']['pause_proxy_metrics']['false_candidates_per_minute_distribution']['p95'] for v in ['energy','multifeature','praat']}
         if any(x is None for x in values.values()):raise ValueError('Missing false-candidate distribution')
-        caps[family]={'maximum_blocked_p95_false_candidates_per_minute':min(values.values()),'development_p95_by_variant':values,
-            'derivation':'minimum observed development family P95 across all three comparators; no universal burden limit'}
+        recalls={v:dev['groups'][f'family/{family}/{v}']['region_metrics']['recall'] for v in ['energy','multifeature','praat']}
+        available=[v for v in recalls.values() if v is not None]
+        best=max(available) if available else None
+        pool=[v for v,r in recalls.items() if best is None or r is not None and abs(r-best)<1e-12]
+        caps[family]={'maximum_blocked_p95_false_candidates_per_minute':min(values[v] for v in pool),'development_p95_by_variant':values,'development_region_recall_by_variant':recalls,'sensitivity_matched_pool':pool,
+            'derivation':'minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit'}
     gate=dict(schema_version='pause_candidate_acceptance_gate_v1',state='frozen_before_blocked',created_utc=datetime.now(timezone.utc).isoformat(),
         runtime=dev['runtime'],development_summary_sha256=digest(raw),development_manifest_sha256=dev['manifest_sha256'],blocked_manifest_sha256=manifest_digest('blocked'),
         evaluation_code_sha256=evaluation_digest(),freeze_code_sha256=digest(Path(__file__).read_bytes()),
@@ -30,7 +34,7 @@ def freeze(development_path,output):
         caution='Synthetic engineering criteria only. Caps may be stringent and do not validate reviewer time savings; no human parameters/results.')
     gate['detector_config_sha256']['praat']=digest((Path(__file__).parents[2]/'configs/pause_detector_praat_v1.json').read_bytes())
     Path(output).write_text(json.dumps(gate,indent=2,allow_nan=False)+'\n')
-    print(json.dumps({'gate_sha256':digest(Path(output).read_bytes()),'caps':{k:v['maximum_blocked_p95_false_candidates_per_minute'] for k,v in caps.items()}))
+    print(json.dumps({'gate_sha256':digest(Path(output).read_bytes()),'caps':{k:v['maximum_blocked_p95_false_candidates_per_minute'] for k,v in caps.items()}}))
 
 
 if __name__=='__main__':

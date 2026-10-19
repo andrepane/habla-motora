@@ -1,0 +1,26 @@
+{
+  "energy": {
+    "elapsed_s": 0.41768577399989226,
+    "status": "completed",
+    "candidates": 1,
+    "wav_sha256": "b492ad78fb401f47fb1a1c1fddc078189671e31890e1f6f6325af781e23ca267",
+    "byte_count": 3840044,
+    "purpose": "20s technical smoke under concurrent development load; not isolated performance acceptance"
+  },
+  "multifeature": {
+    "elapsed_s": 2.020021333999921,
+    "status": "completed",
+    "candidates": 1,
+    "wav_sha256": "b492ad78fb401f47fb1a1c1fddc078189671e31890e1f6f6325af781e23ca267",
+    "byte_count": 3840044,
+    "purpose": "20s technical smoke under concurrent development load; not isolated performance acceptance"
+  },
+  "praat": {
+    "elapsed_s": 0.9368368380000902,
+    "status": "completed",
+    "candidates": 1,
+    "wav_sha256": "b492ad78fb401f47fb1a1c1fddc078189671e31890e1f6f6325af781e23ca267",
+    "byte_count": 3840044,
+    "purpose": "20s technical smoke under concurrent development load; not isolated performance acceptance"
+  }
+}
