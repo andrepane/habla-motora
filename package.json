@@ -2,10 +2,11 @@
   "name": "habla-motora-ui-tests",
   "private": true,
   "scripts": {
-    "test:ui": "node --test tests/frontend.test.mjs tests/recording.test.mjs tests/ddk-recorder.test.mjs tests/phrase-state.test.mjs tests/phrase-recorder.test.mjs",
+    "test:ui": "node --test tests/frontend.test.mjs tests/recording.test.mjs tests/ddk-recorder.test.mjs tests/phrase-state.test.mjs tests/phrase-recorder.test.mjs tests/phrase-pauses.test.mjs",
     "test:browser": "node tests/browser.mjs",
     "test:ddk-browser": "node tests/ddk-browser.mjs",
-    "test:phrase-browser": "node tests/phrase-browser.mjs"
+    "test:phrase-browser": "node tests/phrase-browser.mjs",
+    "test:phrase-pauses-browser": "node tests/phrase-pauses-browser.mjs"
   },
   "devDependencies": {
     "playwright": "1.51.1"
