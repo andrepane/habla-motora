@@ -165,3 +165,7 @@ app.include_router(phrase_router)
 # 7B.1 is additive; 7A calculations and existing acoustic handlers stay unchanged.
 from backend.phrase_pause_routes import router as phrase_pause_router
 app.include_router(phrase_pause_router)
+
+# Optional experimental proposals; manual 7B.1 remains the sole metric source.
+from backend.phrase_candidate_routes import router as phrase_candidate_router
+app.include_router(phrase_candidate_router)

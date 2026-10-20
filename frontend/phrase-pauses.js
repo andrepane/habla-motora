@@ -434,6 +434,15 @@ export function mountPauses(s, redraw) {
   };
   audit();
   return {
+    copyUncertain(bounds) {
+      const id = `p${nextId++}`;
+      state.intervals.push({id, ...bounds, classification: "uncertain",
+        breath_present: "uncertain", within_word: false,
+        nonarticulatory_confirmed: false, note: ""});
+      edit("candidate_copied_uncertain");
+      rows();
+      return id;
+    },
     invalidate,
     sourceUpdated() {
       const current = dependencies(s.state.result);

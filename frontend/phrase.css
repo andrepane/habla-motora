@@ -183,3 +183,18 @@ p,
 small {
   overflow-wrap: anywhere;
 }
+
+.candidatePanel {
+  border: 2px dashed #197c82;
+}
+.candidatePanel pre {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.candidatePanel input {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.candidatePanel legend {
+  overflow-wrap: anywhere;
+}

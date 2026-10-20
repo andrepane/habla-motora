@@ -1,3 +1,4 @@
+import { mountCandidates } from "./phrase-candidates.js";
 import { mountPauses } from "./phrase-pauses.js";
 import { parseWav, metricText } from "./audio.js";
 import { PhraseRecorder } from "./phrase-recorder.js";
@@ -73,6 +74,7 @@ for (let id = 1; id <= 2; id++) {
   };
   s.invalidate = (reason, context = true) => {
     s.request?.abort();
+    if (context) s.candidates?.invalidate(`7A:${reason}`);
     s.pauses?.invalidate(`7A:${reason}`, true);
     s.state.invalidate(reason, context);
     if (context) {
@@ -347,6 +349,7 @@ for (let id = 1; id <= 2; id++) {
   q(".analyze").onclick = () => send(s, false);
   q(".submitReview").onclick = () => send(s, true);
   s.pauses = mountPauses(s, draw);
+  s.candidates = mountCandidates(s, draw);
 }
 function sampleAt(e, s) {
   const rect = s.q(".wave").getBoundingClientRect();
@@ -388,6 +391,7 @@ function draw(s) {
   s.q(".times").textContent =
     `${s.wav.rate} Hz · [${a}, ${b}) muestras · ${(a / s.wav.rate).toFixed(6)}–${(b / s.wav.rate).toFixed(6)} s · Duración: ${((b - a) / s.wav.rate).toFixed(6)} s`;
   s.pauses?.overlay();
+  s.candidates?.overlay();
 }
 function context(s) {
   const mode = s.get("modality").value;
@@ -569,6 +573,7 @@ $("exportAll").onclick = () => {
       history: s.state.history,
       results_current: !!s.state.result,
       pause_review_7b1: s.pauses.exported(),
+      candidate_review_7b2: s.candidates.exported(),
     })),
     aggregation: null,
   };
