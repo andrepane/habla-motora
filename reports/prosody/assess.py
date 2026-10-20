@@ -23,7 +23,10 @@ def assess(directory,freeze):
             for q in ['p10','p90']:
                 v=m[q+'_abs_error_hz'];truth=m[q+'_truth_hz'];limit=max(a['quantile_max_hz_floor'],a['quantile_relative_tolerance']*truth)
                 check(q+'_error',v is not None and v<=limit,r,v)
-            v=m['robust_range_abs_error_st'];check('robust_range_error',m['range_published'] and v is not None and v<=a['robust_range_st'],r,v)
+            # Development rows carry all candidate support rules, while the runner's
+            # primary summary uses rules[0]. Assess the frozen publication policy.
+            support=r['support_comparison'][freeze['range_rule']['id']]
+            v=m['robust_range_abs_error_st'];check('robust_range_error',support['eligible'] and v is not None and v<=a['robust_range_st'],r,v)
             v=m['slope_abs_error_st_s'];limit=max(a['slope_st_s_floor'],a['slope_relative_tolerance']*abs(m['slope_truth_st_s']))
             check('slope_error',m['slope_published'] and v is not None and v<=limit,r,v)
             if c['family'] in ['constant','duration']:check('constant_octave_error',m['octave_error_frames']==0,r,m['octave_error_frames'])
