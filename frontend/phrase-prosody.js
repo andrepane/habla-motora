@@ -84,6 +84,7 @@ export function mountProsody(s) {
     return !!(s.file && source?.context.selection_confirmed && source?.context.selection);
   }
   function invalidate(reason) {
+    s.profileBridge?.invalidate(['prosody'], reason, s.id);
     controller?.abort(); identityRequest++; state.invalidate(reason); cursor = null;
     s.q('.audio').pause();
     render();
@@ -297,10 +298,12 @@ export function mountProsody(s) {
       const body=await result.json();
       if (!result.ok) throw Error(typeof body.detail==='string'?body.detail:'No se pudo completar Prosodia.');
       if (state.accept(body,revision,sourceKey(currentSource()))) {
+        s.profileBridge?.save('prosody', body, file, s.capture, null, s.id);
         view={start:0,end:duration()};q('pan').value=0;render();
       }
     } catch(e) {
       if (e.name!=='AbortError' && revision===state.revision) {
+        s.profileBridge?.failed('prosody', e.message, s.id);
         state.accept({status:'failed',reason:e.message,context:source.context,
           identity:requestedProtocol,dependencies:requestedDependencies,
           configuration:requestedProtocol?.configuration ?? null,

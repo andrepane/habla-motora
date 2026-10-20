@@ -35,6 +35,7 @@ export function mountCandidates(s, redraw) {
     audit();
   }
   function invalidate(reason) {
+    s.profileBridge?.invalidate(['candidates'], reason, s.id);
     controller?.abort();
     state.invalidate(reason);
     selected = null;
@@ -92,7 +93,11 @@ export function mountCandidates(s, redraw) {
         signal,
       });
       if (!response.ok) throw Error("request");
-      if (state.complete(await response.json(), revision)) display();
+      const body = await response.json();
+      if (state.complete(body, revision)) {
+        s.profileBridge?.save('candidates', body, file, s.capture, null, s.id);
+        display();
+      }
     } catch (e) {
       if (
         e.name !== "AbortError" &&

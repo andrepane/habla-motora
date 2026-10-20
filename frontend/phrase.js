@@ -1,4 +1,6 @@
 import { mountCandidates } from "./phrase-candidates.js";
+import { taskBridge } from './profile-bridge.js';
+const profileBridge = taskBridge('phrase');
 import { mountProsody } from "./phrase-prosody.js";
 import { mountPauses } from "./phrase-pauses.js";
 import { parseWav, metricText } from "./audio.js";
@@ -45,6 +47,7 @@ for (let id = 1; id <= 2; id++) {
   const get = (name) => section.querySelector(`[data-f="${name}"]`),
     q = (s) => section.querySelector(s);
   const s = {
+    profileBridge,
     id,
     section,
     get,
@@ -74,6 +77,7 @@ for (let id = 1; id <= 2; id++) {
     get("match").value = "pending";
   };
   s.invalidate = (reason, context = true) => {
+    profileBridge.invalidate(context ? ['phrase','pauses','candidates','prosody'] : ['phrase','pauses'], '7A:'+reason, s.id);
     s.request?.abort();
     if (context) s.candidates?.invalidate(`7A:${reason}`);
     if (context) s.prosody?.invalidate(`7A:${reason}`);
@@ -476,6 +480,7 @@ async function send(s, reviewed) {
     if (s.state.accept(result, revision)) render(s, result);
   } catch (e) {
     if (e.name !== "AbortError" && revision === s.state.revision) {
+      profileBridge.failed('phrase', e.message, s.id);
       s.q(".state").textContent = `Error: ${e.message}`;
       s.q(".results").replaceChildren();
       s.state.result = null;
@@ -486,6 +491,7 @@ async function send(s, reviewed) {
   }
 }
 function render(s, r) {
+  profileBridge.save('phrase', r, s.file, s.capture, s.model ? new File([s.model.buffer], 'model.wav', {type:'audio/wav'}) : null, s.id);
   s.pauses.sourceUpdated();
   s.prosody.sourceUpdated();
   s.q(".state").textContent =
@@ -593,3 +599,5 @@ $("exportAll").onclick = async () => {
   $("globalStatus").textContent =
     "Exportados los WAV íntegros, respuestas y revisiones de ambos intentos. Los resultados invalidados están identificados en el historial.";
 };
+
+profileBridge.ready.then(()=>{if(profileBridge.context()?.ordinal===2)$("tab2").click();});

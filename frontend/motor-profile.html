@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perfil de habla motora</title><link rel="stylesheet" href="/static/style.css"><link rel="stylesheet" href="/static/motor-profile.css"></head>
+<body><main>
+<nav aria-label="Batería"><a href="/">Vocal sostenida</a> · <a href="/ddk">DDK</a> · <a href="/phrase">Frase</a> · <strong>Perfil</strong></nav>
+<header><span class="brand">HABLA MOTORA</span><h1>Perfil de habla motora</h1>
+<p>Resumen cuantitativo de tareas y revisiones. Validación humana pendiente. Sin interpretación clínica automática.</p></header>
+<section><h2>Evaluación local</h2>
+<div class="actions"><label>Evaluación <select id="evaluations"><option value="">Selecciona una evaluación</option></select></label><button id="new">Nueva evaluación</button>
+<label>Importar paquete recuperable <input id="import" type="file" accept=".json,application/json"></label></div>
+<p>Los datos se guardan en este navegador. Exporta el paquete recuperable antes de cambiar de dispositivo o borrar datos del navegador. No hay cuenta ni sincronización remota.</p>
+<p id="message" role="status"></p>
+<div id="identity" hidden>
+<p id="evaluationIdentity"></p><div class="actions"><label>Identificador opcional de caso <input id="case" maxlength="100"></label>
+<label>Fecha de sesión <input id="session" type="datetime-local"></label></div>
+<p id="snapshot" role="status"></p><p id="completeness"></p>
+<div class="actions"><button id="export">Exportar resumen JSON</button><button id="bundle">Exportar paquete recuperable</button></div>
+<details><summary>Intentos y vinculación de tareas</summary><div id="attempts"></div>
+<p>Elige explícitamente el intento representativo. Velocidad, pausas, candidatos y Prosodia comparten un único intento de frase y su contexto 7A.</p></details>
+</div></section>
+<div id="domains"></div>
+<section id="intelligibility" hidden><h2>Inteligibilidad — No evaluada en esta versión</h2>
+<p>No se calcula inteligibilidad ni se incluye en los cinco dominios cuantitativos.</p>
+<label>Notas del clínico sobre inteligibilidad (opcionales, sin puntuación)<textarea id="intelligibilityNote" maxlength="10000"></textarea></label></section>
+<section id="notesSection" hidden><h2>Notas del clínico</h2><label>Observaciones opcionales<textarea id="notes" maxlength="20000"></textarea></label>
+<details><summary>Contrato y referencias del resumen</summary><pre id="audit"></pre></details></section>
+<script type="module" src="/static/motor-profile-ui.js"></script></main></body></html>

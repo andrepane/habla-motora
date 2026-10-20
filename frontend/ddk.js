@@ -1,4 +1,6 @@
 import { parseWav, metricText } from "./audio.js";
+import { taskBridge } from './profile-bridge.js';
+const profileBridge = taskBridge('ddk');
 import { DdkRecorder } from "./ddk-recorder.js";
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -54,6 +56,7 @@ const selected = () => {
   );
 };
 function invalidate() {
+  profileBridge.invalidate(['ddk'], 'ddk_input_or_selection_changed');
   state.generation++;
   state.controller?.abort();
   state.controller = null;
@@ -300,8 +303,10 @@ async function request(mode = "automatic") {
         : "Procesamiento completado. Revisión humana y cierre 6A pendientes.",
     );
   } catch (e) {
-    if (gen === state.generation && e.name !== "AbortError")
+    if (gen === state.generation && e.name !== "AbortError") {
+      profileBridge.failed('ddk', e.message);
       say(e.message, true);
+    }
   } finally {
     if (gen === state.generation) {
       state.busy = false;
@@ -314,6 +319,7 @@ $("analyze").onclick = () => request();
 $("group").onclick = () => request("group");
 $("calculateReview").onclick = () => request("review");
 $("anchor").onchange = () => {
+  profileBridge.invalidate(['ddk'], 'ddk_anchor_changed');
   if (state.result) {
     state.generation++;
     state.controller?.abort();
@@ -331,6 +337,7 @@ $("anchor").onchange = () => {
 };
 // An anchor change keeps the file and requested selector but invalidates all derived data.
 function edit(op) {
+  profileBridge.invalidate(['ddk'], 'ddk_review_changed');
   state.generation++;
   state.controller?.abort();
   state.busy = false;
@@ -362,6 +369,7 @@ $("addEvent").onclick = () => {
   edit({ action: "add", id, time_s: t });
 };
 $("discardReview").onclick = () => {
+  profileBridge.invalidate(['ddk'], 'ddk_review_discarded');
   if (!state.result) return;
   state.generation++;
   state.controller?.abort();
@@ -379,6 +387,7 @@ $("discardReview").onclick = () => {
 };
 for (const id of ["confirmed", "absence"])
   $(id).onchange = () => {
+    profileBridge.invalidate(['ddk'], 'ddk_review_confirmation_changed');
     if (state.result) {
       state.generation++;
       state.controller?.abort();
@@ -440,6 +449,7 @@ function play(t) {
   playbackTimer = setTimeout(() => $("player").pause(), 650);
 }
 function render() {
+  profileBridge.save('ddk', state.result, state.file, state.capture);
   for (const id of ["results", "reviewSection", "exportSection"])
     $(id).hidden = false;
   const r = state.result,

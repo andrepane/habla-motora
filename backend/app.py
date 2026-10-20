@@ -173,3 +173,7 @@ app.include_router(phrase_candidate_router)
 # 8B only adapts the immutable 8A extractor to the confirmed 7A context.
 from backend.phrase_prosody_routes import router as phrase_prosody_router
 app.include_router(phrase_prosody_router)
+
+# Hito 9: metadata/page only, no acoustic orchestration.
+from backend.motor_profile_routes import router as motor_profile_router
+app.include_router(motor_profile_router)
