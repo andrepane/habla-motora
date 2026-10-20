@@ -10,6 +10,8 @@ from research.prosody.profiles import JUMP_LIMITS_S
 
 
 def choose(directory):
+    if Path('research/prosody/freeze.json').exists():
+        raise ValueError('Historical cost-only selector superseded; use select_eligible_development.py. Never overwrite a freeze with v1 policy.')
     path=Path(directory)
     if json.loads((path/'manifest.json').read_text())['split']!='development':raise ValueError('Development only')
     with gzip.open(path/'results.jsonl.gz','rt') as f:rows=[json.loads(line) for line in f]
