@@ -1,0 +1,18 @@
+{
+  "status": "local_suite_and_docker_ci_pending",
+  "prosody_specific": {
+    "passed": 55,
+    "warnings": 1
+  },
+  "frontend_unit": {
+    "passed": 59
+  },
+  "blocked_acceptance": {
+    "all_passed": true,
+    "passed": 1392,
+    "total": 1392
+  },
+  "blocked_first_run": "completed_once",
+  "docker_local": "not_installed; existing GitHub Actions workflow will verify unchanged Dockerfile",
+  "source_freeze_commit": "9c67d04888ae0837297d6896ca4376e126cfc935"
+}

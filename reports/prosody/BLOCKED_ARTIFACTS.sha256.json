@@ -1,0 +1,17 @@
+{
+  "reports/prosody/FINAL_REPORT.md": "b5424dc6a638c3373b705fa574b26fdb77239aa2580f8249ba617d8ecf060234",
+  "reports/prosody/blocked/acceptance.json": "81a4ab71695a3d3d6ba852a19d1e678fa7b64d7200e79cc5ba9e5fc237fa93a6",
+  "reports/prosody/blocked/cases.json": "3bc431dd09420b01b814488dfc86733485d23fc02e0f4071b532ac78b4064829",
+  "reports/prosody/blocked/development_comparison.json": "f176f551a51d12005f6abd94ef0a34a873adc09e6997094ee278426238eb117a",
+  "reports/prosody/blocked/execution.log": "64554e5a64b06517c9e3616d1a9b82b0d87f56db30d3e4910f4787b98ea08fa0",
+  "reports/prosody/blocked/integrity-check.log": "8618eb2ef453e2752d8005a4f4032c4b9847e33d047241427bc9ca4bade79fe3",
+  "reports/prosody/blocked/integrity.json": "092cb9065f9981bde5a143da34d778b3cf03df8e111bb148b6308b92be999cde",
+  "reports/prosody/blocked/manifest.json": "8f532ebdb7badf4c3f41447e5e59c3efa31f7f128fd17cc7a52dee2d6a5e0f26",
+  "reports/prosody/blocked/results.jsonl.gz": "248e0d3b01985406d4eda6e9b1ce7998340f00017c0d86c3c1c6ce2de95e0715",
+  "reports/prosody/blocked/summary.json": "9fcc0cc4f74608a4c1caef6058f4daa2babb8ecaf345d6d0ff933ed8dcf3b243",
+  "reports/prosody/blocked/traces-filtered_800_03__0.npz": "b7e883813634cd42d4df2ba03f1e2a7c9f81a1bc6974940aa4c2a1589ac80b93",
+  "reports/prosody/validation/frontend-unit.log": "e8f010551127f4f92f68adb1b3fd61da4341b7a7e5c198751d25ce90b0016c7b",
+  "reports/prosody/validation/prosody-specific.log": "ca6a9fb4199470ebba59048446e1f880eafe8a395e5ce405ad1af083adadaf18",
+  "reports/prosody/validation/summary.json": "bbd67e34af86ec88d595e3512da8f5802cfb1ecd1a4f92bf19f216556ddb5b20",
+  "research/prosody/final_report.py": "bcc7dd6a70d9845e5538a8aa7f0dd5b07fa2fb472659465feadc0d8b4d8106f6"
+}
