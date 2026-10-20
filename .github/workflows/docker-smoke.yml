@@ -1,4 +1,5 @@
 name: Verify Docker milestones 1, 2, 3, 4 and 5
+# Hito 9 validation trigger
 on:
   push:
     paths:
@@ -110,6 +111,8 @@ jobs:
           docker run --rm habla-motora:smoke-v1 python -c 'from tests.test_phrase_candidates_api import activity; import sys; sys.stdout.buffer.write(activity())' > phrase-candidates.wav
           CANDIDATE_TEST_WAV="$PWD/phrase-candidates.wav" CANDIDATE_SCREENSHOT="$PWD/phrase-candidates-interface.png" npm run test:phrase-candidates-browser
           CANDIDATE_TEST_WAV="$PWD/phrase-candidates.wav" PROSODY_SCREENSHOT="$PWD/phrase-prosody-interface.png" npm run test:phrase-prosody-browser
+          docker run --rm habla-motora:smoke-v1 python -m tests.profile_fixtures /dev/stdout > profile-fixtures.json
+          PROFILE_FIXTURES="$PWD/profile-fixtures.json" PROFILE_EVIDENCE_DIR="$PWD/motor-profile-evidence" npm run test:motor-profile-browser
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -138,3 +141,4 @@ jobs:
             phrase-pauses-interface.png
             phrase-candidates-interface.png
             phrase-prosody-interface.png
+            motor-profile-evidence/

@@ -93,6 +93,7 @@ export function mountPauses(s, redraw) {
     q("audit").textContent = JSON.stringify(exported(), null, 2);
   }
   function invalidate(reason, sourceChanged = false) {
+    s.profileBridge?.invalidate(['pauses'], reason, s.id);
     controller?.abort();
     if (sourceChanged)
       state.history.push({
@@ -390,6 +391,7 @@ export function mountPauses(s, redraw) {
             : JSON.stringify(result.detail),
         );
       if (!state.accept(result, revision)) return;
+      s.profileBridge?.save('pauses', result, s.file, s.capture, null, s.id);
       q("state").textContent =
         `7B.1 · Revisión: ${result.stages.temporal_review} · Cálculo: ${result.stages.calculation}`;
       q("metrics").replaceChildren();
@@ -420,6 +422,7 @@ export function mountPauses(s, redraw) {
       audit();
     } catch (e) {
       if (e.name !== "AbortError" && revision === state.revision) {
+        s.profileBridge?.failed('pauses', e.message, s.id);
         state.result = null;
         q("metrics").replaceChildren();
         q("state").textContent = `Error: ${e.message}`;

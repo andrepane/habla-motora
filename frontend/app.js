@@ -1,3 +1,5 @@
+import { taskBridge } from './profile-bridge.js';
+globalThis.hablaMotorProfileBridge = taskBridge('vowel');
 import {
   MAX_BYTES,
   REQUESTED,
@@ -29,6 +31,7 @@ const message = (s, error = false) => {
   $("status").className = error ? "error" : "";
 };
 function invalidate() {
+  globalThis.hablaMotorProfileBridge?.invalidate(['vowel'], 'vocal_input_or_selection_changed');
   state.generation++;
   state.controller?.abort();
   state.controller = null;
@@ -389,6 +392,7 @@ const specs = [
   ["HNR medio", "hnr_mean_db", "dB", "hnr"],
 ];
 function render(r) {
+  globalThis.hablaMotorProfileBridge?.save('vowel', r, state.file, state.capture);
   state.result = r;
   $("results").hidden = false;
   $("resultState").textContent =
@@ -488,8 +492,10 @@ $("analyze").onclick = async () => {
       r.status === "partial" ? "Análisis parcial." : "Análisis completado.",
     );
   } catch (e) {
-    if (gen === state.generation && e.name !== "AbortError")
+    if (gen === state.generation && e.name !== "AbortError") {
+      globalThis.hablaMotorProfileBridge?.failed('vowel', e.message);
       message(e.message, true);
+    }
   } finally {
     if (gen === state.generation) {
       state.controller = null;

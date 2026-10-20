@@ -1,0 +1,16 @@
+.profile-card h2 {margin-bottom:8px} .profile-top {display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.profile-status {font-size:.9rem;background:#edf4f5;border:1px solid #c9d9de;padding:6px 12px;border-radius:18px}
+.profile-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.profile-metric {background:#eff6f7;border-radius:10px;padding:14px;min-width:0;overflow-wrap:anywhere}
+.profile-metric strong {display:block;font-size:1.6rem;margin:8px 0}.profile-metric small {display:block;line-height:1.5}
+.profile-details {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:10px;margin:12px 0}
+.profile-details strong {font-size:1.2rem}.profile-card details {border-top:1px solid #dce6e8;margin-top:18px;padding-top:14px}
+.profile-card summary {cursor:pointer}.profile-mini {width:100%;height:200px;background:#fafcfc;border:1px solid #dce6e8}
+#completeness {font-weight:700;font-size:1.1rem}#attempts fieldset {margin:16px 0}#attempts a {display:inline-block;margin:8px 10px 8px 0}
+pre {white-space:pre-wrap;overflow-wrap:anywhere;max-height:450px;overflow:auto}input,select,textarea {max-width:100%}
+input,select,textarea {font:inherit;padding:9px;border:1px solid #b6cbd1;border-radius:6px}
+#identity label,#notesSection label,#intelligibility label {display:flex;flex-direction:column;gap:6px}
+textarea {display:block;width:100%;min-height:90px;margin-top:8px}
+.profile-warning {border-left:3px solid #b18c51;padding:8px 12px;background:#fff9ef;overflow-wrap:anywhere}
+.profile-card ul {padding-left:22px}#evaluationIdentity {overflow-wrap:anywhere}
+@media(max-width:650px){main{padding:20px 12px}section{padding:20px 16px}.profile-metrics{grid-template-columns:1fr}.profile-metric strong{font-size:1.4rem}.actions{align-items:stretch}.actions label{width:100%}}
