@@ -1,0 +1,73 @@
+{
+  "schema_version": "pause_research_validation_v1",
+  "tested_code_commit": "d111214907d1d143e84266442655877709375dbc",
+  "protected_modules_unchanged": true,
+  "no_frontend_or_endpoint_integration": true,
+  "no_human_wav_used": true,
+  "specific_tests": {
+    "passed": 40
+  },
+  "local_full_suite": {
+    "passed": 537,
+    "xfailed": 6,
+    "warnings": 1,
+    "seconds": 740.82,
+    "status": "passed"
+  },
+  "interrupted_local_attempt": {
+    "status": "interrupted",
+    "error_markers": 6,
+    "excluded_from_acceptance": true,
+    "complete_traceback_available": false,
+    "cause": "not established; subsequent isolated run passed"
+  },
+  "ci": {
+    "url": "https://github.com/andrepane/habla-motora/actions/runs/39242058207",
+    "run_id": 39242058207,
+    "job_id": 118024994326,
+    "conclusion": "success",
+    "attempt": 1,
+    "docker_build_pytest": {
+      "passed": 537,
+      "xfailed": 6,
+      "warnings": 1,
+      "seconds": 241.41
+    },
+    "container_repeat_pytest": {
+      "passed": 537,
+      "xfailed": 6,
+      "warnings": 1,
+      "seconds": 237.33
+    },
+    "frontend_unit_tests": 45,
+    "browser": {
+      "vowel": 24,
+      "ddk": 35,
+      "phrase_7a": 53,
+      "phrase_7b1": 60
+    },
+    "http_and_synthetic_reports": "passed"
+  },
+  "bank": {
+    "development_wav": 3264,
+    "blocked_wav": 3264,
+    "evaluations_per_split": 9792,
+    "total_evaluations": 19584,
+    "families": 27,
+    "paired_waveform_hashes_verified": true,
+    "development_unique_candidate_ids_across_variants": 7803,
+    "blocked_unique_candidate_ids_across_variants": 7812
+  },
+  "frozen_gate_sha256": "d39dffa0ad4173d5336f006e97b2d6564753b2f210542437effd774c3e1bb6a2",
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "praat": "6.4.27",
+    "machine": "x86_64"
+  },
+  "warnings": [
+    "6 existing strict xfail retained",
+    "Starlette/AnyIO deprecation warning",
+    "No human validation or review-time claim"
+  ]
+}

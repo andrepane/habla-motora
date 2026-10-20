@@ -1,0 +1,529 @@
+{
+  "schema_version": "pause_candidate_acceptance_gate_v1",
+  "state": "frozen_before_blocked",
+  "created_utc": "2026-10-19T11:03:03.092053+00:00",
+  "runtime": {
+    "numpy": "2.3.5",
+    "python": "3.12.14"
+  },
+  "development_summary_sha256": "c557621237c761ea185f474648a732d4ccc09a240d4f1bec9d3151e2b4bd2551",
+  "development_manifest_sha256": "b8eddd413344a04d6b238881aafb8bf8e4cfd12be2ac89f4c88fca5139ddd39d",
+  "blocked_manifest_sha256": "d1ae1ba7e566fbe5195dd683b8da85a71e41731970c051fc7d72190e4e239db5",
+  "evaluation_code_sha256": "4f17fedfed56e905d91aed4948e669c77b548de886c6b32557224ec2efac32e3",
+  "freeze_code_sha256": "ad5094400b78b75dd032cb14ce24d6724297cc5fdf0a0f9b24949ef103693e01",
+  "detector_config_sha256": {
+    "energy": "09100457fd44b3d474dc5b0e60e81233ac85ae8d96dda58fc2a75eb633048c6e",
+    "multifeature": "c3990c0fe6c1a12a6a61f385557d9d82ac597836d1dcaf4b840ba73293ae02ca",
+    "praat": "7a817b037a4f29eefe148d3226973354b1f4d72bee0bef5e2d51fb50ec588847"
+  },
+  "family_burden_caps": {
+    "clean": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "noise_30": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "noise_20": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "noise_10": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.0
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "noise_0": {
+      "maximum_blocked_p95_false_candidates_per_minute": 0.0,
+      "development_p95_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "breath": {
+      "maximum_blocked_p95_false_candidates_per_minute": 30.0,
+      "development_p95_by_variant": {
+        "energy": 30.0,
+        "multifeature": 30.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 0.5,
+        "multifeature": 0.5,
+        "praat": 0.0
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "low_amplitude": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "fade": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 1.0
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "closure": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "weak_voice": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "two_close": {
+      "maximum_blocked_p95_false_candidates_per_minute": 30.0,
+      "development_p95_by_variant": {
+        "energy": 30.0,
+        "multifeature": 30.0,
+        "praat": 30.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "brief_event": {
+      "maximum_blocked_p95_false_candidates_per_minute": 30.0,
+      "development_p95_by_variant": {
+        "energy": 30.0,
+        "multifeature": 30.0,
+        "praat": 30.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 0.875,
+        "multifeature": 0.875,
+        "praat": 0.625
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "aperiodic": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "low_energy_present": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": null,
+        "multifeature": null,
+        "praat": null
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "no_pause": {
+      "maximum_blocked_p95_false_candidates_per_minute": 0.0,
+      "development_p95_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": null,
+        "multifeature": null,
+        "praat": null
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "all_silence": {
+      "maximum_blocked_p95_false_candidates_per_minute": 0.0,
+      "development_p95_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": null,
+        "multifeature": null,
+        "praat": null
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "background_only": {
+      "maximum_blocked_p95_false_candidates_per_minute": 0.0,
+      "development_p95_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": null,
+        "multifeature": null,
+        "praat": null
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "clipped": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "stationary_broadband": {
+      "maximum_blocked_p95_false_candidates_per_minute": 0.0,
+      "development_p95_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": null,
+        "multifeature": null,
+        "praat": null
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "colored_30": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "colored_20": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.78125
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "colored_10": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.0
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "colored_0": {
+      "maximum_blocked_p95_false_candidates_per_minute": 0.0,
+      "development_p95_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 0.0,
+        "multifeature": 0.0,
+        "praat": 0.0
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature",
+        "praat"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "variable_30": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "variable_20": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.875
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "variable_10": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 15.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.84375
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    },
+    "variable_0": {
+      "maximum_blocked_p95_false_candidates_per_minute": 15.0,
+      "development_p95_by_variant": {
+        "energy": 15.0,
+        "multifeature": 15.0,
+        "praat": 0.0
+      },
+      "development_region_recall_by_variant": {
+        "energy": 1.0,
+        "multifeature": 1.0,
+        "praat": 0.0
+      },
+      "sensitivity_matched_pool": [
+        "energy",
+        "multifeature"
+      ],
+      "derivation": "minimum development family P95 among methods tied for highest regional recall; all methods in no-reference controls; no universal burden limit"
+    }
+  },
+  "technical_criteria": {
+    "clean_ge250_recall": 1.0,
+    "white_noise_ge20_ge250_recall": 0.95,
+    "clean_absolute_boundary_median_ms_max": 15,
+    "clean_absolute_boundary_p95_ms_max": 30,
+    "two_close_gap_ge50_fusions_max": 0,
+    "periodic_negative_controls_candidates_max": 0,
+    "failed_runs_max": 0,
+    "latency_p95_s_max": null
+  },
+  "latency_note": "Concurrent bank timings descriptive only; isolated 20s latency gate remains pending before any UI integration",
+  "B_incremental_false_candidates_per_minute_max_by_family": 2,
+  "preference_rule": "Choose only an eligible engine. If both eligible, B requires >=2 percentage points macro-family region recall gain, <=1pp pause-proxy precision loss, no added fusions and all per-family incremental burden gates. Otherwise prefer A if eligible; if neither eligible choose neither.",
+  "caution": "Synthetic engineering criteria only. Caps may be stringent and do not validate reviewer time savings; no human parameters/results."
+}

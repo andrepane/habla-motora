@@ -1,0 +1,43 @@
+{
+  "schema_version": "pause_candidate_config_v1",
+  "window_ms": 20,
+  "periodicity_window_ms": 40,
+  "hop_ms": 5,
+  "minimum_candidate_ms": 80,
+  "context_ms": 100,
+  "periodicity_floor_hz": 60,
+  "periodicity_ceiling_hz": 700,
+  "band_hz": [
+    80,
+    8000
+  ],
+  "bands_hz": [
+    [
+      80,
+      500
+    ],
+    [
+      500,
+      2000
+    ],
+    [
+      2000,
+      8000
+    ]
+  ],
+  "percentile_method": "linear",
+  "energy_primary_drop_db": 18,
+  "energy_lower_margin_db": 3,
+  "energy_secondary_drop_db": 6,
+  "periodicity_max": 0.3,
+  "flatness_min": 0.5,
+  "flux_max": 0.1,
+  "epsilon": 1e-12,
+  "merge_proximity": false,
+  "remove_brief_activity": false,
+  "human_validation": "not_performed",
+  "detector_version": "pause_detector_energy_v1",
+  "proposal_paths": [
+    "A"
+  ]
+}

@@ -354,3 +354,9 @@ Panel manual adicional en `/phrase`, sobre el mismo WAV/selección/revisión de 
 Protocolo: [docs/protocolo_frase_7b1_v1.md](docs/protocolo_frase_7b1_v1.md).
 API: `GET /phrase-pause-protocol`, `POST /phrase-pause-analysis`.
 Pruebas: `python -m pytest tests/test_phrase_pauses.py -q`, `npm run test:ui`, `npm run test:phrase-pauses-browser` (API local, `PHRASE_TEST_WAV` PCM sintético de 8 s).
+
+## Investigación 7B.2 — candidatos de pausa (offline)
+
+Dos variantes experimentales separadas: `pause_detector_energy_v1` (A) y `pause_detector_multifeature_v1` (A+B), con comparador Praat 6.4.27. No están conectadas a `/phrase`, no clasifican pausas y no cambian resultados de 7B.1. No usan WAV humanos. Banco de desarrollo y bloqueado disjuntos; criterios congelados antes del bloqueado. Configuraciones, recetas, candidatos y métricas auditables.
+
+[Protocolo técnico](docs/protocolo_candidatos_pausa_experimental.md) · [Datos e instrucciones de reproducción](reports/pause_candidates/README.md).
