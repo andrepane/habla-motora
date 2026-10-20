@@ -1,0 +1,608 @@
+{
+  "base_commit": "23ba91267d5f88314d555059a8c7d28865bb275a",
+  "integration_commit": "f8bc5643dc5f228a672a0267b5927fabd2df2d88",
+  "compared": 120,
+  "all_identical": true,
+  "files": [
+    {
+      "path": "backend/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/ddk.py",
+      "sha256": "210a6be83b8a4479d774a89833e23bf25cd99201883f17d26fe8bf3eb7e1e1df",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/ddk_v2.py",
+      "sha256": "39dac038d1cdbf8ecd8e18929bc72cce5ef87657b938bf33b0729e263866d57f",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/hnr.py",
+      "sha256": "3ea16ba673612f3c61696dfa40e50cf415db5c5cbce41dca065a4734732b343f",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/jitter.py",
+      "sha256": "0d1fb713be73adc2d8e39c203e24d7285a6190f8c4014ac43f534b70b10d1099",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/phrase.py",
+      "sha256": "6b5d7e45467d3c5e9ac85095c669c3dd9780d42021fc3188984d17a955ae8b84",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/phrase_candidate_routes.py",
+      "sha256": "87994e7bf1db494b81c971f5bdceda7fbc116e0415b34929fa871c70e57c34f9",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/phrase_pause_routes.py",
+      "sha256": "b20dbfc5053a5e99e0a71fe11b0196d6851123c341a59fc103c612df74b27076",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/phrase_pauses.py",
+      "sha256": "3214fa7486032adc85e60f70a7c18fe4bba8dae24d33eff55f1c7f3824fa6962",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/phrase_prosody.py",
+      "sha256": "4ae1b67439ea76934f7c740da1732ddf3d8ac4ded6a8652de5c34baafd99a8c8",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/phrase_routes.py",
+      "sha256": "f9759da8fc43ecbc61ab201770e497097bd7f5a20ad06c040dc977cf45c62b3d",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/pitch.py",
+      "sha256": "2a46b00a06824741ffcff61aaba47775745b872789a5c8d3eeb99a1d7c6c8cca",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/praat_runner.py",
+      "sha256": "dd66bb2f9c4519f579cf54733e8450e01f77129e55b8cd16e6a025adf26e282f",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/shimmer.py",
+      "sha256": "da124cf187e10f62649422a3868ecdd10d159c1ba5c5d20eec1a154604524a94",
+      "identical_to_base": true
+    },
+    {
+      "path": "backend/vowel.py",
+      "sha256": "051f1b01979d8b2243f3dda1ed2b7045df5b2a81b61280004d1d70af10374813",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/ddk_experimental_v1.json",
+      "sha256": "89fd9ac962b05b2180c3f5325f9abc7175aac0378b184394a2c8d23b322b5a5a",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/ddk_experimental_v2.json",
+      "sha256": "0293f5d891cf13ceda4b58e40316e2a56a8738ad63c6bda74ab9c6debf4662fa",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/experimental_v1.json",
+      "sha256": "94b976f9c3e1f21d965df9ce547422953c6d780df64988cf2562cc8594520729",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/pause_detector_energy_v1.json",
+      "sha256": "09100457fd44b3d474dc5b0e60e81233ac85ae8d96dda58fc2a75eb633048c6e",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/pause_detector_multifeature_v1.json",
+      "sha256": "c3990c0fe6c1a12a6a61f385557d9d82ac597836d1dcaf4b840ba73293ae02ca",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/pause_detector_praat_v1.json",
+      "sha256": "7a817b037a4f29eefe148d3226973354b1f4d72bee0bef5e2d51fb50ec588847",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/phrase_7a_v1.json",
+      "sha256": "080db64d4d1cdbbe16e4faa512726357e0b8842af64de570b6117160904a337d",
+      "identical_to_base": true
+    },
+    {
+      "path": "configs/phrase_pause_review_v1.json",
+      "sha256": "0bf0bee0fea55eba80c3f418b21cb178f0326c97f9bc268633d3970296174276",
+      "identical_to_base": true
+    },
+    {
+      "path": "praat/hnr_v1.praat",
+      "sha256": "f5ce3b522e31b47f16a802af70307ef13e17e7d7efcdf997139701e0008c17b1",
+      "identical_to_base": true
+    },
+    {
+      "path": "praat/jitter_v1.praat",
+      "sha256": "9340ddd8f25dd9bcfdfe044d2b0256386db38d599d82ee22e36b9f5df7ef9cb4",
+      "identical_to_base": true
+    },
+    {
+      "path": "praat/pause_candidates_comparator.praat",
+      "sha256": "29e8c79736901b82b3bd182598aa6e7322c484291e96d86dca3e33c072b46026",
+      "identical_to_base": true
+    },
+    {
+      "path": "praat/pitch_v1.praat",
+      "sha256": "66ef64ac2a5e0be13df838f60f8457da9c2822c517606d05e7aa9ddc3625dd92",
+      "identical_to_base": true
+    },
+    {
+      "path": "praat/shimmer_v1.praat",
+      "sha256": "cbbdcf9f02ff73c6cdb4c64e9df609a7166e336c9371e1c176d75f367284a0b2",
+      "identical_to_base": true
+    },
+    {
+      "path": "praat/smoke_test.praat",
+      "sha256": "398b209f700ee812f9670f45f3c0c8a672c6926a2251be07ff10325f9bf4749f",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/BLOCKED_ARTIFACTS.sha256.json",
+      "sha256": "cd71b065e9fa496f00b5bd410d69230244a03d7e86d67cd0b1e3d0ad2d68f0f9",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/DEVELOPMENT_PLAN.md",
+      "sha256": "0a1c5ed31a6e20f59137574bc2e62188a1f7a4e581822dcee18fc5b1d36476e5",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/FINAL_REPORT.md",
+      "sha256": "eb715dc9939b358f8157c6d012cb16dcdd43b43f06e702504d860bbef9b9e2b9",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/FREEZE_REVIEW.md",
+      "sha256": "9313d9b698d32b13fcdbecd28aa7e30f20db9db04341537f142deba7a28229be",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/README.md",
+      "sha256": "0727f80e8d407042335493187b5ec69f794b8a15fe5f873da5784a1fc53502e5",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/assess.py",
+      "sha256": "6863b6184071aa87767666bd05448f13ae05ddafc97fa5e176253a4271df968e",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/acceptance.json",
+      "sha256": "81a4ab71695a3d3d6ba852a19d1e678fa7b64d7200e79cc5ba9e5fc237fa93a6",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/cases.json",
+      "sha256": "3bc431dd09420b01b814488dfc86733485d23fc02e0f4071b532ac78b4064829",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/development_comparison.json",
+      "sha256": "f176f551a51d12005f6abd94ef0a34a873adc09e6997094ee278426238eb117a",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/execution.log",
+      "sha256": "64554e5a64b06517c9e3616d1a9b82b0d87f56db30d3e4910f4787b98ea08fa0",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/integrity-check.log",
+      "sha256": "8618eb2ef453e2752d8005a4f4032c4b9847e33d047241427bc9ca4bade79fe3",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/integrity.json",
+      "sha256": "092cb9065f9981bde5a143da34d778b3cf03df8e111bb148b6308b92be999cde",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/manifest.json",
+      "sha256": "8f532ebdb7badf4c3f41447e5e59c3efa31f7f128fd17cc7a52dee2d6a5e0f26",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/results.jsonl.gz",
+      "sha256": "248e0d3b01985406d4eda6e9b1ce7998340f00017c0d86c3c1c6ce2de95e0715",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/summary.json",
+      "sha256": "9fcc0cc4f74608a4c1caef6058f4daa2babb8ecaf345d6d0ff933ed8dcf3b243",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/blocked/traces-filtered_800_03__0.npz",
+      "sha256": "b7e883813634cd42d4df2ba03f1e2a7c9f81a1bc6974940aa4c2a1589ac80b93",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/ARTIFACTS.sha256.json",
+      "sha256": "fcf4d90033ff6549dd5ff587078982455848070b5972ac4101e796e245855624",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/acceptance.json",
+      "sha256": "0d8105038e09dee1e5f43166d32a692de7832f1ea74da1d78826fe2c90ebbae8",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/assessment-tests.log",
+      "sha256": "cdf8d13a3f141b449c7d92c9b86d6fd681de17445a1d661236b92f93860eafac",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/cases.json",
+      "sha256": "ec30a0872de48bbadfa6d83fbdbc8bf4a1f935e3cecc526a4bb35a8e15fd1097",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/execution.log",
+      "sha256": "5cf871487e90c70396f4b26d321a4be4a159ef98dd98b35b17a2f7d76b585eb4",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/integrity.json",
+      "sha256": "7972679216f436767aead9f607c72f142e48949599fc634196f81bccf2e7e57b",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/manifest.json",
+      "sha256": "681e27cc49b5a7caef28814b669d38a7583aa9f02279f48deac8b3c466721115",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/prosody-tests.log",
+      "sha256": "3e23f1b760556c7793f3527f4ee2a212211cc1e2cd8fc46db1f5ef538fca382a",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/regressions.log",
+      "sha256": "85cf1d0e8aa80d99f47dd078e57c0ace9cfda3bc5f98dfacc55b27e0d14e1e63",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/results.jsonl.gz",
+      "sha256": "40eac33f2991629b3b9ab4df578b8c15de1437057c8a359dec3b54bfa916dd27",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/selection.json",
+      "sha256": "b09807bff7ddaef15b7920f105e878990c1619c1e78af7c52cadcaf79bfce433",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/summary.json",
+      "sha256": "ca91a1432de8a83838a8f61f803be1e9afd1ded0f629ed5e40b756144de144bb",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/temporal_policy.json",
+      "sha256": "5b31d8067e31206f2ab9d15013f7dc683bff34b1884666039a438df5b4b381c4",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-current_cc__0.npz",
+      "sha256": "ba1f15f93120376e22f3fa4014c0d5b0fdab5f9505a4e1f6bf7b339836a26f90",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-current_cc__250.npz",
+      "sha256": "740b2cbe32ce4d90f0c8716d9cd70d7ebaad30f92d2c2c7f9a3b0be034a58796",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_1200_03__0.npz",
+      "sha256": "551605fdf4978aa73216c3985ca9bac7b8e3ce9a653ea0792bea2b08064bc513",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_1200_03__250.npz",
+      "sha256": "81361c195682aa61b72ea51a7f1b182faa6b5770f328c7f305485fae88ba4735",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_1200_09__0.npz",
+      "sha256": "71c57c3ff74b088f0689fc1a489d06f0a612f9db65aba6ed01a45283db85f382",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_1200_09__250.npz",
+      "sha256": "92851f2e7e78437fe7cb46c186007089cb792c79e5d0a699b52b41ae42e91c42",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_800_03__0.npz",
+      "sha256": "70aa45a195156e53ca76a870cb1942964181cb31508c6a7c0d0b22e446a89a0c",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_800_03__250.npz",
+      "sha256": "89f83220dc6d9116a47331d3d7ff4bfafad0dd0e123471508f0f9806ce60a83b",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_800_09__0.npz",
+      "sha256": "e22f57ff7ef677aa8f8151869ad3a78cfb4fe7d248c49512237fda396c7e1f50",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-filtered_800_09__250.npz",
+      "sha256": "2da847a087c836e424cf2a6dae0ffbc3249d7d0ab0e59288a2c76deef8f28690",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-wide_ac__0.npz",
+      "sha256": "e8ec8a5a07edd80b485680c17ae62fe9b197fbc1141dcd5f27dede6eec2c31b4",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-wide_ac__250.npz",
+      "sha256": "343509953652487b8abae4817945d0cf0614273669beee95b07a62c545edfa5b",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-wide_cc__0.npz",
+      "sha256": "9be9577325f54665d627151ea6531a1faa7e59f226bdc9a3c1098f8d19cb4df9",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/development/traces-wide_cc__250.npz",
+      "sha256": "9da2c54783bfa30ccfabb9e4d483174bbd6fee9e8e4a825b536c443ac7adb723",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/ARTIFACTS.sha256.json",
+      "sha256": "df3bde7302ac8d9cc77314054cb28b19cfd3610f26bce05e6ed74e6f72590dd4",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/REVIEW.md",
+      "sha256": "6cb539aab62480051adadecacc3cb07a5f33f6a253a488636f976f88e4ef2c82",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/current_cc__0.json",
+      "sha256": "8e609d36bb7017b50b54d5c5967e9333296a1ebaa865dcf6068332a312139fc8",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/current_cc__250.json",
+      "sha256": "14798e9c00f3c258453db9be795e127ad0291a18d08c95ec68f019461e678581",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/decision.json",
+      "sha256": "c5feb677b16787aaa5f7bb3a09f656e9e7a9ec6d571cb574b6fbb5be1a2d7853",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_1200_03__0.json",
+      "sha256": "703374839f53b2c32d1545ec002096ad83025c66a0a3e75b1fc7c137234f438a",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_1200_03__250.json",
+      "sha256": "0d4277964bbfd86193b68f205aac000d31c970927b56b3758a9cede05a17ae4d",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_1200_09__0.json",
+      "sha256": "146439ab5c5138223718b2eea08af6998ac2e9c9732d76d0d95d977ca5994348",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_1200_09__250.json",
+      "sha256": "6d9b428a7db4c955c15dcd173795890ff082cde7e6d3ebf6470b3ed78a8c2e65",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_800_03__0.json",
+      "sha256": "07be1d524bd4508316051379f29c504e7809461f0af076924561bb3a0c36cb6a",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_800_03__250.json",
+      "sha256": "8db81c5b22cecddd25ae9c7521f59a2e9b7618d2233d7f736f0bdb8428bd0b10",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_800_09__0.json",
+      "sha256": "b8a6a6d8638f1eb0343e9b05d49df6b0a37fb32f9a7c8a345f3d9f2b6d43be4c",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/filtered_800_09__250.json",
+      "sha256": "f5febbe78f557ba36992c3396e739a9410524b3cabcc57256b038f1b2bb8075b",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/integrity.json",
+      "sha256": "94848b789886d5dc6d25027c185c6dc8dcc0124d55e532d218cd860b49c26773",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/tests.log",
+      "sha256": "f4cda9e14392d1b54ff71b5db7c69b85265cff308f9065e46be91a6e96c168dc",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/wide_ac__0.json",
+      "sha256": "74fe13151e1b416bf5b39f9934db6b38197f2795558fff43da5f100ee736a38a",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/wide_ac__250.json",
+      "sha256": "418cf72dc90e755a1406e927924229f6a113277bf02b896780f822c7c11f9a85",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/wide_cc__0.json",
+      "sha256": "062322539e700e880cd6f26e4b185cbdf2f824b5b14a753503ecd333070b3e57",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/eligibility_v2/wide_cc__250.json",
+      "sha256": "9ad6103773b241e3573f790bb683e5654c2860bd6de5fbb44c429d14e65ff82f",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/policy_experiments.py",
+      "sha256": "4c3d975bc5766a10a904fd800516d99e73b36ff17dc194383edbbc22b8d22e51",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/select_development.py",
+      "sha256": "74314ae2b5fcc6c5d4d25edb992f610bd3c81a34ecd7dbdf5708edfd64367381",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/select_eligible_development.py",
+      "sha256": "995f5a2da0c12cb518ec1fe8b89310fc1979ccf80d2af51ba98c1db00955c236",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/CLOSURE.md",
+      "sha256": "9a20a5f0b11339066a0e3bf48daa43d2d12e45a98bfcfa3e146120cb2cd66d91",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/browser-api.log",
+      "sha256": "8eac181e5ce52e5df14e7bb29ec5eb4731e3c63b6132bb21c73152a520a4de3a",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/browser-candidates.log",
+      "sha256": "c62205eb87c19071bbaa117d22424f5dca7c8c66f587411846285ddf294b878b",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/browser-ddk.log",
+      "sha256": "dbbd02c720ccef26c2362aaff2f30800e0d9715b998c65c47f9d7f8927f64ed6",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/browser-pauses.log",
+      "sha256": "73cef77bbb0a55afce4777090403bf6aa5200e28d1d77ad37c1d54a706579f4a",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/browser-phrase.log",
+      "sha256": "840a78c9ef4676419806c98bd43df40bced877437d3b4dbd535939aadb38900f",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/browser-vowel.log",
+      "sha256": "0353a0bc3e54b83e6d1cc9400f6a7cf99a41413a1db015c854c13d2eddfee2af",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/frontend-unit.log",
+      "sha256": "e8f010551127f4f92f68adb1b3fd61da4341b7a7e5c198751d25ce90b0016c7b",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/full-suite.log",
+      "sha256": "3f6ced40a89fdc607630e94b65df3a0619f79896f1eac8f91ceec8bf0e05f073",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/github-actions.json",
+      "sha256": "907c6e42c68f4644d26fa7858bffe2255ab9b7d70de2fcefdf56a0801b5c4143",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/github-actions.log.gz",
+      "sha256": "58ca02cf33686d571cc4d9d24220a45819cf7877c0b2d15be2f066e675699d88",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/prosody-specific.log",
+      "sha256": "ca6a9fb4199470ebba59048446e1f880eafe8a395e5ce405ad1af083adadaf18",
+      "identical_to_base": true
+    },
+    {
+      "path": "reports/prosody/validation/summary.json",
+      "sha256": "6e89bd64824421e46eee7ca40e3923499da6ee5849de1577723ac43d6dbdb5b8",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/__init__.py",
+      "sha256": "3c7bfb3b4985be64af7d10cb341d9f771a859bc10e7b46d8b345bcc02e8a7555",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/bank.py",
+      "sha256": "4be37b683323fd3c76cf82506c59264c08b0f8e6bb15ce2b1ccc85a93cdfb703",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/engine.py",
+      "sha256": "5dbb40c2c65a2161b0043e8ec7415078d49bfc19d3cd9b85fe2c58dd54a10a1a",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/evaluate.py",
+      "sha256": "f651f112ffd492536ca1fb4b25241e73f31476da0f8e0b269cabb528b219b30e",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/extract.praat",
+      "sha256": "17032e2e763024f72df1d98f7f390f7767557dd845256b8b117c851bca3030e0",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/final_report.py",
+      "sha256": "bcc7dd6a70d9845e5538a8aa7f0dd5b07fa2fb472659465feadc0d8b4d8106f6",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/freeze.json",
+      "sha256": "047fac7379b09dfae0f545569e21ec34463ab7227255507ceeba68f8c6b6a24c",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/freeze_v1.json",
+      "sha256": "81307382281376f90130dc9903a8933394c6ba22cfe10e99ef3384aa022faa06",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/freeze_v2.json",
+      "sha256": "047fac7379b09dfae0f545569e21ec34463ab7227255507ceeba68f8c6b6a24c",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/profiles.py",
+      "sha256": "c4495ebc1657e259695893ec31637ece5f154e8304eb1f99280f2cfbf6b631e9",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/run.py",
+      "sha256": "0c2d90151498c3cd8ff4abf667029b7cc4d380ef6ce15f501c9c2759c4fd5bc6",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/statistics.praat",
+      "sha256": "6585b004c1f619c570de1cc8b36859e3534e5377d410a749d0a642370479d67e",
+      "identical_to_base": true
+    },
+    {
+      "path": "research/prosody/verify.praat",
+      "sha256": "d6cc9987f8ec21d960d9000b979a04017ba5511b10479acf1eeb13a0c131e8c3",
+      "identical_to_base": true
+    }
+  ]
+}
