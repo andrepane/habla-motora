@@ -109,6 +109,7 @@ jobs:
           PHRASE_TEST_WAV="$PWD/phrase-8s.wav" PAUSE_SCREENSHOT="$PWD/phrase-pauses-interface.png" npm run test:phrase-pauses-browser
           docker run --rm habla-motora:smoke-v1 python -c 'from tests.test_phrase_candidates_api import activity; import sys; sys.stdout.buffer.write(activity())' > phrase-candidates.wav
           CANDIDATE_TEST_WAV="$PWD/phrase-candidates.wav" CANDIDATE_SCREENSHOT="$PWD/phrase-candidates-interface.png" npm run test:phrase-candidates-browser
+          CANDIDATE_TEST_WAV="$PWD/phrase-candidates.wav" PROSODY_SCREENSHOT="$PWD/phrase-prosody-interface.png" npm run test:phrase-prosody-browser
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -136,3 +137,4 @@ jobs:
             phrase-interface.png
             phrase-pauses-interface.png
             phrase-candidates-interface.png
+            phrase-prosody-interface.png

@@ -1,4 +1,5 @@
 import { mountCandidates } from "./phrase-candidates.js";
+import { mountProsody } from "./phrase-prosody.js";
 import { mountPauses } from "./phrase-pauses.js";
 import { parseWav, metricText } from "./audio.js";
 import { PhraseRecorder } from "./phrase-recorder.js";
@@ -75,8 +76,10 @@ for (let id = 1; id <= 2; id++) {
   s.invalidate = (reason, context = true) => {
     s.request?.abort();
     if (context) s.candidates?.invalidate(`7A:${reason}`);
+    if (context) s.prosody?.invalidate(`7A:${reason}`);
     s.pauses?.invalidate(`7A:${reason}`, true);
     s.state.invalidate(reason, context);
+    s.prosody?.sourceUpdated();
     if (context) {
       resetReview();
       if (reason !== "selectionConfirmed")
@@ -221,6 +224,7 @@ for (let id = 1; id <= 2; id++) {
       control.disabled = value;
     q(".stop").disabled = !value;
     q(".cancel").disabled = !value;
+    if (!value) s.prosody?.sourceUpdated();
   }
   async function stop(cancel = false, limit = false) {
     if (!s.recording) return;
@@ -350,6 +354,7 @@ for (let id = 1; id <= 2; id++) {
   q(".submitReview").onclick = () => send(s, true);
   s.pauses = mountPauses(s, draw);
   s.candidates = mountCandidates(s, draw);
+  s.prosody = mountProsody(s);
 }
 function sampleAt(e, s) {
   const rect = s.q(".wave").getBoundingClientRect();
@@ -482,6 +487,7 @@ async function send(s, reviewed) {
 }
 function render(s, r) {
   s.pauses.sourceUpdated();
+  s.prosody.sourceUpdated();
   s.q(".state").textContent =
     `Selección: ${r.stages.selection.status} · Revisión: ${r.stages.review.status} · Cálculo: ${r.stages.calculation.status}`;
   s.q(".results").replaceChildren();
@@ -544,7 +550,8 @@ for (let i = 1; i <= 2; i++)
     }
     updateRest();
   };
-$("exportAll").onclick = () => {
+$("exportAll").onclick = async () => {
+  await Promise.all(slots.map(s => s.prosody.checkIdentity()));
   const payload = {
     schema_version: "phrase_battery_export_v1",
     protocol,
@@ -572,8 +579,10 @@ $("exportAll").onclick = () => {
       context_response: s.state.contextResult,
       history: s.state.history,
       results_current: !!s.state.result,
+      phrase_7a: { current_response: s.state.result, context_response: s.state.contextResult },
       pause_review_7b1: s.pauses.exported(),
       candidate_review_7b2: s.candidates.exported(),
+      prosody_8a_8b: s.prosody.exported(),
     })),
     aggregation: null,
   };
