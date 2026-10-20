@@ -13,6 +13,12 @@ const same = (a,b) => JSON.stringify(a)===JSON.stringify(b);
 export const fileHash = (kind,p) => kind==='vowel'?p.input?.file_sha256:kind==='ddk'||kind==='phrase'?p.provenance?.file_sha256:kind==='pauses'?p.provenance?.source_dependencies?.file_sha256:p.dependencies?.file_sha256;
 export const contextOf = (kind,p) => kind==='pauses'?p.source_7a?.context:p.context ?? p.dependencies?.context;
 export const contextHash = (kind,p) => kind==='phrase'?p.provenance?.context_sha256:kind==='pauses'?p.provenance?.source_dependencies?.context_sha256:p.dependencies?.context_sha256;
+export function assertAssets(kind,p,assets){
+  if(!assets.some(a=>a.role==='wav' && a.sha256===fileHash(kind,p)))throw Error('El WAV no corresponde al resultado original.');
+  if(kind==='phrase' && p.context?.modality!=='direct_reading_v1' &&
+    !assets.some(a=>a.role==='model' && a.sha256===p.context?.administration?.model_sha256))
+    throw Error('Falta el modelo auditivo original compatible con 7A.');
+}
 
 // [key, label, unit, original JSON pointer, primary, acquisition, experimental]
 export const FIELDS = {

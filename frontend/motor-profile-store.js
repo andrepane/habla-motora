@@ -1,4 +1,4 @@
-import {BATTERY,project,checkCompatibility,assertPhraseBinding,fileHash,contextOf,pointer} from './motor-profile.js';
+import {BATTERY,project,checkCompatibility,assertPhraseBinding,assertAssets,fileHash,contextOf,pointer} from './motor-profile.js';
 const enc=new TextEncoder(),dec=new TextDecoder();
 export async function sha(bytes){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');}
 export const bytesOf = x => enc.encode(JSON.stringify(x));
@@ -75,7 +75,8 @@ export async function loadSources(e){
   for(const s of Object.values(e.sources)){
     try{const x=await artifact(s.payload_sha256);const payload=JSON.parse(dec.decode(x.bytes));
       for(const a of s.assets??[])await artifact(a.sha256);
-      if(s.file_sha256!==fileHash(s.kind,payload) || !s.assets.some(a=>a.role==='wav'&&a.sha256===s.file_sha256))throw Error('Identidad WAV incompatible.');
+      if(s.file_sha256!==fileHash(s.kind,payload))throw Error('Identidad WAV incompatible.');
+      assertAssets(s.kind,payload,s.assets);
       result[s.result_id]={...s,payload};
     }catch{result[s.result_id]={...s,integrity_error:true};}
   }
@@ -86,7 +87,7 @@ export async function registerResult(evaluationId,attemptId,kind,payload,assets,
   const payloadBytes=bytesOf(payload),payloadHash=await putArtifact(payloadBytes,'application/json');
   const refs=[];
   for(const item of assets){const bytes=await item.blob.arrayBuffer();const hash=await putArtifact(bytes,'audio/wav');refs.push({sha256:hash,role:item.role,name:item.blob.name??'original.wav',size:bytes.byteLength});}
-  const wav=refs.find(x=>x.role==='wav');if(!wav || wav.sha256!==fileHash(kind,payload))throw Error('El WAV no corresponde al resultado original.');
+  assertAssets(kind,payload,refs);const wav=refs.find(x=>x.role==='wav');
   const context=contextOf(kind,payload);
   const source={result_id:crypto.randomUUID(),evaluation_id:evaluationId,attempt_id:attemptId,task:a.task,kind,
     created_at:now(),parent_source_ref:a.task==='phrase'&&kind!=='phrase'?a.current.phrase:null,
@@ -133,7 +134,8 @@ export async function importBundle(bundle,protocol){
     if(a.task==='phrase' && contextOf(s.kind,payload)?.attempt!==a.ordinal)throw Error('Intento 7A incompatible.');
     const identity=protocol?.sources?.[s.kind]?.checks.filter(c=>!c.when||pointer(payload,c.when)!=null).map(c=>({pointer:c.pointer,value:pointer(payload,c.pointer)}));
     if(identity && JSON.stringify(identity)!==JSON.stringify(s.compatibility))throw Error('Metadatos de procedencia incompatibles con el original.');
-    if(s.file_sha256!==fileHash(s.kind,payload) || !s.assets.some(a=>a.role==='wav'&&a.sha256===s.file_sha256))throw Error('WAV incompatible.');
+    if(s.file_sha256!==fileHash(s.kind,payload))throw Error('WAV incompatible.');
+    assertAssets(s.kind,payload,s.assets);
     sources[s.result_id]={...s,payload};
   }
   for(const s of Object.values(sources))if(['pauses','candidates','prosody'].includes(s.kind)){

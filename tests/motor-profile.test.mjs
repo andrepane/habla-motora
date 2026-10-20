@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {project,FIELDS,pointer,compareMetadata,assertPhraseBinding} from '../frontend/motor-profile.js';
+import {project,FIELDS,pointer,compareMetadata,assertPhraseBinding,assertAssets} from '../frontend/motor-profile.js';
 import {createEvaluation,addAttempt,bind,attach,invalidateAttempt} from '../frontend/motor-profile-store.js';
 const m=(value,reason=null)=>({value,reason});
 const context={attempt:1,selection_confirmed:true,selection:{start_sample:0,end_sample_exclusive:48000},modality:'direct_reading_v1',phrase_id:'phrase_es_01_v1',administration:{}};
@@ -135,4 +135,10 @@ test('numerator denominator method units and source status are preserved without
 });
 test('missing live identity marks sources stale, never reanalyzes',()=>{
   const s=setup();s.put('phrase',phrase());assert.equal(project(s.e,s.sources,null).domains.speed.status,'stale');
+});
+test('auditory modalities require the original model asset with the exact 7A hash',()=>{
+  const p=phrase();p.context={...context,modality:'auditory_model_only_v1',administration:{model_sha256:'model'}};
+  assert.throws(()=>assertAssets('phrase',p,[{role:'wav',sha256:'wav'}]));
+  assert.throws(()=>assertAssets('phrase',p,[{role:'wav',sha256:'wav'},{role:'model',sha256:'other'}]));
+  assert.doesNotThrow(()=>assertAssets('phrase',p,[{role:'wav',sha256:'wav'},{role:'model',sha256:'model'}]));
 });
