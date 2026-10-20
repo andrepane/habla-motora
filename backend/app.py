@@ -169,3 +169,7 @@ app.include_router(phrase_pause_router)
 # Optional experimental proposals; manual 7B.1 remains the sole metric source.
 from backend.phrase_candidate_routes import router as phrase_candidate_router
 app.include_router(phrase_candidate_router)
+
+# 8B only adapts the immutable 8A extractor to the confirmed 7A context.
+from backend.phrase_prosody_routes import router as phrase_prosody_router
+app.include_router(phrase_prosody_router)

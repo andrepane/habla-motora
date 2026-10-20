@@ -1,0 +1,57 @@
+{
+  "implementation_commit": "f8bc5643dc5f228a672a0267b5927fabd2df2d88",
+  "base_commit": "23ba91267d5f88314d555059a8c7d28865bb275a",
+  "active_freeze": "phrase_prosody_freeze_v2",
+  "configuration": "filtered_800_03__0",
+  "blocked_executed_in_8b": false,
+  "acoustic_code_changed": false,
+  "local": {
+    "prosody_specific": {
+      "passed": 76
+    },
+    "python_full": {
+      "passed": 626,
+      "xfailed": 6,
+      "warnings": 1
+    },
+    "frontend_unit": {
+      "passed": 73,
+      "new": 14
+    },
+    "browser": {
+      "vocal": 24,
+      "ddk": 35,
+      "phrase_7a": 53,
+      "phrase_7b1": 60,
+      "phrase_7b2": 34,
+      "prosody_8b": 55,
+      "total": 261
+    }
+  },
+  "ci": {
+    "run_id": 39442875677,
+    "url": "https://github.com/andrepane/habla-motora/actions/runs/39442875677",
+    "status": "completed",
+    "conclusion": "success",
+    "implementation_sha": "f8bc5643dc5f228a672a0267b5927fabd2df2d88",
+    "python_build": {
+      "passed": 626,
+      "xfailed": 6,
+      "warnings": 1,
+      "duration_s": 289.45
+    },
+    "python_repeat": {
+      "passed": 626,
+      "xfailed": 6,
+      "warnings": 1,
+      "duration_s": 299.07
+    },
+    "frontend_unit_passed": 73,
+    "browser_checks": 261,
+    "artifact_id": 12277210058,
+    "artifact_sha256": "7a2e4ac1c028e93019aa6c6db1a7fca3bf7bcc3e1cbf1f5180f4fbe09020fe53"
+  },
+  "milestone_8b_technical_status": "closed",
+  "human_validation": "pending",
+  "clinical_interpretation": false
+}

@@ -1,0 +1,395 @@
+{
+  "run": {
+    "id": 39442875677,
+    "name": "Verify Docker milestones 1, 2, 3, 4 and 5",
+    "node_id": "WFR_kwLOVHh_Vs8AAAAJLvqFHQ",
+    "head_branch": "investigate/phrase-prosody",
+    "head_sha": "f8bc5643dc5f228a672a0267b5927fabd2df2d88",
+    "path": ".github/workflows/docker-smoke.yml",
+    "display_title": "feat(phrase): integrate frozen prosody v1 with 7A identity and audita…",
+    "run_number": 47,
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "workflow_id": 383293113,
+    "check_suite_id": 106883798589,
+    "check_suite_node_id": "CS_kwDOVHh_Vs8AAAAY4sVWPQ",
+    "url": "https://api.github.com/repos/andrepane/habla-motora/actions/runs/39442875677",
+    "html_url": "https://github.com/andrepane/habla-motora/actions/runs/39442875677",
+    "pull_requests": [],
+    "created_at": "2026-10-20T14:50:17Z",
+    "updated_at": "2026-10-20T15:06:00Z",
+    "actor": {
+      "login": "andrepane",
+      "id": 156331723,
+      "node_id": "U_kgDOCVFuyw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/156331723?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/andrepane",
+      "html_url": "https://github.com/andrepane",
+      "followers_url": "https://api.github.com/users/andrepane/followers",
+      "following_url": "https://api.github.com/users/andrepane/following{/other_user}",
+      "gists_url": "https://api.github.com/users/andrepane/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/andrepane/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/andrepane/subscriptions",
+      "organizations_url": "https://api.github.com/users/andrepane/orgs",
+      "repos_url": "https://api.github.com/users/andrepane/repos",
+      "events_url": "https://api.github.com/users/andrepane/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/andrepane/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "run_attempt": 1,
+    "referenced_workflows": [],
+    "run_started_at": "2026-10-20T14:50:17Z",
+    "triggering_actor": {
+      "login": "andrepane",
+      "id": 156331723,
+      "node_id": "U_kgDOCVFuyw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/156331723?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/andrepane",
+      "html_url": "https://github.com/andrepane",
+      "followers_url": "https://api.github.com/users/andrepane/followers",
+      "following_url": "https://api.github.com/users/andrepane/following{/other_user}",
+      "gists_url": "https://api.github.com/users/andrepane/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/andrepane/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/andrepane/subscriptions",
+      "organizations_url": "https://api.github.com/users/andrepane/orgs",
+      "repos_url": "https://api.github.com/users/andrepane/repos",
+      "events_url": "https://api.github.com/users/andrepane/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/andrepane/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "jobs_url": "https://api.github.com/repos/andrepane/habla-motora/actions/runs/39442875677/jobs",
+    "logs_url": "https://api.github.com/repos/andrepane/habla-motora/actions/runs/39442875677/logs",
+    "check_suite_url": "https://api.github.com/repos/andrepane/habla-motora/check-suites/106883798589",
+    "artifacts_url": "https://api.github.com/repos/andrepane/habla-motora/actions/runs/39442875677/artifacts",
+    "cancel_url": "https://api.github.com/repos/andrepane/habla-motora/actions/runs/39442875677/cancel",
+    "rerun_url": "https://api.github.com/repos/andrepane/habla-motora/actions/runs/39442875677/rerun",
+    "previous_attempt_url": null,
+    "workflow_url": "https://api.github.com/repos/andrepane/habla-motora/actions/workflows/383293113",
+    "head_commit": {
+      "id": "f8bc5643dc5f228a672a0267b5927fabd2df2d88",
+      "tree_id": "6dbb6017de69074e549dce38ffca443a4064a377",
+      "message": "feat(phrase): integrate frozen prosody v1 with 7A identity and auditable F0 view",
+      "timestamp": "2026-10-20T14:50:12Z",
+      "author": {
+        "name": "andrepane",
+        "email": "156331723+andrepane@users.noreply.github.com"
+      },
+      "committer": {
+        "name": "andrepane",
+        "email": "156331723+andrepane@users.noreply.github.com"
+      }
+    },
+    "repository": {
+      "id": 1417183062,
+      "node_id": "R_kgDOVHh_Vg",
+      "name": "habla-motora",
+      "full_name": "andrepane/habla-motora",
+      "private": false,
+      "owner": {
+        "login": "andrepane",
+        "id": 156331723,
+        "node_id": "U_kgDOCVFuyw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/156331723?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/andrepane",
+        "html_url": "https://github.com/andrepane",
+        "followers_url": "https://api.github.com/users/andrepane/followers",
+        "following_url": "https://api.github.com/users/andrepane/following{/other_user}",
+        "gists_url": "https://api.github.com/users/andrepane/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/andrepane/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/andrepane/subscriptions",
+        "organizations_url": "https://api.github.com/users/andrepane/orgs",
+        "repos_url": "https://api.github.com/users/andrepane/repos",
+        "events_url": "https://api.github.com/users/andrepane/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/andrepane/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/andrepane/habla-motora",
+      "description": null,
+      "fork": false,
+      "url": "https://api.github.com/repos/andrepane/habla-motora",
+      "forks_url": "https://api.github.com/repos/andrepane/habla-motora/forks",
+      "keys_url": "https://api.github.com/repos/andrepane/habla-motora/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/andrepane/habla-motora/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/andrepane/habla-motora/teams",
+      "hooks_url": "https://api.github.com/repos/andrepane/habla-motora/hooks",
+      "issue_events_url": "https://api.github.com/repos/andrepane/habla-motora/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/andrepane/habla-motora/events",
+      "assignees_url": "https://api.github.com/repos/andrepane/habla-motora/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/andrepane/habla-motora/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/andrepane/habla-motora/tags",
+      "blobs_url": "https://api.github.com/repos/andrepane/habla-motora/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/andrepane/habla-motora/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/andrepane/habla-motora/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/andrepane/habla-motora/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/andrepane/habla-motora/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/andrepane/habla-motora/languages",
+      "stargazers_url": "https://api.github.com/repos/andrepane/habla-motora/stargazers",
+      "contributors_url": "https://api.github.com/repos/andrepane/habla-motora/contributors",
+      "subscribers_url": "https://api.github.com/repos/andrepane/habla-motora/subscribers",
+      "subscription_url": "https://api.github.com/repos/andrepane/habla-motora/subscription",
+      "commits_url": "https://api.github.com/repos/andrepane/habla-motora/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/andrepane/habla-motora/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/andrepane/habla-motora/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/andrepane/habla-motora/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/andrepane/habla-motora/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/andrepane/habla-motora/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/andrepane/habla-motora/merges",
+      "archive_url": "https://api.github.com/repos/andrepane/habla-motora/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/andrepane/habla-motora/downloads",
+      "issues_url": "https://api.github.com/repos/andrepane/habla-motora/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/andrepane/habla-motora/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/andrepane/habla-motora/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/andrepane/habla-motora/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/andrepane/habla-motora/labels{/name}",
+      "releases_url": "https://api.github.com/repos/andrepane/habla-motora/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/andrepane/habla-motora/deployments"
+    },
+    "head_repository": {
+      "id": 1417183062,
+      "node_id": "R_kgDOVHh_Vg",
+      "name": "habla-motora",
+      "full_name": "andrepane/habla-motora",
+      "private": false,
+      "owner": {
+        "login": "andrepane",
+        "id": 156331723,
+        "node_id": "U_kgDOCVFuyw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/156331723?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/andrepane",
+        "html_url": "https://github.com/andrepane",
+        "followers_url": "https://api.github.com/users/andrepane/followers",
+        "following_url": "https://api.github.com/users/andrepane/following{/other_user}",
+        "gists_url": "https://api.github.com/users/andrepane/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/andrepane/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/andrepane/subscriptions",
+        "organizations_url": "https://api.github.com/users/andrepane/orgs",
+        "repos_url": "https://api.github.com/users/andrepane/repos",
+        "events_url": "https://api.github.com/users/andrepane/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/andrepane/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/andrepane/habla-motora",
+      "description": null,
+      "fork": false,
+      "url": "https://api.github.com/repos/andrepane/habla-motora",
+      "forks_url": "https://api.github.com/repos/andrepane/habla-motora/forks",
+      "keys_url": "https://api.github.com/repos/andrepane/habla-motora/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/andrepane/habla-motora/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/andrepane/habla-motora/teams",
+      "hooks_url": "https://api.github.com/repos/andrepane/habla-motora/hooks",
+      "issue_events_url": "https://api.github.com/repos/andrepane/habla-motora/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/andrepane/habla-motora/events",
+      "assignees_url": "https://api.github.com/repos/andrepane/habla-motora/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/andrepane/habla-motora/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/andrepane/habla-motora/tags",
+      "blobs_url": "https://api.github.com/repos/andrepane/habla-motora/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/andrepane/habla-motora/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/andrepane/habla-motora/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/andrepane/habla-motora/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/andrepane/habla-motora/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/andrepane/habla-motora/languages",
+      "stargazers_url": "https://api.github.com/repos/andrepane/habla-motora/stargazers",
+      "contributors_url": "https://api.github.com/repos/andrepane/habla-motora/contributors",
+      "subscribers_url": "https://api.github.com/repos/andrepane/habla-motora/subscribers",
+      "subscription_url": "https://api.github.com/repos/andrepane/habla-motora/subscription",
+      "commits_url": "https://api.github.com/repos/andrepane/habla-motora/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/andrepane/habla-motora/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/andrepane/habla-motora/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/andrepane/habla-motora/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/andrepane/habla-motora/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/andrepane/habla-motora/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/andrepane/habla-motora/merges",
+      "archive_url": "https://api.github.com/repos/andrepane/habla-motora/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/andrepane/habla-motora/downloads",
+      "issues_url": "https://api.github.com/repos/andrepane/habla-motora/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/andrepane/habla-motora/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/andrepane/habla-motora/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/andrepane/habla-motora/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/andrepane/habla-motora/labels{/name}",
+      "releases_url": "https://api.github.com/repos/andrepane/habla-motora/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/andrepane/habla-motora/deployments"
+    }
+  },
+  "jobs": {
+    "jobs": [
+      {
+        "id": 118697047498,
+        "name": "docker-smoke",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 39442875677,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Build image including pytest",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Praat version and duration",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Repeat full pytest inside container",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Synthetic pitch observations inside container",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Synthetic jitter observations inside container",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Synthetic shimmer observations inside container",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Synthetic HNR observations inside container",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "DDK synthetic characterization",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Start API and verify endpoints over HTTP",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Verify pitch HTTP endpoint",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Verify jitter HTTP endpoint",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Verify shimmer HTTP endpoint",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Verify HNR HTTP endpoint",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Frontend unit and browser checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17
+          },
+          {
+            "name": "Container logs and cleanup",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 37
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 38
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 39
+          }
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "artifacts": [
+      {
+        "id": 12277210058,
+        "name": "milestone-5-docker-results",
+        "size_in_bytes": 3429901,
+        "url": "https://api.github.com/repos/andrepane/habla-motora/actions/artifacts/12277210058",
+        "archive_download_url": "https://api.github.com/repos/andrepane/habla-motora/actions/artifacts/12277210058/zip",
+        "expired": false,
+        "created_at": "2026-10-20T15:05:56Z",
+        "expires_at": "2027-01-18T14:50:17Z",
+        "updated_at": "2026-10-20T15:05:56Z",
+        "digest": "sha256:7a2e4ac1c028e93019aa6c6db1a7fca3bf7bcc3e1cbf1f5180f4fbe09020fe53",
+        "workflow_run": {
+          "id": 39442875677,
+          "repository_id": 1417183062,
+          "head_repository_id": 1417183062,
+          "head_branch": "investigate/phrase-prosody",
+          "head_sha": "f8bc5643dc5f228a672a0267b5927fabd2df2d88"
+        }
+      }
+    ]
+  }
+}

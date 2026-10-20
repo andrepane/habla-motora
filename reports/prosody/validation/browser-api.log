@@ -1,0 +1,99 @@
+INFO:     Started server process [5]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:59786 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59800 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59800 - "GET /static/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59802 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59802 - "GET /static/audio.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59802 - "POST /vowel-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59802 - "GET /static/recorder-worklet.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59802 - "POST /vowel-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51100 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51116 - "GET /ddk HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51116 - "GET /static/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51126 - "GET /static/ddk.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "GET /static/ddk.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "GET /static/audio.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51126 - "GET /static/ddk-recorder.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "POST /ddk-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "POST /ddk-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "POST /ddk-analysis HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:51130 - "POST /ddk-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "POST /ddk-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "POST /ddk-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "GET /static/recorder-worklet.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "POST /ddk-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51132 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51144 - "GET /phrase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51144 - "GET /static/phrase.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51158 - "GET /static/phrase.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51158 - "GET /static/phrase-candidates.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51176 - "GET /static/phrase-recorder.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51144 - "GET /static/phrase-pauses.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "GET /static/audio.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51190 - "GET /static/phrase-state.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "GET /static/phrase-candidate-state.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "GET /phrase-protocol HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51162 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58304 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58304 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58304 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58304 - "POST /phrase-analysis HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:58304 - "POST /phrase-analysis HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:58304 - "GET /static/recorder-worklet.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45614 - "GET /phrase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45630 - "GET /static/phrase.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45614 - "GET /static/phrase.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45630 - "GET /static/phrase-candidates.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45614 - "GET /static/phrase-pauses.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45656 - "GET /static/phrase-recorder.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45662 - "GET /static/phrase-state.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "GET /static/audio.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "GET /static/phrase-candidate-state.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "GET /phrase-protocol HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45670 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45646 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45686 - "GET /phrase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45686 - "GET /static/phrase.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /static/phrase.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /static/phrase-candidates.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45726 - "GET /static/phrase-state.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45714 - "GET /static/phrase-recorder.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45706 - "GET /static/audio.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45686 - "GET /static/phrase-pauses.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /static/phrase-candidate-state.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /phrase-protocol HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "POST /phrase-pause-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /phrase-candidate-protocol HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "POST /phrase-candidates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /phrase-candidate-protocol HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "POST /phrase-candidates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "POST /phrase-analysis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /phrase-candidate-protocol HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "POST /phrase-candidates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /phrase-candidate-protocol HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45690 - "GET /phrase-candidate-protocol HTTP/1.1" 200 OK

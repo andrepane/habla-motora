@@ -1,0 +1,72 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:ui
+> node --test tests/frontend.test.mjs tests/recording.test.mjs tests/ddk-recorder.test.mjs tests/phrase-state.test.mjs tests/phrase-recorder.test.mjs tests/phrase-pauses.test.mjs tests/phrase-candidates.test.mjs
+
+✔ DDK recording cancellation permission resolve preserves restart (5.108102ms)
+✔ DDK recording cancellation permission reject preserves restart (1.02389ms)
+✔ DDK recording cancellation worklet resolve preserves restart (2.125586ms)
+✔ DDK recording cancellation worklet reject preserves restart (0.824429ms)
+✔ DDK recording cancellation resume resolve preserves restart (0.699321ms)
+✔ DDK recording cancellation resume reject preserves restart (0.73163ms)
+✔ PCM16 round trip / rates / signed samples (1.128808ms)
+✔ central 3 s selection (0.723779ms)
+✔ null is not zero and negative HNR is preserved (25.18887ms)
+✔ incompatible uploaded WAV is rejected without conversion (0.874425ms)
+✔ unsupported capture rate is not silently resampled (0.142013ms)
+✔ requested microphone processing constraints (0.089856ms)
+✔ tiny finite measurements are not rounded to fake zeros (0.278129ms)
+✔ original proposals immutable and separate from decisions (4.120687ms)
+✔ copy preserves automatic and edited limits and link (0.375014ms)
+✔ invalidate audio archives without reuse (0.32589ms)
+✔ invalidate selection archives without reuse (0.200903ms)
+✔ invalidate modality archives without reuse (0.202355ms)
+✔ invalidate attempt archives without reuse (0.211308ms)
+✔ invalidate context archives without reuse (0.580173ms)
+✔ late response cannot replace current run (0.243156ms)
+✔ zero candidates never synthesizes manual zero (0.360322ms)
+✔ failed keeps null candidates (0.352881ms)
+✔ not_evaluable keeps null candidates (0.211588ms)
+✔ stale keeps null candidates (0.149795ms)
+✔ regeneration archives links and leaves supplied manual evidence intact (0.304648ms)
+✔ attempt instances independent (0.17956ms)
+✔ 7B source audio: clear confirmation/result and retain evidence history (3.440123ms)
+✔ 7B source selection: clear confirmation/result and retain evidence history (0.342715ms)
+✔ 7B source content_review: clear confirmation/result and retain evidence history (0.327693ms)
+✔ 7B source modality: clear confirmation/result and retain evidence history (0.851902ms)
+✔ 7B source phrase: clear confirmation/result and retain evidence history (0.187021ms)
+✔ 7B source attempt: clear confirmation/result and retain evidence history (0.216035ms)
+✔ 7B source model: clear confirmation/result and retain evidence history (0.113951ms)
+✔ 7B source protocol: clear confirmation/result and retain evidence history (0.088453ms)
+✔ manual interval edit preserves draft, invalidates result and does not affect other attempt (0.311599ms)
+✔ source identity binds review separately from context (0.834845ms)
+✔ Phrase recording cancellation permission resolve preserves restart (7.166096ms)
+✔ Phrase recording cancellation permission reject preserves restart (1.329639ms)
+✔ Phrase recording cancellation worklet resolve preserves restart (8.430308ms)
+✔ Phrase recording cancellation worklet reject preserves restart (3.6378ms)
+✔ Phrase recording cancellation resume resolve preserves restart (0.774395ms)
+✔ Phrase recording cancellation resume reject preserves restart (0.540923ms)
+✔ phrase capture is capped at 20 s without affecting the DDK recorder (53.01797ms)
+✔ audio invalidates context/rates and rejects stale response (1.459094ms)
+✔ start invalidates context/rates and rejects stale response (0.164598ms)
+✔ end invalidates context/rates and rejects stale response (0.164037ms)
+✔ phrase invalidates context/rates and rejects stale response (0.1194ms)
+✔ modality invalidates context/rates and rejects stale response (0.103486ms)
+✔ model invalidates context/rates and rejects stale response (0.150386ms)
+✔ selectionConfirmed invalidates context/rates and rejects stale response (0.103756ms)
+✔ review edit invalidates rates, preserves context and does not affect other attempt (0.536366ms)
+✔ manual annotations do not turn into inferred counts (0.902637ms)
+✔ cancel during permission, then restart before old completion (11.29193ms)
+✔ cancel during permission, then restart before old rejection (7.547941ms)
+✔ cancel during worklet, then restart before old completion (2.884898ms)
+✔ cancel during worklet, then restart before old rejection (2.415062ms)
+✔ cancel during resume, then restart before old completion (2.783596ms)
+✔ cancel during resume, then restart before old rejection (1.736371ms)
+ℹ tests 59
+ℹ suites 0
+ℹ pass 59
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 214.431891
