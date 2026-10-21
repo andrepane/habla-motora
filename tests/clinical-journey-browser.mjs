@@ -13,7 +13,7 @@ try{
  const record=()=>p.evaluate(async id=>(await import('/static/motor-profile-store.js')).getEvaluation(id),eid);
  const same=()=>check(new URL(p.url()).searchParams.get('evaluation_id')===eid,'evaluation identity retained');
  const saved=kind=>p.locator(`.profile-bridge p[data-saved-kind="${kind}"]`).waitFor();
- const upload=(task,selector)=>p.locator(selector).setInputFiles({name:task+'.wav',mimeType:'audio/wav',buffer:Buffer.from(f.wavs[task],'base64')});
+ const upload=async(task,selector)=>{await p.locator(task==='phrase'?'.flow-nav':'.flow-context').first().waitFor();await p.locator(selector).setInputFiles({name:task+'.wav',mimeType:'audio/wav',buffer:Buffer.from(f.wavs[task],'base64')});};
  const choose=async task=>{check((await record()).bindings[task]===null,'no automatic representative');await p.locator('[data-use-profile]').click();await p.locator('[data-use-profile]').filter({hasText:'Intento elegido'}).waitFor();check(!!(await record()).bindings[task],'explicit representative accepted');};
  await p.locator('#recommended').filter({hasText:'Comenzar Vocal'}).click();same();await upload('vowel','#file');await p.locator('#analyze').click();await saved('vowel');await choose('vowel');await checkpoint(p,'03-vocal');await p.screenshot({path:evidence+'/02-vocal.png',fullPage:true});
  await p.getByRole('link',{name:'Continuar con DDK',exact:true}).click();same();await p.locator('#recommended').filter({hasText:'Comenzar DDK'}).click();same();

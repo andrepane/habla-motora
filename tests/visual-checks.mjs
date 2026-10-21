@@ -19,6 +19,13 @@ export async function checkpoint(page, name) {
           requestAnimationFrame(() => requestAnimationFrame(r)),
         ),
     );
+    await page.locator(".skip-link").focus();
+    await page.keyboard.press("Enter");
+    assert.equal(
+      await page.evaluate(() => document.activeElement.id),
+      "content",
+      `${name}: skip link bypasses nav and transfers focus`,
+    );
     const geometry = await page.evaluate(() => ({
       viewport: innerWidth,
       document: document.documentElement.scrollWidth,
