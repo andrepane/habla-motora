@@ -1,2 +1,440 @@
-[hidden]{display:none!important}.flow-nav{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.flow-nav button[aria-current="step"]{outline:2px solid currentColor}.flow-context{margin:16px 0;overflow-wrap:anywhere}.flow-actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.flow-source{margin:12px 0}.flow-step{margin-bottom:18px}#tasks article{border-top:1px solid #dce6e8;padding:14px 0}#tasks fieldset{min-width:0}#tasks a{display:inline-block;margin:8px}#identity label,#start label{display:block;margin:12px 0}#identity input,#start select{font:inherit;padding:8px;max-width:100%}.limits{flex-wrap:wrap}.flow-context button{margin:4px}nav{line-height:1.8}button,a,select{max-width:100%}
-.profile-bridge>a{display:inline-block;margin-right:12px}
+/* Layout and navigation only. Visibility/availability still belongs to 10.2. */
+.flow-nav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 18px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.flow-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  gap: 3px;
+  min-height: 76px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  padding: 14px 14px 14px 46px;
+  text-align: left;
+  font-size: 13px;
+}
+.flow-nav button:last-child {
+  border-right: 0;
+}
+.flow-nav button::before {
+  content: attr(data-step-number);
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  font-size: 12px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-variant-numeric: tabular-nums;
+}
+.flow-nav button .step-state {
+  font-size: 11px;
+  font-weight: 450;
+  color: var(--muted);
+}
+.flow-nav button[aria-current="step"] {
+  outline: 0;
+  background: var(--accent-soft);
+  box-shadow: inset 0 -3px var(--accent);
+  color: var(--accent);
+}
+.flow-nav button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -4px;
+}
+.flow-nav button[data-visual-state="completed"]::before {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.flow-nav button:disabled {
+  background: #f1f4f7;
+}
+.flow-context {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 5px 20px;
+  margin: 0 0 24px;
+  padding: 0;
+  color: var(--muted);
+  counter-reset: flow-step;
+}
+.flow-context li {
+  font-size: 11px;
+  counter-increment: flow-step;
+}
+.flow-context li::before {
+  content: counter(flow-step) ". ";
+  font-weight: 700;
+}
+.flow-actions {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+.profile-bridge {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 16px !important;
+  margin: 0 0 20px !important;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  align-items: center;
+  color: var(--ink);
+}
+.profile-bridge > a {
+  font-size: 12px;
+  display: inline-block;
+  grid-row: 1;
+  padding: 4px 0;
+  margin-right: 12px;
+}
+.profile-bridge > a:nth-child(2) {
+  justify-self: end;
+  margin: 0;
+}
+.profile-bridge > p {
+  font-size: 12px;
+  margin: 3px 0;
+  line-height: 1.55;
+  grid-column: 1/-1;
+}
+.profile-bridge > p:not([role]) {
+  font-weight: 650;
+}
+.profile-bridge > button {
+  font-size: 12px;
+  justify-self: start;
+  grid-column: 1/-1;
+  min-height: 38px;
+  margin-top: 6px;
+}
+.profile-bridge > p[role] {
+  color: var(--muted);
+}
+#clinicalActions {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 18px 20px;
+  border-radius: 6px;
+  justify-content: space-between;
+}
+#clinicalActions button:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+#clinicalActions button:disabled {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+#savedTask > section,
+#savedTask section {
+  background: transparent;
+}
+body[data-page="evaluation"] header {
+  max-width: 800px;
+  padding: 20px 0 30px;
+}
+body[data-page="evaluation"] #start {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 28px;
+  padding: 28px;
+  align-items: start;
+}
+#start > h2,
+#start > button,
+#start > p,
+#start > details {
+  grid-column: 1/-1;
+}
+#start > h2 {
+  margin: 0;
+  font-size: 18px;
+}
+#start > #new {
+  justify-self: start;
+  padding: 13px 25px;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+#start label {
+  margin: 0 !important;
+  display: grid !important;
+  gap: 7px;
+}
+#start select {
+  width: 100%;
+}
+#start > p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+#start > details {
+  margin: 0;
+  padding-top: 12px;
+}
+#start input[type="file"] {
+  min-width: 0;
+}
+#identity {
+  position: relative;
+}
+body[data-page="evaluation"] #identity {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 24px;
+  padding: 24px;
+}
+body[data-page="evaluation"] #identity > h2 {
+  grid-column: 1/-1;
+}
+body[data-page="evaluation"] #identity label {
+  margin: 0 0 16px;
+  display: grid;
+  gap: 6px;
+}
+body[data-page="evaluation"] #identity input {
+  width: 100%;
+}
+body[data-page="evaluation"] #identity #evaluationState {
+  font-size: 13px;
+  margin: 0;
+  color: var(--muted);
+}
+body[data-page="evaluation"] #identity #completeness {
+  font-size: 13px;
+  margin: 0;
+  font-weight: 550;
+}
+#next {
+  grid-column: 1/-1;
+  border-top: 1px solid var(--line);
+  margin-top: 18px;
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+#next p {
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--muted);
+  margin: 0;
+}
+#tasks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+#tasks > section {
+  padding: 20px 0;
+  border: 0;
+  border-top: 2px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+#tasks h2 {
+  font-size: 19px;
+}
+#tasks article {
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+  margin: 12px 0;
+}
+#tasks h3 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+#tasks p {
+  font-size: 12px;
+  color: var(--muted);
+}
+#tasks a {
+  display: inline-block;
+  font-size: 13px;
+  padding: 9px 0;
+  margin: 0 12px 8px 0;
+}
+#tasks button {
+  font-size: 12px;
+  margin-top: 5px;
+}
+#tasks [data-create-task] {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--line);
+}
+#profileLink {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 20px 0;
+}
+#profileLink h2 {
+  font-size: 18px;
+  margin: 0;
+}
+#profileLink p {
+  font-size: 12px;
+  margin: 0;
+  color: var(--muted);
+}
+#profileLink a {
+  font-size: 14px;
+}
+#evaluationManagement {
+  margin-bottom: 24px;
+}
+.task-overview {
+  display: flex;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+  counter-reset: task;
+}
+.task-overview li {
+  font-size: 13px;
+  font-weight: 600;
+  counter-increment: task;
+}
+.task-overview li::before {
+  content: "0" counter(task);
+  font-size: 11px;
+  color: var(--accent);
+  margin-right: 8px;
+}
+.task-overview + p {
+  font-size: 12px !important;
+  color: var(--muted);
+}
+@media (max-width: 850px) {
+  #tasks {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  #tasks > section {
+    display: block;
+    padding: 18px 0;
+    margin: 0;
+  }
+  #tasks article {
+    margin: 10px 0;
+  }
+  #tasks > section > button {
+    margin-bottom: 10px;
+  }
+  .flow-nav button {
+    padding-left: 36px;
+    padding-right: 8px;
+    font-size: 12px;
+  }
+  .flow-nav button::before {
+    left: 9px;
+    width: 20px;
+    height: 20px;
+  }
+  .flow-context {
+    gap: 4px 14px;
+  }
+}
+@media (max-width: 600px) {
+  body[data-page="evaluation"] #start {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 16px;
+  }
+  body[data-page="evaluation"] #identity {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+  #next {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #recommended {
+    width: 100%;
+  }
+  .flow-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .flow-nav button {
+    min-height: 70px;
+    border-bottom: 1px solid var(--line);
+    padding: 12px 8px 12px 39px;
+  }
+  .flow-nav button:nth-child(2) {
+    border-right: 0;
+  }
+  .flow-nav button:nth-child(n + 3) {
+    border-bottom: 0;
+  }
+  .flow-nav button::before {
+    left: 10px;
+    top: 14px;
+  }
+  .flow-context {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px 12px;
+  }
+  .profile-bridge {
+    padding: 10px 12px !important;
+  }
+  .profile-bridge > p {
+    font-size: 11px;
+  }
+  .profile-bridge > a {
+    font-size: 11px;
+    margin: 0;
+  }
+  .profile-bridge > button {
+    width: 100%;
+  }
+  #clinicalActions {
+    padding: 14px;
+    gap: 12px;
+  }
+  #clinicalActions button,
+  #clinicalActions a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  #profileLink {
+    gap: 10px 18px;
+  }
+  .task-overview {
+    flex-direction: column;
+    gap: 6px;
+  }
+  body[data-page="evaluation"] header {
+    padding-top: 0;
+  }
+}

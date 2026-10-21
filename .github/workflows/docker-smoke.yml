@@ -115,6 +115,9 @@ jobs:
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" PROFILE_EVIDENCE_DIR="$PWD/motor-profile-evidence" npm run test:motor-profile-browser
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" npm run test:continuity-browser
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" JOURNEY_EVIDENCE_DIR="$PWD/clinical-journey-evidence" npm run test:journey-browser
+      - name: Visual system, responsive and accessibility checks
+        run: |
+          PROFILE_FIXTURES="$PWD/profile-fixtures.json" VISUAL_EVIDENCE_DIR="$PWD/visual-system-evidence" npm run test:visual-browser
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -145,3 +148,4 @@ jobs:
             phrase-prosody-interface.png
             motor-profile-evidence/
             clinical-journey-evidence/
+            visual-system-evidence/

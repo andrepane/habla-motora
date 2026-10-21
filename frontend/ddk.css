@@ -1,56 +1,74 @@
-select {
-  padding: 8px;
-  border: 1px solid #bdd1d6;
-  border-radius: 7px;
-  font: inherit;
-  max-width: 100%;
+/* DDK-specific review layout; all controls and typography use shared tokens. */
+#reviewSection {
+  border-top: 3px solid var(--accent);
 }
-.tableScroll {
-  overflow-x: auto;
-  margin: 18px 0;
+#reviewSection > p {
+  font-size: 13px;
+  max-width: 940px;
 }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 14px;
+#reviewedCards {
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
 }
-th,
-td {
-  border-bottom: 1px solid #dce6e8;
-  padding: 10px;
-  text-align: left;
+#reviewedCards .card:nth-child(-n + 3) {
+  background: var(--accent-soft);
 }
-caption {
-  text-align: left;
-  font-weight: 600;
+#reviewedCards .card:nth-child(n + 4) .value {
+  font-size: 20px;
+}
+#automaticDetails {
+  margin: 0 0 24px;
   padding: 10px 0;
+  border-top: 1px solid var(--line);
 }
-td input[type="number"] {
-  width: 120px;
+#automaticDetails > summary {
+  font-size: 13px;
 }
-svg {
-  width: 100%;
-  background: #f6f9fa;
-  margin-top: 20px;
-  border-radius: 10px;
+#automaticDetails #results {
+  margin: 0;
+  background: #fbfcfe;
 }
-svg [data-time] {
-  cursor: pointer;
+#exportSection {
+  padding: 18px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
-.cards {
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+#exportSection h2 {
+  font-size: 16px;
+}
+#eventChart,
+#intervalChart,
+#energyChart {
   margin: 16px 0;
 }
-nav {
-  margin-bottom: 12px;
+#reviewSection .tableScroll {
+  border: 1px solid var(--line);
+  border-radius: 5px;
 }
-[hidden] {
-  display: none !important;
+#reviewState {
+  padding: 12px 14px;
+  background: var(--soft);
 }
-.card,
-.notice,
+#warnings,
 #stageState,
-#warnings {
+.card {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  #editTable {
+    min-width: 600px;
+  }
+  #intervalTable {
+    min-width: 500px;
+  }
+  .tableScroll {
+    border: 1px solid var(--line);
+  }
+  #reviewedCards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #reviewedCards .card:nth-child(n + 4) .value {
+    font-size: 19px;
+  }
 }
