@@ -820,3 +820,24 @@ select,
 textarea {
   border-color: #788da1;
 }
+
+/* SVG labels share readable text contrast; data paths, frames and gaps are untouched. */
+svg text {
+  fill: var(--muted);
+}
+@media (max-width: 700px) {
+  body[data-page="vowel"] .charts svg text {
+    font-size: 26px;
+  }
+  body[data-page="vowel"] .charts svg > :is(path, circle, line) {
+    transform: translateX(50px) scaleX(0.9);
+    transform-origin: 0 0;
+  }
+  body[data-page="vowel"] .charts svg > text:not([x="3"]) {
+    transform: translateX(50px) scaleX(0.9);
+    transform-origin: 0 0;
+  }
+  body[data-page="vowel"] .charts svg > text[x="560"] {
+    text-anchor: end;
+  }
+}
