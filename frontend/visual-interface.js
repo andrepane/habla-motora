@@ -113,8 +113,14 @@ function paint() {
       input.setAttribute("aria-label", "Reinicio antes del acontecimiento");
   for (const node of document.querySelectorAll(".tableScroll")) {
     set(node, "tabindex", "0");
+    set(node, "role", "region");
     if (!node.getAttribute("aria-label"))
-      set(node, "aria-label", "Tabla desplazable horizontalmente");
+      set(
+        node,
+        "aria-label",
+        (node.querySelector("caption")?.textContent.trim() || "Tabla") +
+          " · desplazable horizontalmente",
+      );
   }
 }
 let scheduled = false;

@@ -49,6 +49,14 @@ export async function checkpoint(page, name) {
       `${name} ${width}: page overflow ${JSON.stringify(geometry)}`,
     );
     await page.addScriptTag({ path: require.resolve("axe-core/axe.min.js") });
+    for (const table of await page.locator(".tableScroll:visible").all()) {
+      assert.equal(
+        await table.getAttribute("role"),
+        "region",
+        "Focusable table scroll region is named semantically",
+      );
+      assert.ok(await table.getAttribute("aria-label"), "Scroll region label");
+    }
     const axe = await page.evaluate(() =>
       axe.run(document, {
         runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa"] },
