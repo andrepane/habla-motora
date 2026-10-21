@@ -44,7 +44,7 @@ export function mountCandidates(s, redraw) {
   q("run").onclick = async () => {
     const source = s.state.contextResult;
     if (!s.file || !source || !source.context.selection_confirmed) {
-      q("state").textContent = "Primero valida la selección confirmada de 7A.";
+      q("state").textContent = "Primero valida la selección confirmada.";
       return;
     }
     controller?.abort();
@@ -153,8 +153,8 @@ export function mountCandidates(s, redraw) {
         const note = document.createElement("p");
         note.textContent =
           decision.action === "rejected"
-            ? "Propuesta rechazada; no modifica 7B.1."
-            : "Copiado como uncertain. Clasifica y revisa después en 7B.1.";
+            ? "Propuesta rechazada; no modifica las pausas revisadas."
+            : "Copiado como Dudoso. Clasifica y confirma después en Pausas.";
         row.append(note);
       }
       const button = (label, action, terminal = false) => {

@@ -27,7 +27,7 @@ async function listing(){const evaluations=await listEvaluations();$('evaluation
 }
 const taskOf=d=>d==='phonation'?'vowel':d==='ddk'?'ddk':'phrase';
 function taskUrl(task,attemptId){return `${TASKS[task]}?evaluation_id=${encodeURIComponent(id)}&attempt_id=${encodeURIComponent(attemptId)}`;}
-function metricCard(m){const n=el('div',undefined,'profile-metric');n.dataset.metric=m.key;n.append(el('span',m.label),el('strong',metricText(m)),
+function metricCard(m){const n=el('div',undefined,'profile-metric');n.dataset.metric=m.key;n.append(el('span',m.label.replace(/\b7A\b/g,'confirmada')),el('strong',metricText(m)),
   el('small',m.value!==null?m.unit:`${reasonLabels[m.reason]??'No disponible; consulta los detalles técnicos'}`),
   el('small',`${m.acquisition==='manual_reviewed'?'Revisada':m.acquisition==='versioned_reference'?'Referencia del estímulo':m.acquisition==='manual_selection'?'Selección manual':'Automática'}${m.experimental?' · Experimental':''}`));return n;}
 function miniCurve(host,p){

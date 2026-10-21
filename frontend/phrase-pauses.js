@@ -52,12 +52,12 @@ export function mountPauses(s, redraw) {
   const panel = document.createElement("fieldset");
   panel.className = "pausePanel";
   panel.innerHTML = `<legend>Pausas revisadas manualmente</legend>
-  <p>Sin detector automático. Pausa: interrupción interna confirmada ≥250 ms; incluye respiración cuando corresponda. «Eh», fragmentos, reinicios y oclusiones permanecen en el tiempo operacional. No es tiempo de fonación ni articulación pura.</p>
-  <p>Primero confirma la selección y la revisión de contenido. Revisa toda la selección escuchando el contexto. Si hay duda intrapalabra, marca uncertain. Una interferencia no verbal impide publicar el resumen global.</p>
-  <label><input type="checkbox" data-p="editing"> Anotar intervalos sobre la onda de arriba (el arrastre no cambia la selección 7A)</label>
+  <p>El resultado final requiere revisión manual. Pausa: interrupción interna confirmada ≥250 ms; incluye respiración cuando corresponda. «Eh», fragmentos, reinicios y oclusiones permanecen en el tiempo operacional. No es tiempo de fonación ni articulación pura.</p>
+  <p>Primero confirma la selección y la revisión de contenido. Revisa toda la selección escuchando el contexto. Si hay duda intrapalabra, marca Dudoso. Una interferencia no verbal impide publicar el resumen global.</p>
+  <label><input type="checkbox" data-p="editing"> Anotar intervalos sobre la onda de arriba (el arrastre no cambia la selección confirmada)</label>
   <div class="grid"><label>Inicio absoluto <input data-p="start" type="number" min="0" step="1"></label><label>Fin exclusivo <input data-p="end" type="number" min="1" step="1"></label></div>
   <button type="button" data-p="cursorStart">Inicio en cursor</button><button type="button" data-p="cursorEnd">Fin en cursor</button><button type="button" data-p="add">Añadir intervalo</button>
-  <p>Edición por muestras en cada intervalo; escucha con 250 ms de contexto a cada lado. Ampliar cambia solo la vista. Clasificaciones: pause (pausa), below_threshold (&lt;250 ms), consonantal_closure (oclusión), uncertain (dudoso), other_nonverbal (interferencia).</p>
+  <p>Edición por muestras en cada intervalo; escucha con 250 ms de contexto a cada lado. Ampliar cambia solo la vista. Clasificaciones: pausa, menor de 250 ms, oclusión, dudoso e interferencia.</p>
   <div data-p="rows"></div>
   <label>Estado sin confirmar <select data-p="status"><option value="draft">Borrador</option><option value="not_evaluable">No evaluable</option></select></label>
   <label>Nota global / motivo de no evaluable <textarea data-p="note"></textarea></label>
@@ -391,7 +391,7 @@ export function mountPauses(s, redraw) {
     const source = s.state.result;
     if (!s.file || !source) {
       q("state").textContent =
-        "Primero envía la selección y revisión actual de 7A.";
+        "Primero confirma la selección y la revisión de contenido.";
       return;
     }
     controller?.abort();
@@ -404,7 +404,7 @@ export function mountPauses(s, redraw) {
       form.append("review_json", JSON.stringify(source.review));
     form.append("expected_file_sha256", source.provenance.file_sha256);
     form.append("temporal_json", JSON.stringify(draft()));
-    q("state").textContent = "Calculando 7B.1…";
+    q("state").textContent = "Calculando las pausas revisadas…";
     try {
       const response = await fetch("/phrase-pause-analysis", {
         method: "POST",
@@ -469,7 +469,7 @@ export function mountPauses(s, redraw) {
       q("start").value = Math.min(a, b);
       q("end").value = Math.max(a, b);
       q("state").textContent =
-        "Límites de intervalo preparados. Añade y clasifica manualmente; 7A no ha cambiado.";
+        "Límites de intervalo preparados. Añade y clasifica manualmente; la selección no ha cambiado.";
     },
   };
 }
