@@ -187,3 +187,11 @@
     grid-column: 1/-1;
   }
 }
+@media (max-width: 420px) {
+  .prosody-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .prosody-metrics .metric:nth-child(even) {
+    border-left: 0;
+  }
+}

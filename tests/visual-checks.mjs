@@ -26,6 +26,13 @@ export async function checkpoint(page, name) {
       "content",
       `${name}: skip link bypasses nav and transfers focus`,
     );
+    for (const value of await page.locator('[data-pr="primary"] .metric strong:visible').all()) {
+      const lines = await value.evaluate(node => {
+        const range = document.createRange(); range.selectNodeContents(node);
+        return new Set([...range.getClientRects()].map(rect => Math.round(rect.top))).size;
+      });
+      assert.equal(lines, 1, `${name} ${width}: primary F0 metric stays on one line`);
+    }
     const geometry = await page.evaluate(() => ({
       viewport: innerWidth,
       document: document.documentElement.scrollWidth,
