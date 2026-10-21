@@ -40,7 +40,20 @@ export function taskBridge(task){
           const input=task==='phrase'?document.querySelector(`#attempt${a.ordinal} [data-f="file"]`):document.querySelector('#file');
           if(!input)throw Error('El editor todavía no está disponible.');
           editable=true;consulting=false;view.remove();button.remove();unlock();
-          const transfer=new DataTransfer();transfer.items.add(new File([stored.bytes],ref.name,{type:'audio/wav'}));input.files=transfer.files;input.dispatchEvent(new Event('change',{bubbles:true}));
+          const transfer=new DataTransfer();transfer.items.add(new File([stored.bytes],ref.name,{type:'audio/wav'}));input.files=transfer.files;
+          if(task==='phrase'){
+            const slot=document.querySelector(`#attempt${a.ordinal}`),modality=slot.querySelector('[data-f="modality"]');
+            modality.value=source.context.modality;modality.dispatchEvent(new Event('input',{bubbles:true}));
+            await new Promise(resolve=>input.dispatchEvent(new CustomEvent('change',{bubbles:true,detail:{loaded:resolve}})));
+            const limit=slot.querySelector('[data-f="limit"]');
+            if(source.context.recording_limit_reached){limit.checked=true;limit.dispatchEvent(new Event('input',{bubbles:true}));}
+            const model=source.assets.find(x=>x.role==='model');
+            if(model){
+              const original=await artifact(model.sha256),modelInput=slot.querySelector('[data-f="model"]'),files=new DataTransfer();
+              files.items.add(new File([original.bytes],model.name,{type:'audio/wav'}));modelInput.files=files.files;modelInput.dispatchEvent(new Event('change',{bubbles:true}));
+              message.textContent='Modalidad y modelo originales recuperados. Vuelve a escuchar el modelo completo y confirma selección y revisión. Los resultados anteriores se conservan; las dependencias necesitan actualizarse.';
+            }
+          }else input.dispatchEvent(new Event('change',{bubbles:true}));
         }catch(e){message.textContent=e.message;}
       };
     }else{editable=true;unlock();message.textContent='Sin resultado guardado. Revisión pendiente; los cambios del editor son un borrador temporal hasta calcular y guardar.';}

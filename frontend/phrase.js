@@ -168,9 +168,10 @@ for (let id = 1; id <= 2; id++) {
       }
     }
   };
-  get("file").addEventListener("change", () => {
+  get("file").addEventListener("change", async (event) => {
     const file = get("file").files[0];
-    if (file) s.load(file);
+    if (file) await s.load(file);
+    event.detail?.loaded?.();
   });
   get("model").addEventListener("change", async () => {
     s.invalidate("model", true);

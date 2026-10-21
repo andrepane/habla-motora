@@ -35,7 +35,9 @@ confirmación de selección/revisiones; en Frase explica las invalidaciones de P
 candidatos y Prosodia. Cancelar no modifica nada. Aceptar inicia el editor con el
 original y conserva las reglas existentes de invalidación al cargar/modificar.
 No se restauran confirmaciones como si la nueva edición ya estuviera revisada.
-Los resultados anteriores permanecen inmutables.
+Los resultados anteriores permanecen inmutables. La edición conserva modalidad,
+marca de límite y modelo auditivo original de Frase; exige volver a reproducir
+el modelo, sin restaurar automáticamente su confirmación de presentación.
 
 ## P0.4
 
@@ -53,9 +55,9 @@ Una dependencia invalidada sigue desactualizada aunque se abandone el borrador.
 
 - Python completa: 630 passed, 6 xfailed, 1 aviso de deprecación; 244.03 s.
 - npm run test:ui: 100 pruebas aprobadas, 3 nuevas de navegación.
-- npm run test:continuity-browser: 32 comprobaciones aprobadas.
+- npm run test:continuity-browser: 36 comprobaciones aprobadas.
 - Regresiones navegador: Vocal 24, DDK 35, Frase 53, Pausas 60, candidatos 34,
-  Prosodia 55, Perfil 46: 307 comprobaciones aprobadas. Total navegador: 339.
+  Prosodia 55, Perfil 46: 307 comprobaciones aprobadas. Total navegador: 343.
 - Consulta sin POST ni cambios en JSON exacto de evaluación; edición cancelada;
   invalidaciones explícitas conservando fuentes; registro exacto del intento 2;
   Pausas/Prosodia del mismo intento y F0 sin cambios por revisión de contenido;

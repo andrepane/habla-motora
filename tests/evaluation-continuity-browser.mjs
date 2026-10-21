@@ -55,7 +55,7 @@ try{
  check(secondState.current.prosody===prosody.result_id&&!secondState.invalid.prosody,'content/pause review does not alter existing F0');
  // Browser-native reload warning also protects temporary drafts.
  await card.locator('[data-f="notes"]').fill('Borrador temporal');
- const reloadDialog=p.waitForEvent('dialog');const reload=p.reload().catch(()=>null);await(await reloadDialog).dismiss();await reload;
+ const reloadDialog=p.waitForEvent('dialog');const reload=p.reload({timeout:3000}).catch(()=>null);await(await reloadDialog).dismiss();await reload;
  check(await card.locator('[data-f="notes"]').inputValue()==='Borrador temporal','cancel reload preserves unconfirmed draft');
  const pauseSource=final.sources[final.attempts[seed.ids.phrase].current.pauses];check(pauseSource.attempt_id===seed.ids.phrase&&pauseSource.parent_source_ref===a.current.phrase,'existing pauses retain own 7A parent');
  p.on('dialog',d=>d.accept());await p.goto(base+'/phrase');await p.locator('#tab2').click();check(await p.locator('#attempt2').isVisible(),'independent two-attempt mode remains available');
@@ -63,5 +63,24 @@ try{
  await p.setViewportSize({width:390,height:844});await p.goto(url('ddk'));await consult();check(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'read-only consultation fits mobile');
  // An unstarted task redirects to explicit management, not to independent analysis.
  await p.goto(base+'/profile');await p.locator('#new').click();await p.locator('#identity').waitFor();const emptyId=new URL(p.url()).searchParams.get('evaluation_id');await p.locator('nav a[data-evaluation-task="ddk"]').click();check(p.url().includes('manage_task=ddk')&&p.url().includes(emptyId),'missing attempt opens same evaluation management');check(await p.locator('#identity > details').evaluate(x=>x.open),'explicit attempt creation exposed');
+ // An auditory attempt must never silently reopen as direct reading.
+ const auditory=await p.evaluate(async f=>{
+   const s=await import('/static/motor-profile-store.js'),e=s.createEvaluation('Modelo sintético');await s.saveEvaluation(e);let aid;
+   await s.mutateEvaluation(e.evaluation_id,e=>{aid=s.addAttempt(e,'phrase');s.bind(e,'phrase',aid);});
+   const wav=new File([Uint8Array.from(atob(f.wavs.phrase),c=>c.charCodeAt(0))],'original.wav',{type:'audio/wav'});
+   const hash=await s.sha(await wav.arrayBuffer()),ctx={...f.payloads.phrase.context,modality:'auditory_model_only_v1',recording_limit_reached:true,administration:{model_id:'wav-sha256:'+hash,model_sha256:hash,model_presented_confirmed:true}};
+   const form=new FormData();form.append('file',wav);form.append('context_json',JSON.stringify(ctx));
+   const r=await fetch('/phrase-analysis',{method:'POST',body:form});if(!r.ok)throw Error(await r.text());
+   const source=await r.json(),protocol=await(await fetch('/motor-profile-protocol')).json();
+   await s.registerResult(e.evaluation_id,aid,'phrase',source,[{blob:wav,role:'wav'},{blob:wav,role:'model'}],protocol);
+   return {id:e.evaluation_id,aid,hash};
+ },fixture);
+ await p.goto(base+`/phrase?evaluation_id=${auditory.id}&attempt_id=${auditory.aid}`);await consult();
+ await p.getByRole('button',{name:'Editar / Reanalizar'}).click();
+ await p.locator('#attempt1 .modelState').filter({hasText:'Modelo identificado:'}).waitFor();
+ check(await p.locator('#attempt1 [data-f="modality"]').inputValue()==='auditory_model_only_v1','editing preserves auditory modality');
+ check(await p.locator('#attempt1 [data-f="limit"]').isChecked(),'editing preserves recorded limit flag');
+ check((await p.locator('#attempt1 .modelState').innerText()).includes(auditory.hash),'editing restores byte-identical original model');
+ check((await p.locator('#attempt1 .modelState').innerText()).includes('Aún no presentado'),'restoring model never fabricates its presentation confirmation');
  check(errors.length===0,'no uncaught browser errors');console.log(`Continuity browser: ${checks} checks passed`);await context.close();
 }finally{await browser.close();}
