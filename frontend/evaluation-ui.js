@@ -9,12 +9,13 @@ async function create(task){let aid;await mutateEvaluation(id,e=>aid=addAttempt(
 async function render(){const version=++revision;try{
  const response=await fetch('/motor-profile-protocol',{cache:'no-store'});if(!response.ok)throw Error('No se pudo comprobar la versión de evaluación.');protocol=await response.json();
  const evaluations=await listEvaluations();$('evaluations').replaceChildren(new Option('Selecciona una evaluación',''));for(const e of evaluations)$('evaluations').add(new Option(`${e.case_ref||'Evaluación'} · ${new Date(e.session_at).toLocaleString()}`,e.evaluation_id));$('evaluations').value=id||'';
- $('identity').hidden=$('profileLink').hidden=!id;$('tasks').replaceChildren();linkNavigation(id);
+ $('identity').hidden=$('profileLink').hidden=$('evaluationManagement').hidden=!id;if(id)$('evaluationManagement').append($('start'));else document.querySelector('header').after($('start'));$('tasks').replaceChildren();linkNavigation(id);
  if(!id)return;const e=await getEvaluation(id);if(!e)throw Error('Evaluación no encontrada en este navegador.');const sources=await loadSources(e);if(version!==revision)return;linkNavigation(id,e);
  $('case').value=e.case_ref;$('session').value=new Date(new Date(e.session_at).getTime()-new Date(e.session_at).getTimezoneOffset()*60000).toISOString().slice(0,16);
  const rows=Object.values(e.attempts).map(a=>({attempt:a,summary:attemptSummary(e,a,sources,protocol)}));
  $('evaluationState').textContent=rows.some(r=>r.summary.status==='failed')?'Hay una tarea que no se pudo completar':rows.some(r=>r.summary.status==='stale')?'Hay resultados que necesitan actualizarse':rows.length?'Evaluación en curso':'Evaluación pendiente';
  const completed=rows.filter(r=>r.summary.representative).flatMap(r=>Object.values(r.summary.domains)).filter(d=>d.status==='completed').length;
+ if(completed===5)$('evaluationState').textContent='Dominios cuantitativos completados';
  $('completeness').textContent=`${completed}/5 dominios cuantitativos completados · Inteligibilidad no evaluada`;
  const next=recommended(e,rows),button=node('button',next.label);button.id='recommended';button.onclick=async()=>{try{if(next.create)await create(next.task);else if(next.choose){await mutateEvaluation(id,e=>bind(e,next.task,next.attempt));await render();}else if(next.profile)location.href=evaluationUrl(id);else go(next.task,next.attempt,next.step);}catch(x){message(x.message);}};$('next').replaceChildren(node('p','Siguiente paso recomendado'),button);
  for(const task of ['vowel','ddk','phrase']){
