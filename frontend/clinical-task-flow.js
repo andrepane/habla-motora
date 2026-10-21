@@ -21,7 +21,7 @@ export function mountPhraseSteps(slots,bridge){
   let step='recording',all=false;
   const options=make('details');options.append(make('summary','Opciones técnicas de navegación'));const showAll=make('button','Mostrar todos los apartados');showAll.type='button';showAll.className='showAllSteps';showAll.onclick=()=>window.dispatchEvent(new Event('motor-show-all'));options.append(showAll);nav.after(options);const wanted=new URLSearchParams(location.search).get('step');
   const keys=['recording','content','pauses','prosody'],labels=['Grabación y selección','Contenido','Pausas','Prosodia'],buttons=new Map();
-  function available(key){return key==='recording'||key==='content'&&!!s.state.contextResult?.context.selection_confirmed||key==='pauses'&&!!s.state.result?.review?.confirmed&&s.state.result.review.production==='present'||key==='prosody'&&!!s.state.contextResult?.context.selection_confirmed;}
+  function available(key){return key==='recording'||key==='content'&&!!s.state.contextResult?.context.selection_confirmed||key==='pauses'&&!!s.state.result?.review?.confirmed||key==='prosody'&&!!s.state.contextResult?.context.selection_confirmed;}
   function show(key){if(!available(key))return;step=key;render();}
   for(let i=0;i<keys.length;i++){const key=keys[i],b=make('button',labels[i]);b.type='button';b.dataset.phraseStep=key;b.onclick=()=>show(key);buttons.set(key,b);nav.append(b);}
   const footer=make('div');footer.className='flow-actions';const next=make('button');next.type='button';next.dataset.nextStep='true';footer.append(next);s.section.append(footer);
