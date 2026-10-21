@@ -66,27 +66,31 @@ function paint() {
       pauses: ["confirmed", "not_evaluable"].includes(
         pauses?.temporal_review?.status,
       ),
-      prosody: ["completed", "partial", "not_evaluable"].includes(
-        slot.querySelector(".prosodyPanel")?.dataset.status,
-      ),
     };
+    const prosodyStatus = slot.querySelector(".prosodyPanel")?.dataset.status;
     for (const [i, b] of [
       ...slot.querySelectorAll("[data-phrase-step]"),
     ].entries()) {
+      const resultStatus = b.dataset.phraseStep === "prosody"
+        ? (["completed", "partial", "not_evaluable"].includes(prosodyStatus)
+          ? prosodyStatus : null)
+        : (finished[b.dataset.phraseStep] ? "completed" : null);
       const status =
         b.getAttribute("aria-current") === "step"
           ? "current"
           : b.disabled
             ? "locked"
-            : finished[b.dataset.phraseStep]
-              ? "completed"
-              : "available";
-      const label = {
+            : resultStatus || "available";
+      const labels = {
         current: "Paso actual",
         locked: "Bloqueado",
         completed: "Completado",
+        partial: "Parcial",
+        not_evaluable: "No evaluable",
         available: "Disponible",
-      }[status];
+      };
+      const label = labels[status] + (status === "current" && b.dataset.phraseStep === "prosody" && resultStatus
+        ? " · " + labels[resultStatus] : "");
       set(b, "data-step-number", String(i + 1));
       set(b, "data-visual-state", status);
       let note = b.querySelector(".step-state");
