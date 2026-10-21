@@ -69,4 +69,11 @@ nueva ejecución de bancos desarrollo/bloqueado. El harness permite Chromium
 alternativo con BROWSER_EXECUTABLE; CI mantiene el Chromium de Playwright.
 Docker no está disponible localmente. El workflow existente conserva construcción,
 pytest dentro del contenedor y endpoints HTTP e incorpora la nueva prueba.
-Su resultado se documentará por separado.
+Verificación remota completada: commit de implementación
+20f516fd516676b604ab938cf742ad6ab15dd79f, workflow 39593716565, todos los pasos
+aprobados. Docker: 630 passed + 6 xfailed en construcción y en la segunda pasada;
+100 unitarias frontend y 343 comprobaciones de navegador, incluidas 36 nuevas.
+Endpoints HTTP, caracterizaciones existentes y carga de artefactos aprobados.
+URL: https://github.com/andrepane/habla-motora/actions/runs/39593716565
+Resumen verificable en reports/hito10_1/ci.json. Este cierre documental no cambia
+el código validado ni requiere volver a ejecutar los motores.

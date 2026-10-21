@@ -1,0 +1,214 @@
+{
+  "implementation_commit": "20f516fd516676b604ab938cf742ad6ab15dd79f",
+  "base_main": "f6936dfa6d4e44e373d9eda9f092f6c758b47f2d",
+  "workflow_url": "https://github.com/andrepane/habla-motora/actions/runs/39593716565",
+  "job_id": 119200755307,
+  "status": "completed",
+  "conclusion": "success",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-10-21T11:40:43Z",
+      "completed_at": "2026-10-21T11:40:44Z"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-10-21T11:40:44Z",
+      "completed_at": "2026-10-21T11:40:49Z"
+    },
+    {
+      "name": "Build image including pytest",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-10-21T11:40:49Z",
+      "completed_at": "2026-10-21T11:46:50Z"
+    },
+    {
+      "name": "Praat version and duration",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-10-21T11:46:50Z",
+      "completed_at": "2026-10-21T11:46:51Z"
+    },
+    {
+      "name": "Repeat full pytest inside container",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-10-21T11:46:51Z",
+      "completed_at": "2026-10-21T11:52:20Z"
+    },
+    {
+      "name": "Synthetic pitch observations inside container",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-10-21T11:52:20Z",
+      "completed_at": "2026-10-21T11:52:24Z"
+    },
+    {
+      "name": "Synthetic jitter observations inside container",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-10-21T11:52:24Z",
+      "completed_at": "2026-10-21T11:52:45Z"
+    },
+    {
+      "name": "Synthetic shimmer observations inside container",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-10-21T11:52:45Z",
+      "completed_at": "2026-10-21T11:53:24Z"
+    },
+    {
+      "name": "Synthetic HNR observations inside container",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-10-21T11:53:24Z",
+      "completed_at": "2026-10-21T11:56:10Z"
+    },
+    {
+      "name": "DDK synthetic characterization",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-10-21T11:56:10Z",
+      "completed_at": "2026-10-21T11:56:16Z"
+    },
+    {
+      "name": "Start API and verify endpoints over HTTP",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-10-21T11:56:16Z",
+      "completed_at": "2026-10-21T11:56:17Z"
+    },
+    {
+      "name": "Verify pitch HTTP endpoint",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2026-10-21T11:56:17Z",
+      "completed_at": "2026-10-21T11:56:18Z"
+    },
+    {
+      "name": "Verify jitter HTTP endpoint",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-10-21T11:56:18Z",
+      "completed_at": "2026-10-21T11:56:18Z"
+    },
+    {
+      "name": "Verify shimmer HTTP endpoint",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-10-21T11:56:18Z",
+      "completed_at": "2026-10-21T11:56:20Z"
+    },
+    {
+      "name": "Verify HNR HTTP endpoint",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-10-21T11:56:20Z",
+      "completed_at": "2026-10-21T11:56:21Z"
+    },
+    {
+      "name": "Run actions/setup-node@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-10-21T11:56:21Z",
+      "completed_at": "2026-10-21T11:56:22Z"
+    },
+    {
+      "name": "Frontend unit and browser checks",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17,
+      "started_at": "2026-10-21T11:56:22Z",
+      "completed_at": "2026-10-21T11:58:26Z"
+    },
+    {
+      "name": "Container logs and cleanup",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 18,
+      "started_at": "2026-10-21T11:58:26Z",
+      "completed_at": "2026-10-21T11:58:26Z"
+    },
+    {
+      "name": "Run actions/upload-artifact@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-10-21T11:58:26Z",
+      "completed_at": "2026-10-21T11:58:27Z"
+    },
+    {
+      "name": "Post Run actions/setup-node@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 37,
+      "started_at": "2026-10-21T11:58:27Z",
+      "completed_at": "2026-10-21T11:58:27Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 38,
+      "started_at": "2026-10-21T11:58:27Z",
+      "completed_at": "2026-10-21T11:58:28Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 39,
+      "started_at": "2026-10-21T11:58:28Z",
+      "completed_at": "2026-10-21T11:58:28Z"
+    }
+  ],
+  "results": {
+    "python_each_docker_pass": {
+      "passed": 630,
+      "xfailed": 6,
+      "warnings": 1
+    },
+    "frontend_unit_passed": 100,
+    "browser_checks": {
+      "continuity": 36,
+      "vocal": 24,
+      "ddk": 35,
+      "phrase": 53,
+      "pauses": 60,
+      "candidates": 34,
+      "prosody": 55,
+      "profile": 46,
+      "total": 343
+    }
+  },
+  "unchanged": [
+    "backend",
+    "configs",
+    "praat",
+    "research",
+    "frontend/motor-profile.js",
+    "frontend/motor-profile-store.js"
+  ],
+  "freeze_sha256": "047fac7379b09dfae0f545569e21ec34463ab7227255507ceeba68f8c6b6a24c"
+}
