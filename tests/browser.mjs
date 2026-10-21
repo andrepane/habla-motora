@@ -1,5 +1,4 @@
-import { createRequire } from "node:module";
-const { chromium } = createRequire(import.meta.url)("playwright");
+import { chromium } from "./browser-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { createHash } from "node:crypto";

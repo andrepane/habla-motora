@@ -1,3 +1,4 @@
+import {linkNavigation} from './evaluation-navigation.js';
 import {DOMAIN_NAMES,TASKS,project} from './motor-profile.js';
 import {createEvaluation,saveEvaluation,listEvaluations,getEvaluation,mutateEvaluation,addAttempt,bind,buildProfile,loadSources,exportBundle,importBundle,artifact} from './motor-profile-store.js';
 import {segments,edgeRegions} from './phrase-prosody-state.js';
@@ -42,10 +43,11 @@ function miniCurve(host,p){
   host.append(svg,el('small','F0 en Hz · tiempo real de la selección 7A · huecos en ámbar · bordes sin análisis en gris. Sin suavizado.'));
 }
 async function renderContent(){
-  const revision=++renderRevision;await listing();
+  const revision=++renderRevision;linkNavigation(id);await listing();
   $('identity').hidden=$('intelligibility').hidden=$('notesSection').hidden=!id;
   if(!id){$('domains').replaceChildren();return;}
   const e=await getEvaluation(id);if(!e){message('Evaluación no encontrada en este navegador.');return;}
+  linkNavigation(id,e);
   const sources=await loadSources(e),profile=project(e,sources,protocol);if(revision!==renderRevision)return;
   $('domains').replaceChildren();
   $('evaluationIdentity').textContent=`Evaluación ${e.evaluation_id} · ${e.battery_version} · ${profile.schema_version} · zona ${e.time_zone}`;
@@ -97,6 +99,11 @@ async function renderContent(){
     card.append(details);$('domains').append(card);
   }
   $('audit').textContent=JSON.stringify(profile,null,2);
+  const manage=new URLSearchParams(location.search).get('manage_task');
+  if(['vowel','ddk','phrase'].includes(manage)){
+    $('attempts').parentElement.open=true;
+    $('attempts').querySelector(`[data-add-task="${manage}"]`)?.focus();
+  }
 }
 async function render(){try{await renderContent();}catch(e){
   $('domains').replaceChildren();$('snapshot').textContent='Estado del resumen: Fallido.';

@@ -1,4 +1,4 @@
-import {chromium} from 'playwright';
+import {chromium} from './browser-runtime.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const base=process.env.BASE_URL||'http://127.0.0.1:8000';
@@ -10,6 +10,7 @@ const check=(v,why)=>assert.ok(v,`Profile check ${++checks}: ${why}`);
 try{
   const context=await browser.newContext({acceptDownloads:true,locale:'es-ES',timezoneId:'Europe/Rome',viewport:{width:1280,height:900}}),page=await context.newPage(),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
+  page.on('dialog',dialog=>dialog.accept());
   await page.goto(base+'/profile');await page.locator('#new').click();
   await page.locator('#identity').waitFor({state:'visible'});
   const summary=async()=>JSON.parse(await page.locator('#audit').textContent());
@@ -48,7 +49,7 @@ try{
   check(p.domains.ddk.status==='partial','automatic DDK requires review');
   check(p.domains.ddk.metrics.event_rate_per_s.value===null,'automatic rate never fills reviewed metric');
   await page.goto(base+`/ddk?evaluation_id=${evaluationId}&attempt_id=${ddk.attempt_id}`);
-  await page.getByRole('button',{name:'Recuperar WAV para editar/reanalizar'}).click();
+  await page.getByRole('button',{name:'Editar / Reanalizar'}).click();
   await page.locator('#analyze').click();await saved('ddk');
   const rows=page.locator('#editTable tbody tr');check(await rows.count()===3,'three synthetic events');
   for(let i=0;i<3;i++)await rows.nth(i).locator('select').selectOption(['pa','ta','ka'][i]);
@@ -130,7 +131,7 @@ try{
   const oldProsody=complete.domains.prosody.source_refs[0];
   await page.setViewportSize({width:1280,height:900});
   await page.goto(base+`/phrase?evaluation_id=${evaluationId}&attempt_id=${phrase.attempt_id}`);
-  await page.getByRole('button',{name:'Recuperar WAV para editar/reanalizar'}).click();
+  await page.getByRole('button',{name:'Editar / Reanalizar'}).click();
   await card.locator('.state').filter({hasText:'WAV conservado'}).waitFor();
   await home();await loaded();p=await summary();
   check(p.domains.speed.status==='stale' && p.domains.pauses.status==='stale' && p.domains.prosody.status==='stale','input edit invalidates shared phrase context');

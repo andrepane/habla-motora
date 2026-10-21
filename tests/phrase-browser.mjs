@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { chromium } from "./browser-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { createHash } from "node:crypto";

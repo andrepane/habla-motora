@@ -221,7 +221,7 @@ for (let id = 1; id <= 2; id++) {
   });
   function lock(value) {
     busy = value;
-    for (const button of [$("tab1"), $("tab2")]) button.disabled = value;
+    for (const button of [$("tab1"), $("tab2")]) button.disabled = value || !!profileBridge.context();
     for (const control of section.querySelectorAll(
       "input,select,textarea,button",
     ))
@@ -546,7 +546,7 @@ function updateRest() {
 setInterval(updateRest, 1000);
 for (let i = 1; i <= 2; i++)
   $(`tab${i}`).onclick = () => {
-    if (busy) return;
+    if (busy || !profileBridge.acceptsOrdinal(i)) return;
     active = i;
     for (const s of slots) {
       s.q(".audio").pause();
@@ -600,4 +600,10 @@ $("exportAll").onclick = async () => {
     "Exportados los WAV íntegros, respuestas y revisiones de ambos intentos. Los resultados invalidados están identificados en el historial.";
 };
 
-profileBridge.ready.then(()=>{if(profileBridge.context()?.ordinal===2)$("tab2").click();});
+profileBridge.ready.then(()=>{
+  const bound=profileBridge.context();if(!bound)return;
+  $(`tab${bound.ordinal}`).click();
+  for(const i of [1,2])$(`tab${i}`).disabled=true;
+  const note=document.createElement('p');note.textContent='Intento vinculado a la evaluación. Para cambiarlo, vuelve al Perfil y abre el intento correspondiente.';
+  document.querySelector('.tabs').after(note);
+});

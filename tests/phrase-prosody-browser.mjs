@@ -1,4 +1,4 @@
-import {chromium} from 'playwright';
+import {chromium} from './browser-runtime.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const base=process.env.BASE_URL || 'http://127.0.0.1:8000';
