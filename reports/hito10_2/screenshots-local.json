@@ -1,0 +1,41 @@
+{
+  "description": "Real Chromium screenshots, synthetic WAVs, guided default UI. CI regenerates equivalent screenshots in its artifact; pixel hashes vary with date/browser/locale.",
+  "tested_code": "b817d424ad47e06171014812a3d8c422f1226148",
+  "files": [
+    {
+      "file": "01-inicio.png",
+      "sha256": "d765d9a6e8221c3a36194599f0ad700e6471941f592a5be08824a050a6ed47be",
+      "bytes": 61540
+    },
+    {
+      "file": "02-vocal.png",
+      "sha256": "3842b89e35bf599bcd6b6e40d92136bedcb908d932358b590150b1cc5dd90747",
+      "bytes": 222893
+    },
+    {
+      "file": "03-ddk.png",
+      "sha256": "06fa815b706f3d75b5a074ef0d634917785d8d7c6d320fb343c6669926c4df23",
+      "bytes": 338800
+    },
+    {
+      "file": "04-pausas.png",
+      "sha256": "9acb5820686041c82ade81fd775a4e66af86c73770e470eb9f8ceb74bb25b04f",
+      "bytes": 262439
+    },
+    {
+      "file": "05-prosodia.png",
+      "sha256": "7e75d4b0a0f7cbec848fd7e18365b9db13081ecb21683c38de095e855dbf2135",
+      "bytes": 249964
+    },
+    {
+      "file": "06-perfil.png",
+      "sha256": "e7ebd284c0f9f61849b76e4f5d28b6258dac997dd953356d30e8da1bf579d10a",
+      "bytes": 392267
+    },
+    {
+      "file": "07-movil.png",
+      "sha256": "99250e95eb159b25c53f5ac6600500494967399b036cddd54f320ed0ee328386",
+      "bytes": 118532
+    }
+  ]
+}
