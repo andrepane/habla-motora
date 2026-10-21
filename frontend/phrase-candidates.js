@@ -3,10 +3,10 @@ export function mountCandidates(s, redraw) {
   const state = new CandidateState();
   const panel = document.createElement("fieldset");
   panel.className = "candidatePanel";
-  panel.innerHTML = `<legend>7B.2 · Ayuda experimental opcional</legend>
+  panel.innerHTML = `<legend>Ayuda experimental opcional</legend>
   <button type="button" data-c="run">Proponer candidatos automáticamente (experimental)</button>
   <p>Puede proponer cierres consonánticos o interrupciones breves y omitir regiones. Los límites pueden requerir corrección. La revisión manual sigue siendo obligatoria.</p>
-  <p>Revisar todos los candidatos no equivale a revisar toda la selección. Cero candidatos no equivale a cero pausas. Solo 7B.1 confirmado produce las métricas definitivas.</p>
+  <p>Revisar todos los candidatos no equivale a revisar toda la selección. Cero candidatos no equivale a cero pausas. Solo la revisión manual confirmada produce las métricas definitivas.</p>
   <p data-c="state" role="status">Desactivado: se ejecuta únicamente al pulsar el botón.</p>
   <div data-c="rows"></div><details><summary>Detalles técnicos e historial experimental</summary><pre data-c="audit"></pre></details>`;
   s.section.append(panel);
@@ -44,7 +44,7 @@ export function mountCandidates(s, redraw) {
   q("run").onclick = async () => {
     const source = s.state.contextResult;
     if (!s.file || !source || !source.context.selection_confirmed) {
-      q("state").textContent = "Primero valida la selección confirmada de 7A.";
+      q("state").textContent = "Primero valida la selección confirmada.";
       return;
     }
     controller?.abort();
@@ -128,7 +128,7 @@ export function mountCandidates(s, redraw) {
       title.textContent = "Candidato automático — requiere revisión manual";
       row.append(title);
       const info = document.createElement("p");
-      info.textContent = `${c.candidate_id} · [${c.start_sample}, ${c.end_sample_exclusive}) · ${c.duration_s.toFixed(3)} s`;
+      info.textContent = `Propuesta de ${c.duration_s.toFixed(3)} s · requiere revisión manual`;
       row.append(info);
       const bounds = {};
       for (const [key, label] of [
@@ -153,8 +153,8 @@ export function mountCandidates(s, redraw) {
         const note = document.createElement("p");
         note.textContent =
           decision.action === "rejected"
-            ? "Propuesta rechazada; no modifica 7B.1."
-            : "Copiado como uncertain. Clasifica y revisa después en 7B.1.";
+            ? "Propuesta rechazada; no modifica las pausas revisadas."
+            : "Copiado como Dudoso. Clasifica y confirma después en Pausas.";
         row.append(note);
       }
       const button = (label, action, terminal = false) => {

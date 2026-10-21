@@ -1,0 +1,9 @@
+browser: 24 browser checks passed (real API, synthetic microphone, partial results, invalidation, export, mobile).
+ddk-browser: 35 DDK browser checks passed (real API, synthetic audio/microphone, audit, manual replay, exports, invalidation, mobile).
+phrase-browser: 53 phrase browser checks passed (real API, two attempts, manual independent rates, models, invalidation, byte-identical WAV export, microphone, mobile).
+phrase-pauses-browser: 60 7B.1 browser checks passed (real API, manual intervals, intraword safeguard, global interference blocking, exact samples, unchanged 7A, invalidation, two attempts, export, mobile).
+phrase-candidates-browser: 7B.2 browser: 34 checks passed
+phrase-prosody-browser: 55 Prosodia 8B browser checks passed (real frozen API, gap topology, units/reference, identity, independent pauses/export, partial/null/zero, failures and mobile).
+motor-profile-browser: 50 motor profile browser checks passed (real task bridges/API, immutable local registry, explicit attempts, exact projection, completed/null, export/reconstruction, integrity, stale, desktop/mobile).
+evaluation-continuity-browser: Continuity browser: 36 checks passed
+clinical-journey-browser: Clinical journey: 39 checks passed

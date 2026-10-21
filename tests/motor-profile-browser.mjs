@@ -1,4 +1,4 @@
-import {chromium} from 'playwright';
+import {chromium,technicalTaskView} from './browser-runtime.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const base=process.env.BASE_URL||'http://127.0.0.1:8000';
@@ -9,7 +9,8 @@ const browser=await chromium.launch({headless:true});let checks=0;
 const check=(v,why)=>assert.ok(v,`Profile check ${++checks}: ${why}`);
 try{
   const context=await browser.newContext({acceptDownloads:true,locale:'es-ES',timezoneId:'Europe/Rome',viewport:{width:1280,height:900}}),page=await context.newPage(),errors=[];
-  page.on('pageerror',e=>errors.push(e.message));
+  await technicalTaskView(page);page.on('pageerror',e=>errors.push(e.message));
+  page.on('dialog',dialog=>dialog.accept());
   await page.goto(base+'/profile');await page.locator('#new').click();
   await page.locator('#identity').waitFor({state:'visible'});
   const summary=async()=>JSON.parse(await page.locator('#audit').textContent());
@@ -24,12 +25,11 @@ try{
     await page.waitForFunction(({task})=>document.querySelector(`[data-binding="${task}"]`).options.length>1,{task});
     const e=await evalRecord(),a=Object.values(e.attempts).filter(x=>x.task===task).at(-1);
     check(e.bindings[task]===null,'new attempt is not silently representative');
-    await page.locator(`[data-binding="${task}"]`).selectOption(a.attempt_id);
-    await page.waitForFunction(({task,id})=>JSON.parse(document.querySelector('#audit').textContent).bindings[task]===id,{task,id:a.attempt_id});
+    check(await page.locator(`[data-binding="${task}"] option[value="${a.attempt_id}"]`).evaluate(o=>o.disabled),'unfinished attempts cannot be selected');
     return a;
   };
   const upload=async(task,selector)=>page.locator(selector).setInputFiles({name:task+'-synthetic.wav',mimeType:'audio/wav',buffer:Buffer.from(fixtures.wavs[task],'base64')});
-  const saved=async kind=>page.locator('.profile-bridge p').filter({hasText:`Resultado ${kind} guardado`}).waitFor();
+  const saved=async kind=>{await page.locator(`.profile-bridge p[data-saved-kind="${kind}"]`).waitFor();const choose=page.locator('[data-use-profile]');if(await choose.isVisible()&&await choose.isEnabled()){await choose.click();await choose.filter({hasText:'Intento elegido'}).waitFor();}};
   check((await summary()).completeness.required_domains===5,'five domains');
   check((await page.locator('#intelligibility').textContent()).includes('No evaluada'),'intelligibility visible');
   check((await page.locator('#completeness').textContent()).includes('Inteligibilidad no evaluada'),'denominator language');
@@ -45,10 +45,10 @@ try{
   await page.goto(base+`/ddk?evaluation_id=${evaluationId}&attempt_id=${ddk.attempt_id}`);
   await upload('ddk','#file');await page.locator('#analyze').click();await saved('ddk');
   await home();await loaded();p=await summary();
-  check(p.domains.ddk.status==='partial','automatic DDK requires review');
+  check(p.domains.ddk.status==='not_started','unconfirmed automatic DDK is not included in Profile');
   check(p.domains.ddk.metrics.event_rate_per_s.value===null,'automatic rate never fills reviewed metric');
   await page.goto(base+`/ddk?evaluation_id=${evaluationId}&attempt_id=${ddk.attempt_id}`);
-  await page.getByRole('button',{name:'Recuperar WAV para editar/reanalizar'}).click();
+  await page.getByRole('button',{name:'Editar / Reanalizar'}).click();
   await page.locator('#analyze').click();await saved('ddk');
   const rows=page.locator('#editTable tbody tr');check(await rows.count()===3,'three synthetic events');
   for(let i=0;i<3;i++)await rows.nth(i).locator('select').selectOption(['pa','ta','ka'][i]);
@@ -65,7 +65,7 @@ try{
   await f('production').selectOption('present');await f('match').selectOption('exact_once');
   await f('words').fill('14');await f('syllables').fill('25');await f('wordsConfirmed').check();await f('syllablesConfirmed').check();
   await f('reviewConfirmed').check();await card.locator('.submitReview').click();
-  await card.locator('.state').filter({hasText:'Revisión: completed'}).waitFor();await saved('phrase');
+  await card.locator('.state').filter({hasText:'Contenido: revisado'}).waitFor();await saved('phrase');
   await card.locator('[data-c="run"]').click();await saved('candidates');
   await card.locator('[data-pr="run"]').click();await saved('prosody');
   for(const [a,b]of [[96000,144000],[240000,288000]]){
@@ -130,7 +130,7 @@ try{
   const oldProsody=complete.domains.prosody.source_refs[0];
   await page.setViewportSize({width:1280,height:900});
   await page.goto(base+`/phrase?evaluation_id=${evaluationId}&attempt_id=${phrase.attempt_id}`);
-  await page.getByRole('button',{name:'Recuperar WAV para editar/reanalizar'}).click();
+  await page.getByRole('button',{name:'Editar / Reanalizar'}).click();
   await card.locator('.state').filter({hasText:'WAV conservado'}).waitFor();
   await home();await loaded();p=await summary();
   check(p.domains.speed.status==='stale' && p.domains.pauses.status==='stale' && p.domains.prosody.status==='stale','input edit invalidates shared phrase context');
@@ -140,9 +140,8 @@ try{
   await page.waitForFunction(()=>document.querySelector('[data-binding="phrase"]').options.length===3);
   const e=await evalRecord(),second=Object.values(e.attempts).filter(a=>a.task==='phrase').at(-1);
   check(e.bindings.phrase===phrase.attempt_id,'adding second attempt never switches representative');
-  await page.locator('[data-binding="phrase"]').selectOption(second.attempt_id);
-  await page.waitForFunction(()=>JSON.parse(document.querySelector('#audit').textContent).domains.speed.status==='not_started');p=await summary();
-  check(['speed','pauses','prosody'].every(k=>p.domains[k].attempt_id===second.attempt_id && p.domains[k].status==='not_started'),'representative phrase binding atomic');
+  check(await page.locator(`[data-binding="phrase"] option[value="${second.attempt_id}"]`).evaluate(o=>o.disabled),'unfinished second attempt cannot replace representative');
+  p=await summary();check(['speed','pauses','prosody'].every(k=>p.domains[k].attempt_id===phrase.attempt_id),'representative phrase binding remains atomic');
   // Restore a snapshot in a fresh context; a changed server version makes it stale without acoustic calls.
   let acousticCalls=0;imported.on('request',r=>{if(/analysis$|\/pitch$/.test(r.url()))acousticCalls++;});
   await imported.route('**/motor-profile-protocol',route=>{

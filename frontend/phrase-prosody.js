@@ -7,14 +7,14 @@ const labels = {
   f0_mean_hz: 'F0 media · Hz', f0_sd_hz: 'SD · Hz', f0_sd_st: 'SD · semitonos',
   p10_hz: 'P10 · Hz', p90_hz: 'P90 · Hz', robust_range_hz: 'Rango robusto P10–P90 · Hz',
   f0_min_hz: 'Mínimo · Hz', f0_max_hz: 'Máximo · Hz', raw_range_hz: 'Rango bruto · Hz',
-  selection_duration_s: 'Duración exacta 7A · s',
+  selection_duration_s: 'Duración exacta de selección · s',
 };
 const reasons = {
   insufficient_distributional_support: 'Soporte temporal/distribucional insuficiente',
   insufficient_temporal_support: 'Soporte temporal insuficiente',
   insufficient_defined_frames: 'Frames definidos insuficientes',
   no_defined_f0: 'Sin F0 definida', no_analysis_frames: 'Sin frames de análisis',
-  praat_undefined: 'Valor indefinido en Praat', selection_unconfirmed: 'Selección 7A sin confirmar',
+  praat_undefined: 'Valor indefinido en Praat', selection_unconfirmed: 'Selección sin confirmar',
   insufficient_analysis_duration: 'Selección demasiado corta para el análisis',
   pitch_execution_failed: 'No se pudo completar la extracción', dependency_mismatch: 'Dependencias distintas',
   request_failed: 'No se obtuvo una respuesta de análisis',
@@ -38,12 +38,12 @@ export function mountProsody(s) {
   const state = new ProsodyState();
   const panel = document.createElement('fieldset');
   panel.className = 'prosodyPanel';
-  panel.innerHTML = `<legend>8A/8B · Prosodia</legend>
+  panel.innerHTML = `<legend>Prosodia</legend>
     <h3>Curva de F0</h3>
-    <p>Usa exactamente la selección confirmada de 7A, sin una segunda selección.</p>
+    <p>Usa exactamente la selección confirmada, sin una segunda selección.</p>
     <p class="prosody-note">Medidas descriptivas de F0 sobre habla conectada. No constituyen una interpretación clínica automática.</p>
-    <button type="button" data-pr="run" disabled>Analizar Prosodia sobre selección 7A</button>
-    <p data-pr="state" role="status">Pendiente · Primero valida la selección confirmada de 7A.</p>
+    <button type="button" data-pr="run" disabled>Analizar Prosodia de la selección confirmada</button>
+    <p data-pr="state" role="status">Pendiente · Primero valida la selección confirmada.</p>
     <p data-pr="selection"></p>
     <div class="prosody-toolbar">
       <label>Unidad <select data-pr="unit"><option value="hz">Hz</option><option value="st">Semitonos</option></select></label>
@@ -56,7 +56,7 @@ export function mountProsody(s) {
     <div class="prosody-legend"><span class="prosody-valid">F0 definida · puntos y segmentos</span><span class="prosody-gap">Sin F0</span><span class="prosody-edge">Borde sin análisis</span></div>
     <label>Desplazar vista <input data-pr="pan" type="range" min="0" max="1" step="0.001" value="0" disabled></label>
     <p data-pr="hover" class="prosody-hover" aria-live="off">Cursor: tiempo y F0 del frame real. No se interpolan huecos.</p>
-    <button type="button" data-pr="play">Escuchar selección 7A</button>
+    <button type="button" data-pr="play">Escuchar selección confirmada</button>
     <button type="button" data-pr="playCursor" disabled>Escuchar entorno del cursor (±250 ms)</button>
     <div data-pr="primary" class="prosody-metrics"></div>
     <div data-pr="warnings" class="prosody-warnings"></div>
@@ -115,19 +115,19 @@ export function mountProsody(s) {
     panel.dataset.status = state.status;
     q('state').textContent = `${statusLabels[state.status] ?? state.status}${state.reason ? ' · '+(reasons[state.reason] ?? state.reason) : ''}`;
     q('run').disabled = !ready() || state.status === 'processing';
-    if (state.status === 'idle') q('state').textContent += ready() ? ' · Selección 7A validada. Lista para analizar.' : ' · Primero valida la selección confirmada de 7A.';
+    if (state.status === 'idle') q('state').textContent += ready() ? ' · Selección confirmada validada. Lista para analizar.' : ' · Primero valida la selección confirmada.';
     for (const key of ['primary','secondary','warnings']) q(key).replaceChildren();
     const r = state.result;
     const showMetrics = r && ['completed','partial','not_evaluable'].includes(state.status);
     const selectionContext = r?.context ?? (ready() ? currentSource().context : null);
     const selection = selectionContext?.selection;
-    q('selection').textContent = selection ? `Selección 7A: [${selection.start_sample}, ${selection.end_sample_exclusive}) muestras · intento ${selectionContext.attempt} · ${selectionContext.modality}` : '';
+    q('selection').textContent = selection ? `Selección confirmada · intento ${selectionContext.attempt}` : '';
     q('counts').textContent = r?.counts?.total !== null && r?.counts?.total !== undefined
       ? `Frames totales: ${r.counts.total} · definidos: ${r.counts.defined} · indefinidos: ${r.counts.undefined}` : '';
     const reference = r?.reference_st?.value_hz;
     q('reference').textContent = Number.isFinite(reference)
-      ? `Referencia de semitonos: mediana nativa de esta selección = ${reference.toFixed(6)} Hz · 0 ST. Tiempo relativo al inicio de 7A.`
-      : 'Referencia de semitonos: no disponible hasta disponer de mediana nativa. Tiempo relativo al inicio de 7A.';
+      ? `Referencia de semitonos: mediana nativa de esta selección = ${reference.toFixed(6)} Hz · 0 ST. Tiempo relativo al inicio de la selección.`
+      : 'Referencia de semitonos: no disponible hasta disponer de mediana nativa. Tiempo relativo al inicio de la selección.';
     q('unit').querySelector('[value="st"]').disabled = !Number.isFinite(reference);
     if (!Number.isFinite(reference) && q('unit').value === 'st') q('unit').value = 'hz';
     if (showMetrics) {
@@ -142,7 +142,7 @@ export function mountProsody(s) {
         const list = document.createElement('ul');
         for (const w of warnings) {
           const item = document.createElement('li'); item.dataset.code = w.code;
-          item.textContent = `${warningLabels[w.code] ?? w.code} · ${w.code}`;
+          item.textContent = `${warningLabels[w.code] ?? 'Aviso técnico; consulta detalles'}`;
           if (w.delta_t_s !== undefined) item.textContent += ` · Δt ${w.delta_t_s.toFixed(6)} s · ${w.delta_st.toFixed(3)} ST · ${w.direction}`;
           if (w.max_internal_s !== undefined) item.textContent += ` · hueco interior máximo ${w.max_internal_s.toFixed(3)} s`;
           if (w.rail_samples !== undefined) item.textContent += ` · ${w.rail_samples} muestras en límite digital`;
@@ -165,7 +165,7 @@ export function mountProsody(s) {
     q('pan').disabled = !frames.length || view.end-view.start >= d;
     if (!frames.length || !(d > 0)) {
       const text = svg('text', {x: 40, y: 145, fill: '#546f76'});
-      text.textContent = state.status === 'stale' ? 'Curva desactualizada · vuelve a analizar la selección 7A.' : 'La curva aparecerá tras el análisis de la selección 7A.';
+      text.textContent = state.status === 'stale' ? 'Curva desactualizada · vuelve a analizar la selección confirmada.' : 'La curva aparecerá tras el análisis de la selección confirmada.';
       chart.append(text); return;
     }
     const hop = state.result.configuration.profile.hop_s;
@@ -323,7 +323,7 @@ export function mountProsody(s) {
     if(width!==chartWidth){chartWidth=width;draw();}
   }).observe(q('chart'));
   render();
-  return {invalidate,exported,checkIdentity,sourceUpdated(){
+  return {restore(result){state.source=sourceKey(currentSource());state.accept(result,state.revision,state.source);view={start:0,end:duration()};render();},invalidate,exported,checkIdentity,sourceUpdated(){
     if (state.source && state.source!==sourceKey(currentSource())) invalidate('7A:context_changed');
     if (state.status==='idle') render();
     q('run').disabled=!ready() || state.status==='processing';

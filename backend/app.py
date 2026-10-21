@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile, Request
 from starlette.concurrency import run_in_threadpool
 from backend.praat_runner import AnalysisError, MAX_BYTES, analyze_wav
 
@@ -123,8 +123,18 @@ app.mount('/static', StaticFiles(directory=FRONTEND), name='static')
 
 
 @app.get('/', include_in_schema=False)
-def interface():
+def index(request: Request):
+    # Keep existing linked/bookmarked Vocal URLs; normal entry is evaluation.
+    legacy = request.query_params.get('attempt_id') or request.query_params.get('standalone')
+    return FileResponse(FRONTEND / ('index.html' if legacy else 'evaluation.html'))
+
+@app.get('/vocal', include_in_schema=False)
+def vocal_page():
     return FileResponse(FRONTEND / 'index.html')
+
+@app.get('/evaluation', include_in_schema=False)
+def evaluation_page():
+    return FileResponse(FRONTEND / 'evaluation.html')
 
 
 @app.get('/ddk', include_in_schema=False)

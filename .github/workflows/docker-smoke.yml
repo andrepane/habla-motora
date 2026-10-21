@@ -113,6 +113,8 @@ jobs:
           CANDIDATE_TEST_WAV="$PWD/phrase-candidates.wav" PROSODY_SCREENSHOT="$PWD/phrase-prosody-interface.png" npm run test:phrase-prosody-browser
           docker run --rm habla-motora:smoke-v1 python -m tests.profile_fixtures /dev/stdout > profile-fixtures.json
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" PROFILE_EVIDENCE_DIR="$PWD/motor-profile-evidence" npm run test:motor-profile-browser
+          PROFILE_FIXTURES="$PWD/profile-fixtures.json" npm run test:continuity-browser
+          PROFILE_FIXTURES="$PWD/profile-fixtures.json" JOURNEY_EVIDENCE_DIR="$PWD/clinical-journey-evidence" npm run test:journey-browser
       - name: Container logs and cleanup
         if: always()
         run: |
@@ -142,3 +144,4 @@ jobs:
             phrase-candidates-interface.png
             phrase-prosody-interface.png
             motor-profile-evidence/
+            clinical-journey-evidence/

@@ -1,0 +1,316 @@
+{
+  "base": "e1728236761302c1ff7085a3dacaf15f1feebb27",
+  "tested_code": "b817d424ad47e06171014812a3d8c422f1226148",
+  "files": [
+    {
+      "path": "backend/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "backend/ddk.py",
+      "sha256": "210a6be83b8a4479d774a89833e23bf25cd99201883f17d26fe8bf3eb7e1e1df",
+      "unchanged": true
+    },
+    {
+      "path": "backend/ddk_v2.py",
+      "sha256": "39dac038d1cdbf8ecd8e18929bc72cce5ef87657b938bf33b0729e263866d57f",
+      "unchanged": true
+    },
+    {
+      "path": "backend/hnr.py",
+      "sha256": "3ea16ba673612f3c61696dfa40e50cf415db5c5cbce41dca065a4734732b343f",
+      "unchanged": true
+    },
+    {
+      "path": "backend/jitter.py",
+      "sha256": "0d1fb713be73adc2d8e39c203e24d7285a6190f8c4014ac43f534b70b10d1099",
+      "unchanged": true
+    },
+    {
+      "path": "backend/motor_profile_routes.py",
+      "sha256": "4a035d4a05013195fe73204a8a159fcf56341b9ab9f94854409a238329616def",
+      "unchanged": true
+    },
+    {
+      "path": "backend/phrase.py",
+      "sha256": "6b5d7e45467d3c5e9ac85095c669c3dd9780d42021fc3188984d17a955ae8b84",
+      "unchanged": true
+    },
+    {
+      "path": "backend/phrase_candidate_routes.py",
+      "sha256": "87994e7bf1db494b81c971f5bdceda7fbc116e0415b34929fa871c70e57c34f9",
+      "unchanged": true
+    },
+    {
+      "path": "backend/phrase_pause_routes.py",
+      "sha256": "b20dbfc5053a5e99e0a71fe11b0196d6851123c341a59fc103c612df74b27076",
+      "unchanged": true
+    },
+    {
+      "path": "backend/phrase_pauses.py",
+      "sha256": "3214fa7486032adc85e60f70a7c18fe4bba8dae24d33eff55f1c7f3824fa6962",
+      "unchanged": true
+    },
+    {
+      "path": "backend/phrase_prosody.py",
+      "sha256": "4ae1b67439ea76934f7c740da1732ddf3d8ac4ded6a8652de5c34baafd99a8c8",
+      "unchanged": true
+    },
+    {
+      "path": "backend/phrase_prosody_routes.py",
+      "sha256": "a8eed379ed4e47efbb6fd24defe8af2d173cea5ac4da412d62c99ad680a2b6d1",
+      "unchanged": true
+    },
+    {
+      "path": "backend/phrase_routes.py",
+      "sha256": "f9759da8fc43ecbc61ab201770e497097bd7f5a20ad06c040dc977cf45c62b3d",
+      "unchanged": true
+    },
+    {
+      "path": "backend/pitch.py",
+      "sha256": "2a46b00a06824741ffcff61aaba47775745b872789a5c8d3eeb99a1d7c6c8cca",
+      "unchanged": true
+    },
+    {
+      "path": "backend/praat_runner.py",
+      "sha256": "dd66bb2f9c4519f579cf54733e8450e01f77129e55b8cd16e6a025adf26e282f",
+      "unchanged": true
+    },
+    {
+      "path": "backend/shimmer.py",
+      "sha256": "da124cf187e10f62649422a3868ecdd10d159c1ba5c5d20eec1a154604524a94",
+      "unchanged": true
+    },
+    {
+      "path": "backend/vowel.py",
+      "sha256": "051f1b01979d8b2243f3dda1ed2b7045df5b2a81b61280004d1d70af10374813",
+      "unchanged": true
+    },
+    {
+      "path": "configs/ddk_experimental_v1.json",
+      "sha256": "89fd9ac962b05b2180c3f5325f9abc7175aac0378b184394a2c8d23b322b5a5a",
+      "unchanged": true
+    },
+    {
+      "path": "configs/ddk_experimental_v2.json",
+      "sha256": "0293f5d891cf13ceda4b58e40316e2a56a8738ad63c6bda74ab9c6debf4662fa",
+      "unchanged": true
+    },
+    {
+      "path": "configs/experimental_v1.json",
+      "sha256": "94b976f9c3e1f21d965df9ce547422953c6d780df64988cf2562cc8594520729",
+      "unchanged": true
+    },
+    {
+      "path": "configs/pause_detector_energy_v1.json",
+      "sha256": "09100457fd44b3d474dc5b0e60e81233ac85ae8d96dda58fc2a75eb633048c6e",
+      "unchanged": true
+    },
+    {
+      "path": "configs/pause_detector_multifeature_v1.json",
+      "sha256": "c3990c0fe6c1a12a6a61f385557d9d82ac597836d1dcaf4b840ba73293ae02ca",
+      "unchanged": true
+    },
+    {
+      "path": "configs/pause_detector_praat_v1.json",
+      "sha256": "7a817b037a4f29eefe148d3226973354b1f4d72bee0bef5e2d51fb50ec588847",
+      "unchanged": true
+    },
+    {
+      "path": "configs/phrase_7a_v1.json",
+      "sha256": "080db64d4d1cdbbe16e4faa512726357e0b8842af64de570b6117160904a337d",
+      "unchanged": true
+    },
+    {
+      "path": "configs/phrase_pause_review_v1.json",
+      "sha256": "0bf0bee0fea55eba80c3f418b21cb178f0326c97f9bc268633d3970296174276",
+      "unchanged": true
+    },
+    {
+      "path": "praat/hnr_v1.praat",
+      "sha256": "f5ce3b522e31b47f16a802af70307ef13e17e7d7efcdf997139701e0008c17b1",
+      "unchanged": true
+    },
+    {
+      "path": "praat/jitter_v1.praat",
+      "sha256": "9340ddd8f25dd9bcfdfe044d2b0256386db38d599d82ee22e36b9f5df7ef9cb4",
+      "unchanged": true
+    },
+    {
+      "path": "praat/pause_candidates_comparator.praat",
+      "sha256": "29e8c79736901b82b3bd182598aa6e7322c484291e96d86dca3e33c072b46026",
+      "unchanged": true
+    },
+    {
+      "path": "praat/pitch_v1.praat",
+      "sha256": "66ef64ac2a5e0be13df838f60f8457da9c2822c517606d05e7aa9ddc3625dd92",
+      "unchanged": true
+    },
+    {
+      "path": "praat/shimmer_v1.praat",
+      "sha256": "cbbdcf9f02ff73c6cdb4c64e9df609a7166e336c9371e1c176d75f367284a0b2",
+      "unchanged": true
+    },
+    {
+      "path": "praat/smoke_test.praat",
+      "sha256": "398b209f700ee812f9670f45f3c0c8a672c6926a2251be07ff10325f9bf4749f",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/__init__.py",
+      "sha256": "a195220464820aa89aaa1a5e39ff270f0a6aafdb084bcc7e8d2af6e234c8ea3b",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/bank.py",
+      "sha256": "3a2fddf67f01630fa723ece62fcf731268ef30cb8c93fc3b0d06585f4272da1d",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/engine.py",
+      "sha256": "0c837e11109915202a700c27e9c225627d6d6cc09ca977eab5857a7ea6190629",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/freeze_gate.py",
+      "sha256": "ad5094400b78b75dd032cb14ce24d6724297cc5fdf0a0f9b24949ef103693e01",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/inspect_case.py",
+      "sha256": "663138031c09c422be145a0d49c775be8076b20061ee2f0c98b4646991f9303e",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/metrics.py",
+      "sha256": "793413e1452380035d7ecb559e22b652cb0ed9e9f8f33b444ff57549fb95ac2f",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/praat_comparator.py",
+      "sha256": "363a6f4e2b612460650dfd5888759b6894daaae5e765b1eeac4c6c9c5c24cdde",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/report.py",
+      "sha256": "1f76bbc616eeb5918732426925133910e085815c0c152bb630ec13b16b566ca2",
+      "unchanged": true
+    },
+    {
+      "path": "research/pause_candidates/run_bank.py",
+      "sha256": "804ee9c9ec3d7dda209927047013732f439257bfed7b6b759957018d5cf3a5fe",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/__init__.py",
+      "sha256": "3c7bfb3b4985be64af7d10cb341d9f771a859bc10e7b46d8b345bcc02e8a7555",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/bank.py",
+      "sha256": "4be37b683323fd3c76cf82506c59264c08b0f8e6bb15ce2b1ccc85a93cdfb703",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/engine.py",
+      "sha256": "5dbb40c2c65a2161b0043e8ec7415078d49bfc19d3cd9b85fe2c58dd54a10a1a",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/evaluate.py",
+      "sha256": "f651f112ffd492536ca1fb4b25241e73f31476da0f8e0b269cabb528b219b30e",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/extract.praat",
+      "sha256": "17032e2e763024f72df1d98f7f390f7767557dd845256b8b117c851bca3030e0",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/final_report.py",
+      "sha256": "bcc7dd6a70d9845e5538a8aa7f0dd5b07fa2fb472659465feadc0d8b4d8106f6",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/freeze.json",
+      "sha256": "047fac7379b09dfae0f545569e21ec34463ab7227255507ceeba68f8c6b6a24c",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/freeze_v1.json",
+      "sha256": "81307382281376f90130dc9903a8933394c6ba22cfe10e99ef3384aa022faa06",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/freeze_v2.json",
+      "sha256": "047fac7379b09dfae0f545569e21ec34463ab7227255507ceeba68f8c6b6a24c",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/profiles.py",
+      "sha256": "c4495ebc1657e259695893ec31637ece5f154e8304eb1f99280f2cfbf6b631e9",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/run.py",
+      "sha256": "0c2d90151498c3cd8ff4abf667029b7cc4d380ef6ce15f501c9c2759c4fd5bc6",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/statistics.praat",
+      "sha256": "6585b004c1f619c570de1cc8b36859e3534e5377d410a749d0a642370479d67e",
+      "unchanged": true
+    },
+    {
+      "path": "research/prosody/verify.praat",
+      "sha256": "d6cc9987f8ec21d960d9000b979a04017ba5511b10479acf1eeb13a0c131e8c3",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/motor-profile.js",
+      "sha256": "a6cb6dbcfedb1f476a24919e3ee60b0fe0a3612cfc43e91e5fe3ee0553615d5d",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/motor-profile-store.js",
+      "sha256": "f9458ced688a36da38aebe6d365ed6a9039e46d46a76bd91aad30a5ea9874578",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/audio.js",
+      "sha256": "17efcbfdc5ae9db9aa19daf626e7efeed7988c196f5f26db4a407531c9f0ffd4",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/phrase-state.js",
+      "sha256": "5b737c325fb102ead899eb4c997be920da10aee2c0af56c059ba1b3b27452c54",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/phrase-candidate-state.js",
+      "sha256": "e8fcd49c9f57ffe1cdb55b5b90f1b14d362bf363e94e7829abd405543ab894af",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/phrase-prosody-state.js",
+      "sha256": "10ef660662aede1e174ed444ea7f8d6bd62dae29b34c7e07a040fa12e57c4f70",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/ddk-recorder.js",
+      "sha256": "8d0d88e911a6099e7f7d1a244e1a0a78b4d7a125c430cd18aea9b3fe72dedde8",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/phrase-recorder.js",
+      "sha256": "0e61200880bdb669324db6658069faa3e1ebdcee927d3e786c5df9b44aab0668",
+      "unchanged": true
+    },
+    {
+      "path": "frontend/recorder-worklet.js",
+      "sha256": "c631186763b35db433d484d3641a424fa864c189d28a7b2d43ab370c17b218d8",
+      "unchanged": true
+    }
+  ]
+}

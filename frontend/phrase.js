@@ -1,3 +1,4 @@
+import {mountPhraseSteps} from './clinical-task-flow.js';
 import { mountCandidates } from "./phrase-candidates.js";
 import { taskBridge } from './profile-bridge.js';
 const profileBridge = taskBridge('phrase');
@@ -168,9 +169,10 @@ for (let id = 1; id <= 2; id++) {
       }
     }
   };
-  get("file").addEventListener("change", () => {
+  get("file").addEventListener("change", async (event) => {
     const file = get("file").files[0];
-    if (file) s.load(file);
+    if (file) await s.load(file);
+    event.detail?.loaded?.();
   });
   get("model").addEventListener("change", async () => {
     s.invalidate("model", true);
@@ -221,7 +223,7 @@ for (let id = 1; id <= 2; id++) {
   });
   function lock(value) {
     busy = value;
-    for (const button of [$("tab1"), $("tab2")]) button.disabled = value;
+    for (const button of [$("tab1"), $("tab2")]) button.disabled = value || !!profileBridge.context();
     for (const control of section.querySelectorAll(
       "input,select,textarea,button",
     ))
@@ -336,7 +338,7 @@ for (let id = 1; id <= 2; id++) {
   };
   let down = null;
   q(".wave").onpointerdown = (e) => {
-    if (!s.wav || busy) return;
+    if (!s.wav || busy || s.parentReadOnly && !s.pauses.editing) return;
     down = sampleAt(e, s);
     q(".wave").setPointerCapture(e.pointerId);
   };
@@ -403,6 +405,7 @@ function draw(s) {
   s.candidates?.overlay();
 }
 function context(s) {
+  if(s.parentReadOnly)return structuredClone(s.state.contextResult.context);
   const mode = s.get("modality").value;
   return {
     phrase_id: s.get("phrase").value,
@@ -495,7 +498,7 @@ function render(s, r) {
   s.pauses.sourceUpdated();
   s.prosody.sourceUpdated();
   s.q(".state").textContent =
-    `Selección: ${r.stages.selection.status} · Revisión: ${r.stages.review.status} · Cálculo: ${r.stages.calculation.status}`;
+    `Selección: ${r.stages.selection.status==='completed'?'confirmada':'pendiente'} · Contenido: ${r.stages.review.status==='completed'?'revisado':'pendiente de revisión'}`;
   s.q(".results").replaceChildren();
   const metrics = { selected_duration_s: r.selected_duration_s, ...r.rates };
   const labels = {
@@ -514,9 +517,7 @@ function render(s, r) {
     value.textContent = metricText(m);
     const note = document.createElement("small");
     note.textContent =
-      m.reason ||
-      m.count_basis ||
-      "Por índices de muestra; incluye pausas interiores";
+      m.reason ? 'No disponible; consulta el motivo en los detalles técnicos' : m.count_basis==='versioned_stimulus_not_acoustic_detection'?'Referencia del estímulo; no es un recuento automático':'Recuento revisado; incluye pausas interiores';
     div.append(label, value, note);
     s.q(".results").append(div);
   }
@@ -546,7 +547,7 @@ function updateRest() {
 setInterval(updateRest, 1000);
 for (let i = 1; i <= 2; i++)
   $(`tab${i}`).onclick = () => {
-    if (busy) return;
+    if (busy || !profileBridge.acceptsOrdinal(i)) return;
     active = i;
     for (const s of slots) {
       s.q(".audio").pause();
@@ -600,4 +601,33 @@ $("exportAll").onclick = async () => {
     "Exportados los WAV íntegros, respuestas y revisiones de ambos intentos. Los resultados invalidados están identificados en el historial.";
 };
 
-profileBridge.ready.then(()=>{if(profileBridge.context()?.ordinal===2)$("tab2").click();});
+profileBridge.ready.then(()=>{
+  const bound=profileBridge.context();if(!bound)return;
+  $(`tab${bound.ordinal}`).disabled=false;$(`tab${bound.ordinal}`).click();
+  for(const i of [1,2])$(`tab${i}`).disabled=true;
+  const note=document.createElement('p');note.textContent='Intento vinculado a la evaluación. Para cambiarlo, vuelve al Perfil y abre el intento correspondiente.';
+  document.querySelector('.tabs').after(note);
+});
+
+profileBridge.ready.then(()=>mountPhraseSteps(slots,profileBridge));
+
+window.addEventListener('motor-phrase-resume',async event=>{
+ const {source,sources,bytes,file,model,resolve,reject}=event.detail;
+ try{
+  const s=slots.find(s=>s.id===source.context.attempt),r=structuredClone(source);
+  s.file=file;s.buffer=bytes;s.wav=parseWav(bytes);s.viewStart=0;s.viewEnd=s.wav.samples.length;s.url=URL.createObjectURL(file);s.q('.audio').src=s.url;
+  s.get('modality').value=r.context.modality;s.get('start').value=r.context.selection.start_sample;s.get('end').value=r.context.selection.end_sample_exclusive;s.get('selectionConfirmed').checked=r.context.selection_confirmed;s.get('limit').checked=r.context.recording_limit_reached;
+  s.state.contextResult=r;s.state.result=r;
+  if(model)s.model={buffer:model.bytes,hash:model.sha256,id:r.context.administration.model_id};
+  s.parentReadOnly=true;
+  for(const field of ['production','match'])s.get(field).value=field==='production'?r.review?.production??'pending':r.review?.target_match??'pending';
+  for(const [field,key]of [['words','word_count'],['syllables','syllable_count']]){s.get(field).value=r.review?.[key]?.value??'';s.get(field+'Confirmed').checked=!!r.review?.[key]?.confirmed;}
+  s.get('reviewConfirmed').checked=!!r.review?.confirmed;s.get('notes').value=r.review?.notes??'';s.get('events').value=(r.review?.events??[]).map(e=>e.type+': '+e.note).join('\n');
+  for(const f of s.section.querySelectorAll(':scope > fieldset:not(.pausePanel):not(.prosodyPanel)'))f.disabled=true;
+  s.get('modality').disabled=s.get('phrase').disabled=true;s.q('.review').disabled=!!r.review?.confirmed;
+  if(sources.pauses)s.pauses.restore(sources.pauses);
+  if(sources.prosody)s.prosody.restore(sources.prosody);
+  s.prosody.sourceUpdated();draw(s);window.dispatchEvent(new Event('motor-phrase-resumed'));resolve();
+ }catch(e){reject(e);}
+});
+window.addEventListener('motor-edit-start',()=>{for(const s of slots){s.parentReadOnly=false;for(const f of s.section.querySelectorAll('fieldset'))f.disabled=false;s.get('modality').disabled=s.get('phrase').disabled=false;}});

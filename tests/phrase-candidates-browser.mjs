@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { chromium, technicalTaskView } from "./browser-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 const base = process.env.BASE_URL || "http://127.0.0.1:8000";
@@ -11,7 +11,7 @@ const check = (x) => assert.ok(x, `7B.2 browser check ${++checks}`);
 try {
   const page = await browser.newPage({ acceptDownloads: true });
   const errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
+  await technicalTaskView(page);page.on("pageerror", (e) => errors.push(e.message));
   let calls = 0;
   page.on("request", (r) => {
     if (r.url().endsWith("/phrase-candidates")) calls++;
@@ -35,7 +35,7 @@ try {
   await card.locator(".analyze").click();
   await card
     .locator(".state")
-    .filter({ hasText: "Selección: completed" })
+    .filter({ hasText: "Selección: confirmada" })
     .waitFor();
   check(calls === 0);
   await f("production").selectOption("present");
@@ -48,12 +48,12 @@ try {
   await card.locator(".submitReview").click();
   await card
     .locator(".state")
-    .filter({ hasText: "Revisión: completed" })
+    .filter({ hasText: "Contenido: revisado" })
     .waitFor();
   const originalSource = await source();
   await p("confirmed").check();
   await p("calculate").click();
-  await p("state").filter({ hasText: "Cálculo: completed" }).waitFor();
+  await p("state").filter({ hasText: "Cálculo: disponible" }).waitFor();
   const initialManual = await manual();
   const run = async () => {
     await c("run").click();
@@ -192,7 +192,7 @@ try {
   await card.locator(".analyze").click();
   await card
     .locator(".state")
-    .filter({ hasText: "Selección: completed" })
+    .filter({ hasText: "Selección: confirmada" })
     .waitFor();
   await c("run").click();
   await c("state").filter({ hasText: "No evaluable:" }).waitFor();

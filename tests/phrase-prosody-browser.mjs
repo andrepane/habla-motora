@@ -1,4 +1,4 @@
-import {chromium} from 'playwright';
+import {chromium,technicalTaskView} from './browser-runtime.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const base=process.env.BASE_URL || 'http://127.0.0.1:8000';
@@ -12,7 +12,7 @@ let checks=0;
 const check=(v,message)=>assert.ok(v,`8B check ${++checks}: ${message}`);
 try {
   const page=await browser.newPage({acceptDownloads:true});
-  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const errors=[];await technicalTaskView(page);page.on('pageerror',e=>errors.push(e.message));
   let calls=0;page.on('request',r=>{if(r.url().endsWith('/phrase-prosody-analysis'))calls++;});
   await page.goto(base+'/phrase');
   const card=page.locator('#attempt1'), panel=card.locator('.prosodyPanel');
@@ -25,13 +25,13 @@ try {
   };
   const confirm=async()=>{
     await f('selectionConfirmed').check();await card.locator('.analyze').click();
-    await card.locator('.state').filter({hasText:'Selección: completed'}).waitFor();
+    await card.locator('.state').filter({hasText:'Selección: confirmada'}).waitFor();
   };
   const analyze=async(status='completed')=>{
     await p('run').click();await page.waitForFunction(({id,status})=>document.querySelector(`#attempt${id} .prosodyPanel`)?.dataset.status===status,{id:1,status});
   };
   check(await p('run').isDisabled(),'requires confirmed 7A');
-  check(await panel.evaluate(e=>e.previousElementSibling.classList.contains('candidatePanel')),'placed after 7B.2');
+  check(await panel.evaluate(e=>e.previousElementSibling.classList.contains('pausePanel')),'Prosody follows pauses, candidates nested as optional help');
   check((await panel.textContent()).includes('Medidas descriptivas de F0 sobre habla conectada. No constituyen una interpretación clínica automática.'),'required note');
   await load(bytes);
   await f('start').fill('4800');await f('end').fill(String(bytes.readUInt32LE(40)/2-4800));
@@ -110,7 +110,7 @@ try {
   await second.locator('[data-f="file"]').setInputFiles({name:'same.wav',mimeType:'audio/wav',buffer:bytes});
   await second.locator('.state').filter({hasText:'WAV conservado'}).waitFor();
   await second.locator('[data-f="selectionConfirmed"]').check();await second.locator('.analyze').click();
-  await second.locator('.state').filter({hasText:'Selección: completed'}).waitFor();
+  await second.locator('.state').filter({hasText:'Selección: confirmada'}).waitFor();
   await second.locator('[data-pr="run"]').click();
   await page.waitForFunction(()=>document.querySelector('#attempt2 .prosodyPanel').dataset.status==='completed');
   const secondResult=JSON.parse(await second.locator('[data-pr="audit"]').textContent()).current_response;

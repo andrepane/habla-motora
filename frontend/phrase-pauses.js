@@ -51,18 +51,18 @@ export function mountPauses(s, redraw) {
   const state = new PauseState();
   const panel = document.createElement("fieldset");
   panel.className = "pausePanel";
-  panel.innerHTML = `<legend>7B.1 · Pausas revisadas manualmente</legend>
-  <p>Sin detector automático. Pausa: interrupción interna confirmada ≥250 ms; incluye respiración cuando corresponda. «Eh», fragmentos, reinicios y oclusiones permanecen en el tiempo operacional. No es tiempo de fonación ni articulación pura.</p>
-  <p>Primero confirma la selección y envía la revisión de contenido de 7A. Revisa toda la selección escuchando el contexto. Si hay duda intrapalabra, marca uncertain. Una interferencia no verbal impide publicar el resumen global.</p>
-  <label><input type="checkbox" data-p="editing"> Anotar intervalos sobre la onda de arriba (el arrastre no cambia la selección 7A)</label>
+  panel.innerHTML = `<legend>Pausas revisadas manualmente</legend>
+  <p>El resultado final requiere revisión manual. Pausa: interrupción interna confirmada ≥250 ms; incluye respiración cuando corresponda. «Eh», fragmentos, reinicios y oclusiones permanecen en el tiempo operacional. No es tiempo de fonación ni articulación pura.</p>
+  <p>Primero confirma la selección y la revisión de contenido. Revisa toda la selección escuchando el contexto. Si hay duda intrapalabra, marca Dudoso. Una interferencia no verbal impide publicar el resumen global.</p>
+  <label><input type="checkbox" data-p="editing"> Anotar intervalos sobre la onda de arriba (el arrastre no cambia la selección confirmada)</label>
   <div class="grid"><label>Inicio absoluto <input data-p="start" type="number" min="0" step="1"></label><label>Fin exclusivo <input data-p="end" type="number" min="1" step="1"></label></div>
   <button type="button" data-p="cursorStart">Inicio en cursor</button><button type="button" data-p="cursorEnd">Fin en cursor</button><button type="button" data-p="add">Añadir intervalo</button>
-  <p>Edición por muestras en cada intervalo; escucha con 250 ms de contexto a cada lado. Ampliar cambia solo la vista. Clasificaciones: pause (pausa), below_threshold (&lt;250 ms), consonantal_closure (oclusión), uncertain (dudoso), other_nonverbal (interferencia).</p>
+  <p>Edición por muestras en cada intervalo; escucha con 250 ms de contexto a cada lado. Ampliar cambia solo la vista. Clasificaciones: pausa, menor de 250 ms, oclusión, dudoso e interferencia.</p>
   <div data-p="rows"></div>
   <label>Estado sin confirmar <select data-p="status"><option value="draft">Borrador</option><option value="not_evaluable">No evaluable</option></select></label>
   <label>Nota global / motivo de no evaluable <textarea data-p="note"></textarea></label>
   <label><input data-p="confirmed" type="checkbox"> He revisado toda la selección, he anotado todas las pausas del protocolo y no quedan regiones inciertas ni interferencias sin resolver</label>
-  <button data-p="calculate" type="button">Calcular 7B.1 con revisión temporal</button>
+  <button data-p="calculate" type="button">Confirmar y calcular pausas revisadas</button>
   <p data-p="state" role="status">Revisión temporal pendiente.</p><div data-p="metrics" class="grid"></div>
   <details><summary>Auditoría 7B.1 e historial</summary><pre data-p="audit"></pre></details>`;
   s.section.append(panel);
@@ -112,7 +112,7 @@ export function mountPauses(s, redraw) {
       redraw(s);
     }
     q("metrics").replaceChildren();
-    q("state").textContent = "7B.1 invalidado. Revisa y confirma de nuevo.";
+    q("state").textContent = "Necesita actualizarse. Revisa y confirma de nuevo.";
     audit();
   }
   function edit(reason) {
@@ -177,7 +177,7 @@ export function mountPauses(s, redraw) {
       const row = document.createElement("fieldset");
       row.dataset.intervalId = event.id;
       const legend = document.createElement("legend");
-      legend.textContent = event.id;
+      legend.textContent = `Intervalo ${state.intervals.indexOf(event)+1}`;
       row.append(legend);
       const number = (key, label) => {
         const l = document.createElement("label");
@@ -216,7 +216,7 @@ export function mountPauses(s, redraw) {
         select.dataset.key = key;
         for (const v of values) {
           const option = document.createElement("option");
-          option.value = option.textContent = v;
+          option.value=v;option.textContent=({pause:'Pausa',below_threshold:'Inferior a 250 ms',consonantal_closure:'Oclusión consonántica',uncertain:'Dudoso',other_nonverbal:'Interferencia no verbal',yes:'Sí',no:'No'})[v]??v;
           select.append(option);
         }
         select.value = event[key];
@@ -359,41 +359,7 @@ export function mountPauses(s, redraw) {
     }
     s.q(".wave").append(group);
   }
-  q("calculate").onclick = async () => {
-    const source = s.state.result;
-    if (!s.file || !source) {
-      q("state").textContent =
-        "Primero envía la selección y revisión actual de 7A.";
-      return;
-    }
-    controller?.abort();
-    controller = new AbortController();
-    const revision = state.revision;
-    const form = new FormData();
-    form.append("file", s.file);
-    form.append("context_json", JSON.stringify(source.context));
-    if (source.review)
-      form.append("review_json", JSON.stringify(source.review));
-    form.append("expected_file_sha256", source.provenance.file_sha256);
-    form.append("temporal_json", JSON.stringify(draft()));
-    q("state").textContent = "Calculando 7B.1…";
-    try {
-      const response = await fetch("/phrase-pause-analysis", {
-        method: "POST",
-        body: form,
-        signal: controller.signal,
-      });
-      const result = await response.json();
-      if (!response.ok)
-        throw Error(
-          typeof result.detail === "string"
-            ? result.detail
-            : JSON.stringify(result.detail),
-        );
-      if (!state.accept(result, revision)) return;
-      s.profileBridge?.save('pauses', result, s.file, s.capture, null, s.id);
-      q("state").textContent =
-        `7B.1 · Revisión: ${result.stages.temporal_review} · Cálculo: ${result.stages.calculation}`;
+  function renderResult(result){
       q("metrics").replaceChildren();
       const labels = {
         pause_duration_s: "Pausas revisadas (s)",
@@ -420,6 +386,43 @@ export function mountPauses(s, redraw) {
         q("metrics").append(div);
       }
       audit();
+  }
+  q("calculate").onclick = async () => {
+    const source = s.state.result;
+    if (!s.file || !source) {
+      q("state").textContent =
+        "Primero confirma la selección y la revisión de contenido.";
+      return;
+    }
+    controller?.abort();
+    controller = new AbortController();
+    const revision = state.revision;
+    const form = new FormData();
+    form.append("file", s.file);
+    form.append("context_json", JSON.stringify(source.context));
+    if (source.review)
+      form.append("review_json", JSON.stringify(source.review));
+    form.append("expected_file_sha256", source.provenance.file_sha256);
+    form.append("temporal_json", JSON.stringify(draft()));
+    q("state").textContent = "Calculando las pausas revisadas…";
+    try {
+      const response = await fetch("/phrase-pause-analysis", {
+        method: "POST",
+        body: form,
+        signal: controller.signal,
+      });
+      const result = await response.json();
+      if (!response.ok)
+        throw Error(
+          typeof result.detail === "string"
+            ? result.detail
+            : JSON.stringify(result.detail),
+        );
+      if (!state.accept(result, revision)) return;
+      s.profileBridge?.save('pauses', result, s.file, s.capture, null, s.id);
+      q("state").textContent =
+        `Revisión: ${{confirmed:'confirmada',draft:'pendiente',not_evaluable:'no evaluable'}[result.stages.temporal_review]??'pendiente'} · Cálculo: ${{completed:'disponible',blocked:'pendiente de revisión',partial:'parcial',not_evaluable:'no evaluable'}[result.stages.calculation]??'no disponible'}`;
+      renderResult(result);
     } catch (e) {
       if (e.name !== "AbortError" && revision === state.revision) {
         s.profileBridge?.failed('pauses', e.message, s.id);
@@ -437,6 +440,7 @@ export function mountPauses(s, redraw) {
   };
   audit();
   return {
+    restore(result){state.intervals=structuredClone(result.temporal_review.intervals);state.result=structuredClone(result);nextId=Math.max(0,...state.intervals.map(i=>Number(/^p(\d+)$/.exec(i.id)?.[1])||0))+1;boundDependencies=dependencies(s.state.result);q('confirmed').checked=result.temporal_review.status==='confirmed';q('status').value=result.temporal_review.status==='not_evaluable'?'not_evaluable':'draft';q('note').value=result.temporal_review.note??'';rows();renderResult(result);},
     copyUncertain(bounds) {
       const id = `p${nextId++}`;
       state.intervals.push({id, ...bounds, classification: "uncertain",
@@ -465,7 +469,7 @@ export function mountPauses(s, redraw) {
       q("start").value = Math.min(a, b);
       q("end").value = Math.max(a, b);
       q("state").textContent =
-        "Límites de intervalo preparados. Añade y clasifica manualmente; 7A no ha cambiado.";
+        "Límites de intervalo preparados. Añade y clasifica manualmente; la selección no ha cambiado.";
     },
   };
 }

@@ -1,0 +1,20 @@
+2026-10-21T14:08:18.9553812Z #12 401.7 638 passed, 6 xfailed, 1 warning in 401.11s (0:06:41)
+2026-10-21T14:15:02.3026150Z 638 passed, 6 xfailed, 1 warning in 400.59s (0:06:40)
+2026-10-21T14:19:52.6057648Z [36;1mpython -c 'import json; x=json.load(open("pitch-api-result.json")); assert abs(x["acoustic"]["f0_mean_hz"]["value"]-200)<0.1; assert x["quality"]["f0_coverage_percent"]["value"]==100; assert x["provenance"]["module_version"]=="pitch_v1"; print("pitch HTTP 200, F0:",x["acoustic"])'[0m
+2026-10-21T14:19:53.2189331Z pitch HTTP 200, F0: {'f0_mean_hz': {'value': 199.99991673923483, 'reason': None}, 'f0_sd_hz': {'value': 4.271979354988e-05, 'reason': None}}
+2026-10-21T14:19:53.2262987Z [36;1mpython -c 'import json; x=json.load(open("jitter-api-result.json")); assert abs(x["acoustic"]["jitter_local_percent"]["value"]-.5)<=.05; assert x["provenance"]["module_version"]=="jitter_v1"; print("jitter HTTP 200:",x["acoustic"]["jitter_local_percent"])'[0m
+2026-10-21T14:19:54.4226248Z jitter HTTP 200: {'value': 0.499833315122997, 'reason': None, 'status': 'experimental_pulse_reliability_unverified'}
+2026-10-21T14:19:54.4300454Z [36;1mpython -c 'import json; x=json.load(open("shimmer-api-result.json")); assert abs(x["acoustic"]["shimmer_local_percent"]["value"]-.5)<=.05; assert x["provenance"]["module_version"]=="shimmer_v1"; print("shimmer HTTP 200:",x["acoustic"]["shimmer_local_percent"])'[0m
+2026-10-21T14:19:56.0636248Z shimmer HTTP 200: {'value': 0.500758145420238, 'reason': None, 'status': 'experimental_pulse_reliability_unverified'}
+2026-10-21T14:19:56.0720959Z [36;1mpython -c 'import json; x=json.load(open("hnr-api-result.json")); assert x["acoustic"]["hnr_mean_db"]["value"] is not None; assert x["provenance"]["module_version"]=="hnr_v1"; assert x["quality"]["hnr_coverage_percent"]["value"]==100; print("HNR HTTP 200:",x["acoustic"]["hnr_mean_db"])'[0m
+2026-10-21T14:19:57.7230455Z HNR HTTP 200: {'value': 20.14544355206075, 'reason': None, 'status': 'experimental_periodicity_reliability_unverified', 'definition': 'Praat 6.4.27 Harmonicity: Get mean; native temporal semantics'}
+2026-10-21T14:20:01.5451022Z # pass 102
+2026-10-21T14:20:28.0655729Z 35 DDK browser checks passed (real API, synthetic audio/microphone, audit, manual replay, exports, invalidation, mobile).
+2026-10-21T14:20:37.5139739Z 24 browser checks passed (real API, synthetic microphone, partial results, invalidation, export, mobile).
+2026-10-21T14:20:51.7302445Z 53 phrase browser checks passed (real API, two attempts, manual independent rates, models, invalidation, byte-identical WAV export, microphone, mobile).
+2026-10-21T14:20:55.2290233Z 60 7B.1 browser checks passed (real API, manual intervals, intraword safeguard, global interference blocking, exact samples, unchanged 7A, invalidation, two attempts, export, mobile).
+2026-10-21T14:21:00.7234544Z 7B.2 browser: 34 checks passed
+2026-10-21T14:21:40.1400047Z 55 Prosodia 8B browser checks passed (real frozen API, gap topology, units/reference, identity, independent pauses/export, partial/null/zero, failures and mobile).
+2026-10-21T14:21:56.1274354Z 50 motor profile browser checks passed (real task bridges/API, immutable local registry, explicit attempts, exact projection, completed/null, export/reconstruction, integrity, stale, desktop/mobile).
+2026-10-21T14:22:05.4790191Z Continuity browser: 36 checks passed
+2026-10-21T14:22:15.2511278Z Clinical journey: 39 checks passed

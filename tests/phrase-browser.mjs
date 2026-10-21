@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { chromium, technicalTaskView } from "./browser-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { createHash } from "node:crypto";
@@ -32,7 +32,7 @@ try {
   });
   const page = await ctx.newPage();
   const errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
+  await technicalTaskView(page);page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(base + "/phrase");
   const card = page.locator("#attempt1"),
     other = page.locator("#attempt2");
@@ -51,7 +51,7 @@ try {
     await click("analyze", c);
     await c
       .locator(".state")
-      .filter({ hasText: "Selección: completed" })
+      .filter({ hasText: "Selección: confirmada" })
       .waitFor();
   };
   const submit = async (c = card) => {
@@ -59,12 +59,12 @@ try {
     await click("submitReview", c);
     await c
       .locator(".state")
-      .filter({ hasText: "Revisión: completed" })
+      .filter({ hasText: "Contenido: revisado" })
       .waitFor();
   };
   const audit = async (c = card) =>
     JSON.parse(await c.locator(".audit").textContent());
-  check((await page.title()).includes("7A"));
+  check((await page.title()).includes("Habla conectada"));
   check((await field("modality").inputValue()) === "direct_reading_v1");
   check(await card.locator(".stimulus").isVisible());
   check(

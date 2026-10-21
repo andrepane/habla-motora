@@ -1,3 +1,5 @@
+import {linkNavigation,commonNavigation} from './evaluation-navigation.js';
+import {attemptSummary} from './evaluation-flow.js';
 import {DOMAIN_NAMES,TASKS,project} from './motor-profile.js';
 import {createEvaluation,saveEvaluation,listEvaluations,getEvaluation,mutateEvaluation,addAttempt,bind,buildProfile,loadSources,exportBundle,importBundle,artifact} from './motor-profile-store.js';
 import {segments,edgeRegions} from './phrase-prosody-state.js';
@@ -15,17 +17,18 @@ const warningLabels={ACOUSTIC_CANDIDATES_NOT_PHONETIC_RECOGNITION:'El detector p
   LOW_F0_COVERAGE:'Cobertura de F0 baja.',POSSIBLE_OCTAVE_JUMP:'Posible salto de octava; sin corrección automática.',
   EXTREME_DISCONTINUITY:'Discontinuidad extrema de F0.',F0_NEAR_SEARCH_LIMIT:'Valores próximos a límites de búsqueda.',
   SHORT_SELECTION:'Selección corta.',UPPER_FILTERED_BAND:'F0 en la banda superior del extractor filtrado.'};
+commonNavigation();
 let id=new URLSearchParams(location.search).get('evaluation_id'),protocol=null,renderRevision=0;
 function message(s){$('message').textContent=s;}
 async function refreshProtocol(){try{const r=await fetch('/motor-profile-protocol',{cache:'no-store'});if(!r.ok)throw Error();protocol=await r.json();}catch{protocol=null;}}
 async function listing(){const evaluations=await listEvaluations();$('evaluations').replaceChildren(new Option('Selecciona una evaluación',''));
-  for(const e of evaluations)$('evaluations').add(new Option(`${e.case_ref||e.evaluation_id.slice(0,8)} · ${new Date(e.session_at).toLocaleString()}`,e.evaluation_id));
+  for(const e of evaluations)$('evaluations').add(new Option(`${e.case_ref||'Evaluación'} · ${new Date(e.session_at).toLocaleString()}`,e.evaluation_id));
   $('evaluations').value=id??'';
 }
 const taskOf=d=>d==='phonation'?'vowel':d==='ddk'?'ddk':'phrase';
 function taskUrl(task,attemptId){return `${TASKS[task]}?evaluation_id=${encodeURIComponent(id)}&attempt_id=${encodeURIComponent(attemptId)}`;}
-function metricCard(m){const n=el('div',undefined,'profile-metric');n.dataset.metric=m.key;n.append(el('span',m.label),el('strong',metricText(m)),
-  el('small',m.value!==null?m.unit:`${reasonLabels[m.reason]??m.reason} · ${m.reason}`),
+function metricCard(m){const n=el('div',undefined,'profile-metric');n.dataset.metric=m.key;n.append(el('span',m.label.replace(/\b7A\b/g,'confirmada')),el('strong',metricText(m)),
+  el('small',m.value!==null?m.unit:`${reasonLabels[m.reason]??'No disponible; consulta los detalles técnicos'}`),
   el('small',`${m.acquisition==='manual_reviewed'?'Revisada':m.acquisition==='versioned_reference'?'Referencia del estímulo':m.acquisition==='manual_selection'?'Selección manual':'Automática'}${m.experimental?' · Experimental':''}`));return n;}
 function miniCurve(host,p){
   if(!p?.frames?.length)return;
@@ -39,16 +42,17 @@ function miniCurve(host,p){
   }
   for(const run of runs){add('polyline',{points:run.map(x=>`${X(x.frame.time_relative_s)},${Y(x.value)}`).join(' '),stroke:'#086b76',fill:'none','stroke-width':2,'data-f0-segment':'true'});
     for(const x of run){const c=add('circle',{cx:X(x.frame.time_relative_s),cy:Y(x.value),r:1.5,fill:'#086b76'}),t=document.createElementNS(ns,'title');t.textContent=`${x.frame.time_relative_s} s · ${x.value} Hz · frame ${x.frame.frame_index}`;c.append(t);}}
-  host.append(svg,el('small','F0 en Hz · tiempo real de la selección 7A · huecos en ámbar · bordes sin análisis en gris. Sin suavizado.'));
+  host.append(svg,el('small','F0 en Hz · tiempo real de la selección confirmada · huecos en ámbar · bordes sin análisis en gris. Sin suavizado.'));
 }
 async function renderContent(){
-  const revision=++renderRevision;await listing();
+  const revision=++renderRevision;linkNavigation(id);await listing();
   $('identity').hidden=$('intelligibility').hidden=$('notesSection').hidden=!id;
   if(!id){$('domains').replaceChildren();return;}
   const e=await getEvaluation(id);if(!e){message('Evaluación no encontrada en este navegador.');return;}
+  linkNavigation(id,e);
   const sources=await loadSources(e),profile=project(e,sources,protocol);if(revision!==renderRevision)return;
   $('domains').replaceChildren();
-  $('evaluationIdentity').textContent=`Evaluación ${e.evaluation_id} · ${e.battery_version} · ${profile.schema_version} · zona ${e.time_zone}`;
+  $('evaluationIdentity').textContent=`Evaluación activa${e.case_ref?' · '+e.case_ref:''} · ${new Date(e.session_at).toLocaleString()}`;
   $('case').value=e.case_ref;$('session').value=new Date(new Date(e.session_at).getTime()-new Date(e.session_at).getTimezoneOffset()*60000).toISOString().slice(0,16);
   $('notes').value=e.notes;$('intelligibilityNote').value=e.intelligibility_note;
   $('snapshot').textContent=`Estado del resumen: ${{empty:'Sin resultados incorporados',current:'Actualizado',stale:'Desactualizado',failed:'Fallo de integridad'}[profile.snapshot_status]}. Describe vigencia, no estado clínico.`;
@@ -60,16 +64,16 @@ async function renderContent(){
     const group=el('fieldset');group.append(el('legend',name));const label=el('label','Intento representativo '),select=el('select');select.dataset.binding=task;
     select.append(new Option('Sin seleccionar explícitamente',''));
     for(const a of Object.values(e.attempts).filter(x=>x.task===task)){
-      select.append(new Option(`Intento ${a.ordinal}`,a.attempt_id));const link=el('a',`Abrir intento ${a.ordinal}`);link.href=taskUrl(task,a.attempt_id);group.append(link);
+      const option=new Option(`Intento ${a.ordinal}`,a.attempt_id);option.disabled=e.bindings[task]!==a.attempt_id&&!attemptSummary(e,a,sources,protocol).eligible;select.append(option);const link=el('a',`Abrir intento ${a.ordinal}`);link.href=taskUrl(task,a.attempt_id);group.append(link);
     }
-    select.value=e.bindings[task]??'';select.onchange=async()=>{await mutateEvaluation(id,e=>bind(e,task,select.value||null));await render();};label.append(select);group.prepend(label);
+    select.value=e.bindings[task]??'';select.onchange=async()=>{if(select.value&&!attemptSummary(e,e.attempts[select.value],sources,protocol).eligible){message('Completa y confirma la tarea antes de usar este intento en el Perfil.');await render();return;}await mutateEvaluation(id,e=>bind(e,task,select.value||null));await render();};label.append(select);group.prepend(label);
     const button=el('button','Crear intento');button.dataset.addTask=task;button.onclick=async()=>{try{await mutateEvaluation(id,e=>addAttempt(e,task));await render();message('Intento creado. Elige explícitamente si será el representativo.');}catch(x){message(x.message);}};group.append(button);$('attempts').append(group);
   }
   for(const [key,d]of Object.entries(profile.domains)){
     const card=el('section',undefined,'profile-card');card.dataset.domain=key;card.dataset.status=d.status;
     const top=el('div',undefined,'profile-top');top.append(el('h2',d.name),el('span',statuses[d.status],'profile-status'));card.append(top);
-    card.append(el('p',`Tarea original: ${d.task_state.source_status??d.task_state.status} · Revisión: ${d.task_state.review_status??'según tarea'} · Validación humana pendiente.`));
-    if(d.reason)card.append(el('p',reasonLabels[d.reason]??d.reason,'profile-warning'));
+    const technicalTaskText=`Tarea original: ${d.task_state.source_status??d.task_state.status} · Revisión: ${d.task_state.review_status??'según tarea'}`;card.append(el('p','Validación humana pendiente.'));
+    if(d.reason)card.append(el('p',reasonLabels[d.reason]??'Revisa la tarea o los detalles técnicos','profile-warning'));
     const hidePrimary=d.status==='not_started'||key==='ddk'&&d.task_state.review_status!=='completed';
     const metrics=el('div',undefined,'profile-metrics');if(!hidePrimary)for(const m of Object.values(d.metrics).filter(x=>x.primary))metrics.append(metricCard(m));card.append(metrics);
     const source=sources[d.source_refs[0]];
@@ -78,11 +82,11 @@ async function renderContent(){
       if(!['stale','failed'].includes(d.status))miniCurve(card,source?.payload);
     }
     if(key==='ddk'&&d.task_state.review_status!=='completed')card.append(el('p','Revisión pendiente. Los candidatos automáticos no se presentan como sílabas revisadas.'));
-    if(key==='pauses')card.append(el('p','Tiempo operacional, no articulación pura. 7B.2 es solo soporte experimental de revisión y no alimenta estas cifras.'));
-    if(d.warnings.length){const list=el('ul',undefined,'profile-warning');for(const w of d.warnings)list.append(el('li',`${w.message??warningLabels[w.code]??w.code} · ${w.code}`));card.append(list);}
+    if(key==='pauses')card.append(el('p','Tiempo operacional, no articulación pura. Los candidatos automáticos son solo soporte experimental de revisión y no alimenta estas cifras.'));
+    if(d.warnings.length){const list=el('ul',undefined,'profile-warning');for(const w of d.warnings)list.append(el('li',`${w.message??warningLabels[w.code]??'Aviso técnico; consulta los detalles'}`));card.append(list);}
     const link=el('a','Ver tarea');link.href=d.attempt_id?taskUrl(taskOf(key),d.attempt_id):'#attempts';
     if(!d.attempt_id)link.onclick=event=>{event.preventDefault();$('attempts').parentElement.open=true;$('attempts').scrollIntoView();};card.append(link);
-    const details=el('details'),grid=el('div',undefined,'profile-details');details.append(el('summary','Detalles técnicos'));
+    const details=el('details'),grid=el('div',undefined,'profile-details');details.append(el('summary','Detalles técnicos'),el('p',technicalTaskText));
     for(const m of Object.values(d.metrics).filter(x=>hidePrimary||!x.primary))grid.append(metricCard(m));details.append(grid,
       el('p','La completitud describe el cierre de la tarea/revisión. Una métrica puede no ser calculable dentro de un dominio completado.'));
     if(source){
@@ -97,6 +101,11 @@ async function renderContent(){
     card.append(details);$('domains').append(card);
   }
   $('audit').textContent=JSON.stringify(profile,null,2);
+  const manage=new URLSearchParams(location.search).get('manage_task');
+  if(['vowel','ddk','phrase'].includes(manage)){
+    $('attempts').parentElement.open=true;
+    $('attempts').querySelector(`[data-add-task="${manage}"]`)?.focus();
+  }
 }
 async function render(){try{await renderContent();}catch(e){
   $('domains').replaceChildren();$('snapshot').textContent='Estado del resumen: Fallido.';

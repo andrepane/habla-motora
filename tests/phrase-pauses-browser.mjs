@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { chromium, technicalTaskView } from "./browser-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { createHash } from "node:crypto";
@@ -15,7 +15,7 @@ const check = (x) => {
 try {
   const page = await browser.newPage({ acceptDownloads: true });
   const errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
+  await technicalTaskView(page);page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(base + "/phrase");
   const card = page.locator("#attempt1"),
     other = page.locator("#attempt2");
@@ -26,7 +26,7 @@ try {
   const audit = async () => JSON.parse(await p("audit").textContent());
   const calculate = async (status) => {
     await p("calculate").click();
-    await p("state").filter({ hasText: status }).waitFor();
+    await p("state").filter({ hasText: status.replace("Cálculo: completed","Cálculo: disponible").replace("Cálculo: blocked","Cálculo: pendiente de revisión").replace("Cálculo: not_evaluable","Cálculo: no evaluable") }).waitFor();
     return (await audit()).current_response;
   };
   await f("file").setInputFiles({
@@ -39,7 +39,7 @@ try {
   await card.locator(".analyze").click();
   await card
     .locator(".state")
-    .filter({ hasText: "Selección: completed" })
+    .filter({ hasText: "Selección: confirmada" })
     .waitFor();
   await f("production").selectOption("present");
   await f("match").selectOption("exact_once");
@@ -51,7 +51,7 @@ try {
   await card.locator(".submitReview").click();
   await card
     .locator(".state")
-    .filter({ hasText: "Revisión: completed" })
+    .filter({ hasText: "Contenido: revisado" })
     .waitFor();
   const original = await source();
   check(original.rates.reference_word_rate.value === 105);
@@ -220,7 +220,7 @@ try {
   await card.locator(".analyze").click();
   await card
     .locator(".state")
-    .filter({ hasText: "Revisión: not_requested" })
+    .filter({ hasText: "Contenido: pendiente de revisión" })
     .waitFor();
   check((await audit()).current_response === null);
   check(!(await p("confirmed").isChecked()));
@@ -230,7 +230,7 @@ try {
   await card.locator(".submitReview").click();
   await card
     .locator(".state")
-    .filter({ hasText: "Revisión: completed" })
+    .filter({ hasText: "Contenido: revisado" })
     .waitFor();
   row = await add(48000, 72000);
   await e("classification").selectOption("pause");

@@ -1,3 +1,4 @@
+import {mountTaskSteps} from './clinical-task-flow.js';
 import { parseWav, metricText } from "./audio.js";
 import { taskBridge } from './profile-bridge.js';
 const profileBridge = taskBridge('ddk');
@@ -804,3 +805,5 @@ $("copy").onclick = async () => {
   }
 };
 update();
+
+profileBridge.ready?.then(()=>mountTaskSteps('ddk',profileBridge));
