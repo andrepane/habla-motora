@@ -1,3 +1,4 @@
+import {checkCompatibility} from './motor-profile.js';
 import {attemptSummary,taskNames} from './evaluation-flow.js';
 import {getEvaluation,mutateEvaluation,invalidateAttempt,registerResult,artifact,bind,loadSources} from './motor-profile-store.js';
 import {evaluationUrl,linkNavigation,rememberAttempt,commonNavigation,destination,activeAttempts} from './evaluation-navigation.js';
@@ -36,12 +37,12 @@ export function taskBridge(task){
       message.textContent='Resultado guardado. Consultar no modifica sus estados. La revisión y los motivos originales se conservan.';
       if(task==='phrase'){
         const loaded=await loadSources(e),parent=loaded[a.current.phrase]?.payload;
-        if(parent?.context.selection_confirmed){
+        if(parent?.context.selection_confirmed&&!a.invalid.phrase&&!a.errors.phrase&&!loaded[a.current.phrase]?.integrity_error&&!checkCompatibility('phrase',parent,protocol)){
           const resume=document.createElement('button');resume.textContent='Continuar contenido, pausas o Prosodia';resume.type='button';resume.dataset.resumePhrase='true';box.append(resume);
           resume.onclick=async()=>{try{
             const ref=source.assets.find(x=>x.role==='wav'),wav=await artifact(ref.sha256),modelRef=source.assets.find(x=>x.role==='model'),model=modelRef?{...(await artifact(modelRef.sha256)),sha256:modelRef.sha256}:null;
             editable=true;consulting=false;unlock();view.hidden=true;
-            const payloads=Object.fromEntries(['pauses','prosody'].filter(k=>a.current[k]&&!a.invalid[k]&&!a.errors[k]&&!loaded[a.current[k]]?.integrity_error).map(k=>[k,loaded[a.current[k]].payload]));
+            const payloads=Object.fromEntries(['pauses','prosody'].filter(k=>a.current[k]&&!a.invalid[k]&&!a.errors[k]&&!loaded[a.current[k]]?.integrity_error&&!checkCompatibility(k,loaded[a.current[k]].payload,protocol)).map(k=>[k,loaded[a.current[k]].payload]));
             await new Promise((resolve,reject)=>window.dispatchEvent(new CustomEvent('motor-phrase-resume',{detail:{source:parent,sources:payloads,bytes:wav.bytes,file:new File([wav.bytes],ref.name,{type:'audio/wav'}),model,resolve,reject}})));
             resume.hidden=true;message.textContent='Continuación de revisiones. Selección y contenido guardados permanecen bloqueados; editar la selección requiere Editar / Reanalizar.';
           }catch(x){message.textContent=x.message;}};
