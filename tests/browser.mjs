@@ -1,4 +1,4 @@
-import { chromium } from "./browser-runtime.mjs";
+import { chromium, technicalTaskView } from "./browser-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { createHash } from "node:crypto";
@@ -28,8 +28,8 @@ try {
   });
   const page = await context.newPage(),
     errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(base);
+  await technicalTaskView(page);page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(base+"/vocal");
   check((await page.title()) === "Evaluación de vocal sostenida");
   await page.locator("#file").setInputFiles({
     name: "vocal.wav",

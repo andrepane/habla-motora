@@ -51,9 +51,9 @@ export function mountPauses(s, redraw) {
   const state = new PauseState();
   const panel = document.createElement("fieldset");
   panel.className = "pausePanel";
-  panel.innerHTML = `<legend>7B.1 · Pausas revisadas manualmente</legend>
+  panel.innerHTML = `<legend>Pausas revisadas manualmente</legend>
   <p>Sin detector automático. Pausa: interrupción interna confirmada ≥250 ms; incluye respiración cuando corresponda. «Eh», fragmentos, reinicios y oclusiones permanecen en el tiempo operacional. No es tiempo de fonación ni articulación pura.</p>
-  <p>Primero confirma la selección y envía la revisión de contenido de 7A. Revisa toda la selección escuchando el contexto. Si hay duda intrapalabra, marca uncertain. Una interferencia no verbal impide publicar el resumen global.</p>
+  <p>Primero confirma la selección y la revisión de contenido. Revisa toda la selección escuchando el contexto. Si hay duda intrapalabra, marca uncertain. Una interferencia no verbal impide publicar el resumen global.</p>
   <label><input type="checkbox" data-p="editing"> Anotar intervalos sobre la onda de arriba (el arrastre no cambia la selección 7A)</label>
   <div class="grid"><label>Inicio absoluto <input data-p="start" type="number" min="0" step="1"></label><label>Fin exclusivo <input data-p="end" type="number" min="1" step="1"></label></div>
   <button type="button" data-p="cursorStart">Inicio en cursor</button><button type="button" data-p="cursorEnd">Fin en cursor</button><button type="button" data-p="add">Añadir intervalo</button>
@@ -62,7 +62,7 @@ export function mountPauses(s, redraw) {
   <label>Estado sin confirmar <select data-p="status"><option value="draft">Borrador</option><option value="not_evaluable">No evaluable</option></select></label>
   <label>Nota global / motivo de no evaluable <textarea data-p="note"></textarea></label>
   <label><input data-p="confirmed" type="checkbox"> He revisado toda la selección, he anotado todas las pausas del protocolo y no quedan regiones inciertas ni interferencias sin resolver</label>
-  <button data-p="calculate" type="button">Calcular 7B.1 con revisión temporal</button>
+  <button data-p="calculate" type="button">Confirmar y calcular pausas revisadas</button>
   <p data-p="state" role="status">Revisión temporal pendiente.</p><div data-p="metrics" class="grid"></div>
   <details><summary>Auditoría 7B.1 e historial</summary><pre data-p="audit"></pre></details>`;
   s.section.append(panel);
@@ -112,7 +112,7 @@ export function mountPauses(s, redraw) {
       redraw(s);
     }
     q("metrics").replaceChildren();
-    q("state").textContent = "7B.1 invalidado. Revisa y confirma de nuevo.";
+    q("state").textContent = "Necesita actualizarse. Revisa y confirma de nuevo.";
     audit();
   }
   function edit(reason) {
@@ -177,7 +177,7 @@ export function mountPauses(s, redraw) {
       const row = document.createElement("fieldset");
       row.dataset.intervalId = event.id;
       const legend = document.createElement("legend");
-      legend.textContent = event.id;
+      legend.textContent = `Intervalo ${state.intervals.indexOf(event)+1}`;
       row.append(legend);
       const number = (key, label) => {
         const l = document.createElement("label");
@@ -216,7 +216,7 @@ export function mountPauses(s, redraw) {
         select.dataset.key = key;
         for (const v of values) {
           const option = document.createElement("option");
-          option.value = option.textContent = v;
+          option.value=v;option.textContent=({pause:'Pausa',below_threshold:'Inferior a 250 ms',consonantal_closure:'Oclusión consonántica',uncertain:'Dudoso',other_nonverbal:'Interferencia no verbal',yes:'Sí',no:'No'})[v]??v;
           select.append(option);
         }
         select.value = event[key];
@@ -359,6 +359,34 @@ export function mountPauses(s, redraw) {
     }
     s.q(".wave").append(group);
   }
+  function renderResult(result){
+      q("metrics").replaceChildren();
+      const labels = {
+        pause_duration_s: "Pausas revisadas (s)",
+        operational_speech_time_s: "Tiempo de habla operacional (s)",
+        pause_percent: "Porcentaje de pausa",
+        pause_count: "Número de pausas",
+        pause_mean_duration_s: "Duración media (s)",
+        pause_median_duration_s: "Duración mediana (s)",
+        reviewed_syllable_articulation_rate:
+          "Sílabas/s · articulatoria operacional",
+        reviewed_word_articulation_rate:
+          "Palabras/min · articulatoria operacional",
+      };
+      for (const [key, m] of Object.entries(result.metrics)) {
+        const div = document.createElement("div");
+        div.className = "metric";
+        const label = document.createElement("span"),
+          value = document.createElement("strong"),
+          note = document.createElement("small");
+        label.textContent = labels[key];
+        value.textContent = metricText(m);
+        note.textContent = m.reason || m.unit;
+        div.append(label, value, note);
+        q("metrics").append(div);
+      }
+      audit();
+  }
   q("calculate").onclick = async () => {
     const source = s.state.result;
     if (!s.file || !source) {
@@ -393,33 +421,8 @@ export function mountPauses(s, redraw) {
       if (!state.accept(result, revision)) return;
       s.profileBridge?.save('pauses', result, s.file, s.capture, null, s.id);
       q("state").textContent =
-        `7B.1 · Revisión: ${result.stages.temporal_review} · Cálculo: ${result.stages.calculation}`;
-      q("metrics").replaceChildren();
-      const labels = {
-        pause_duration_s: "Pausas revisadas (s)",
-        operational_speech_time_s: "Tiempo de habla operacional (s)",
-        pause_percent: "Porcentaje de pausa",
-        pause_count: "Número de pausas",
-        pause_mean_duration_s: "Duración media (s)",
-        pause_median_duration_s: "Duración mediana (s)",
-        reviewed_syllable_articulation_rate:
-          "Sílabas/s · articulatoria operacional",
-        reviewed_word_articulation_rate:
-          "Palabras/min · articulatoria operacional",
-      };
-      for (const [key, m] of Object.entries(result.metrics)) {
-        const div = document.createElement("div");
-        div.className = "metric";
-        const label = document.createElement("span"),
-          value = document.createElement("strong"),
-          note = document.createElement("small");
-        label.textContent = labels[key];
-        value.textContent = metricText(m);
-        note.textContent = m.reason || m.unit;
-        div.append(label, value, note);
-        q("metrics").append(div);
-      }
-      audit();
+        `Revisión: ${{confirmed:'confirmada',draft:'pendiente',not_evaluable:'no evaluable'}[result.stages.temporal_review]??'pendiente'} · Cálculo: ${{completed:'disponible',blocked:'pendiente de revisión',partial:'parcial',not_evaluable:'no evaluable'}[result.stages.calculation]??'no disponible'}`;
+      renderResult(result);
     } catch (e) {
       if (e.name !== "AbortError" && revision === state.revision) {
         s.profileBridge?.failed('pauses', e.message, s.id);
@@ -437,6 +440,7 @@ export function mountPauses(s, redraw) {
   };
   audit();
   return {
+    restore(result){state.intervals=structuredClone(result.temporal_review.intervals);state.result=structuredClone(result);nextId=Math.max(0,...state.intervals.map(i=>Number(/^p(\d+)$/.exec(i.id)?.[1])||0))+1;boundDependencies=dependencies(s.state.result);q('confirmed').checked=result.temporal_review.status==='confirmed';q('status').value=result.temporal_review.status==='not_evaluable'?'not_evaluable':'draft';q('note').value=result.temporal_review.note??'';rows();renderResult(result);},
     copyUncertain(bounds) {
       const id = `p${nextId++}`;
       state.intervals.push({id, ...bounds, classification: "uncertain",

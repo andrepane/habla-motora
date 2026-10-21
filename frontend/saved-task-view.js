@@ -1,3 +1,4 @@
+import {stateLabels} from './evaluation-flow.js';
 import {project,pointer} from './motor-profile.js';
 import {loadSources,artifact} from './motor-profile-store.js';
 import {metricText} from './audio.js';
@@ -9,7 +10,7 @@ export async function savedTaskView(e,a,protocol){
   const sources=await loadSources(e),profile=project(copy,sources,protocol);
   host.append(node('p',`Intento ${a.ordinal} · ${e.bindings[a.task]===a.attempt_id?'Elegido para el Perfil':'No elegido para el Perfil'}. Consulta sin modificar resultados.`));
   for(const d of Object.values(profile.domains).filter(d=>d.attempt_id===a.attempt_id)){
-    host.append(node('h3',d.name),node('p',`Estado conservado: ${d.status}`));
+    host.append(node('h3',d.name),node('p',`Estado conservado: ${stateLabels[d.status]??d.status}`));
     if(['stale','failed'].includes(d.status))host.append(node('p','Valores del resultado original conservado; no se utilizan como resultados vigentes del Perfil.'));
     const list=node('dl');
     for(let m of Object.values(d.metrics)){

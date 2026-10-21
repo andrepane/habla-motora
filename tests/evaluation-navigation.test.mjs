@@ -7,7 +7,7 @@ test('evaluation routes preserve identity and representative without choosing on
   for(const [task,id]of Object.entries(e.bindings))assert.equal(new URL(destination(e,task),'http://local').searchParams.get('attempt_id'),id);
   assert.equal(destination(e,'phrase',{phrase:'p2'}),'/phrase?evaluation_id=E&attempt_id=p2');
   assert.equal(destination(e,'ddk',{ddk:'foreign'}),'/ddk?evaluation_id=E&attempt_id=d');
-  assert.equal(destination({...e,bindings:{}},'ddk'),'/profile?evaluation_id=E&manage_task=ddk');
+  assert.equal(destination({...e,bindings:{}},'ddk'),'/evaluation?evaluation_id=E&manage_task=ddk');
   assert.equal(destination(e),'/profile?evaluation_id=E');assert.deepEqual(e,before);
 });
 test('URLs encode evaluation identity and explicit attempt',()=>{

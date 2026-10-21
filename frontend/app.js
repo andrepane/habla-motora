@@ -1,3 +1,4 @@
+import {mountTaskSteps} from './clinical-task-flow.js';
 import { taskBridge } from './profile-bridge.js';
 globalThis.hablaMotorProfileBridge = taskBridge('vowel');
 import {
@@ -524,3 +525,5 @@ $("json").onclick = () => {
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
+
+globalThis.hablaMotorProfileBridge?.ready?.then(()=>mountTaskSteps('vowel',globalThis.hablaMotorProfileBridge));

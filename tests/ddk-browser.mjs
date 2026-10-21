@@ -1,4 +1,4 @@
-import { chromium } from "./browser-runtime.mjs";
+import { chromium, technicalTaskView } from "./browser-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 const base = process.env.BASE_URL || "http://127.0.0.1:8000";
@@ -28,7 +28,7 @@ try {
   });
   const page = await context.newPage(),
     errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
+  await technicalTaskView(page);page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(base + "/ddk");
   check((await page.title()).includes("DDK"));
   await page

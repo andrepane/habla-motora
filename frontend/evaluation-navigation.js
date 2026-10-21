@@ -1,10 +1,10 @@
 // Navigation metadata only. Does not select a representative or mutate an evaluation.
-export const taskPaths = {vowel:'/',ddk:'/ddk',phrase:'/phrase'};
+export const taskPaths = {vowel:'/vocal',ddk:'/ddk',phrase:'/phrase'};
 export function evaluationUrl(id, task=null, attempt=null) {
   const params=new URLSearchParams({evaluation_id:id});
   if(attempt)params.set('attempt_id',attempt);
   else if(task)params.set('manage_task',task);
-  return (attempt?taskPaths[task]:'/profile')+'?'+params;
+  return (attempt?taskPaths[task]:task?'/evaluation':'/profile')+'?'+params;
 }
 export function destination(e,task,active={}) {
   if(!task)return evaluationUrl(e.evaluation_id);
@@ -18,11 +18,19 @@ export function rememberAttempt(id,task,attempt){try{sessionStorage.setItem(key(
 export function linkNavigation(id,e=null){
   for(const a of document.querySelectorAll('nav a')){
     if(!a.dataset.evaluationTask){
-      const path=new URL(a.href,location.href).pathname,task=Object.keys(taskPaths).find(k=>taskPaths[k]===path);
+      const path=new URL(a.href,location.href).pathname,task=Object.keys(taskPaths).find(k=>taskPaths[k]===path)||(path==='/'?'vowel':null);
       if(!task&&path!=='/profile')continue;
       a.dataset.evaluationTask=task||'profile';
     }
+    if(a.dataset.evaluationTask==='evaluation'){a.href='/evaluation'+(id?'?evaluation_id='+encodeURIComponent(id):'');continue;}
     const task=a.dataset.evaluationTask==='profile'?null:a.dataset.evaluationTask;
     a.href=!id?(task?taskPaths[task]:'/profile'):e?destination(e,task,activeAttempts(id)):evaluationUrl(id,task);
   }
+}
+export function commonNavigation(){
+ const nav=document.querySelector('main > nav');if(!nav)return;
+ nav.replaceChildren();
+ for(const [task,label,path]of [['evaluation','Evaluación','/evaluation'],['vowel','Vocal','/vocal'],['ddk','DDK','/ddk'],['phrase','Habla conectada','/phrase'],['profile','Perfil','/profile']]){
+  const a=document.createElement('a');a.textContent=label;a.href=path;a.dataset.evaluationTask=task;nav.append(a,document.createTextNode(' · '));
+ }
 }

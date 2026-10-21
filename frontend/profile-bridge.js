@@ -1,15 +1,19 @@
-import {getEvaluation,mutateEvaluation,invalidateAttempt,registerResult,artifact} from './motor-profile-store.js';
-import {evaluationUrl,linkNavigation,rememberAttempt} from './evaluation-navigation.js';
+import {attemptSummary,taskNames} from './evaluation-flow.js';
+import {getEvaluation,mutateEvaluation,invalidateAttempt,registerResult,artifact,bind,loadSources} from './motor-profile-store.js';
+import {evaluationUrl,linkNavigation,rememberAttempt,commonNavigation,destination,activeAttempts} from './evaluation-navigation.js';
 import {savedTaskView} from './saved-task-view.js';
 
 export function taskBridge(task){
+  commonNavigation();
   const params=new URLSearchParams(location.search),evaluationId=params.get('evaluation_id'),attemptId=params.get('attempt_id');
   const box=document.createElement('aside');box.className='notice profile-bridge';box.style.margin='16px 0';
   const back=document.createElement('a');back.href=evaluationId?evaluationUrl(evaluationId):'/profile';back.textContent='Perfil de habla motora';
+  const hub=document.createElement('a');hub.textContent='Volver a evaluación';hub.href='/evaluation'+(evaluationId?'?evaluation_id='+encodeURIComponent(evaluationId):'');box.append(hub);
   const message=document.createElement('p'),identity=document.createElement('p');message.setAttribute('role','status');box.append(back,identity,message);document.querySelector('main header')?.after(box);
+  const actions=document.createElement('section');actions.id='clinicalActions';actions.className='flow-actions';actions.hidden=!evaluationId;box.after(actions);
   let context=null,protocol=null,queue=Promise.resolve(),editable=!evaluationId,pending=0,bypass=false,consulting=false;
   const revisions={},dirty=new Set();
-  const controls=()=>[...document.querySelector('main').children].filter(n=>n!==box && !['NAV','HEADER','SCRIPT'].includes(n.tagName)&&n.id!=='savedTask');
+  const controls=()=>[...document.querySelector('main').children].filter(n=>n!==box && !['NAV','HEADER','SCRIPT'].includes(n.tagName)&&!['savedTask','clinicalActions'].includes(n.id));
   // Block task interactions while identity/source lookup is in progress.
   let originalHidden=new Map();
   function lock(){for(const n of controls()){if(!originalHidden.has(n))originalHidden.set(n,n.hidden);n.hidden=true;}}
@@ -23,18 +27,34 @@ export function taskBridge(task){
     if(!a){back.href=evaluationUrl(evaluationId,task);message.textContent='Elige o crea explícitamente un intento desde la evaluación.';return;}
     if(a.evaluation_id!==evaluationId||a.task!==task)throw Error('Vinculación de evaluación/intento inválida.');
     const response=await fetch('/motor-profile-protocol',{cache:'no-store'});if(!response.ok)throw Error('No se pudo verificar el protocolo del perfil.');
-    protocol=await response.json();context={evaluationId,attemptId,ordinal:a.ordinal};rememberAttempt(evaluationId,task,attemptId);linkNavigation(evaluationId,e);
-    identity.textContent=`Evaluación ${e.case_ref||evaluationId.slice(0,8)} · ${task} · intento ${a.ordinal} · ${e.bindings[task]===attemptId?'Elegido para el Perfil':'No elegido para el Perfil'}.`;
+    protocol=await response.json();context={evaluationId,attemptId,ordinal:a.ordinal};if(task==='phrase')for(const b of document.querySelectorAll('.tabs button'))b.disabled=true;rememberAttempt(evaluationId,task,attemptId);linkNavigation(evaluationId,e);
+    identity.textContent=`Evaluación activa${e.case_ref?' · '+e.case_ref:''} · ${taskNames[task]} · intento ${a.ordinal} · ${e.bindings[task]===attemptId?'Elegido para el Perfil':'No elegido para el Perfil'}.`;
+    await updateActions();
     const source=e.sources[a.current[task]];
     if(source){
       consulting=true;lock();const view=await savedTaskView(e,a,protocol);box.after(view);
       message.textContent='Resultado guardado. Consultar no modifica sus estados. La revisión y los motivos originales se conservan.';
+      if(task==='phrase'){
+        const loaded=await loadSources(e),parent=loaded[a.current.phrase]?.payload;
+        if(parent?.context.selection_confirmed){
+          const resume=document.createElement('button');resume.textContent='Continuar contenido, pausas o Prosodia';resume.type='button';resume.dataset.resumePhrase='true';box.append(resume);
+          resume.onclick=async()=>{try{
+            const ref=source.assets.find(x=>x.role==='wav'),wav=await artifact(ref.sha256),modelRef=source.assets.find(x=>x.role==='model'),model=modelRef?{...(await artifact(modelRef.sha256)),sha256:modelRef.sha256}:null;
+            editable=true;consulting=false;unlock();view.hidden=true;
+            const payloads=Object.fromEntries(['pauses','prosody'].filter(k=>a.current[k]&&!a.invalid[k]&&!a.errors[k]&&!loaded[a.current[k]]?.integrity_error).map(k=>[k,loaded[a.current[k]].payload]));
+            await new Promise((resolve,reject)=>window.dispatchEvent(new CustomEvent('motor-phrase-resume',{detail:{source:parent,sources:payloads,bytes:wav.bytes,file:new File([wav.bytes],ref.name,{type:'audio/wav'}),model,resolve,reject}})));
+            resume.hidden=true;message.textContent='Continuación de revisiones. Selección y contenido guardados permanecen bloqueados; editar la selección requiere Editar / Reanalizar.';
+          }catch(x){message.textContent=x.message;}};
+        }
+      }
+
       const button=document.createElement('button');button.type='button';button.textContent='Editar / Reanalizar';box.append(button);
       button.onclick=async()=>{
         const warning=task==='phrase'
           ? 'Iniciar la edición recuperará el WAV y requerirá confirmar de nuevo la selección y la revisión. Pausas, candidatos y Prosodia necesitarán actualizarse. El resultado anterior seguirá conservado en el historial. ¿Continuar?'
           : 'Iniciar la edición recuperará el WAV para confirmar de nuevo la selección y reanalizar. El resultado anterior seguirá conservado en el historial. ¿Continuar?';
         if(!window.confirm(warning))return;
+        window.dispatchEvent(new Event('motor-edit-start'));
         try{
           const ref=source.assets.find(x=>x.role==='wav'),stored=await artifact(ref.sha256);
           const input=task==='phrase'?document.querySelector(`#attempt${a.ordinal} [data-f="file"]`):document.querySelector('#file');
@@ -58,6 +78,18 @@ export function taskBridge(task){
       };
     }else{editable=true;unlock();message.textContent='Sin resultado guardado. Revisión pendiente; los cambios del editor son un borrador temporal hasta calcular y guardar.';}
   })().catch(e=>{message.textContent='Registro no disponible: '+e.message;});
+  async function updateActions(){
+    if(!context)return;
+    const e=await getEvaluation(evaluationId),a=e.attempts[attemptId],sources=await loadSources(e),summary=attemptSummary(e,a,sources,protocol);
+    actions.replaceChildren();actions.hidden=!summary.eligible;
+    const footer=document.querySelector('main > footer');if(footer)footer.before(actions);else document.querySelector('main').append(actions);
+    const use=document.createElement('button');use.dataset.useProfile='true';use.textContent=e.bindings[task]===attemptId?'Intento elegido para el Perfil':'Usar este intento en el Perfil';
+    use.disabled=!summary.eligible||e.bindings[task]===attemptId;
+    use.onclick=async()=>{try{await queue;const current=await getEvaluation(evaluationId),s=attemptSummary(current,current.attempts[attemptId],await loadSources(current),protocol);if(!s.eligible)throw Error('Completa la tarea y su revisión antes de elegir este intento.');await mutateEvaluation(evaluationId,e=>bind(e,task,attemptId));await updateActions();identity.textContent=`Evaluación activa${e.case_ref?' · '+e.case_ref:''} · ${taskNames[task]} · intento ${a.ordinal} · Elegido para el Perfil`;message.textContent='Intento elegido explícitamente para el Perfil.';}catch(x){message.textContent=x.message;}};
+    actions.append(use);
+    const nextTask=task==='vowel'?'ddk':task==='ddk'?'phrase':null,link=document.createElement('a');
+    link.textContent=nextTask?'Continuar con '+taskNames[nextTask]:'Ver Perfil';link.href=destination(e,nextTask,activeAttempts(evaluationId));actions.append(link);
+  }
   function enqueue(fn){pending++;queue=queue.then(()=>ready).then(()=>context?fn():undefined).catch(e=>{message.textContent='No se guardó en el Perfil: '+e.message;dirty.add('save_failed');}).finally(()=>pending--);return queue;}
   function permitted(ordinal){return editable&&(!evaluationId||context&&(ordinal===null||ordinal===context.ordinal));}
   function draftMessage(){message.textContent='Cambios sin confirmar: borrador temporal solo en esta pestaña. Al salir se perderán los cambios no guardados. Los resultados anteriores se conservan; las dependencias modificadas necesitan actualizarse.';}
@@ -82,20 +114,20 @@ export function taskBridge(task){
     invalidate(kinds,reason,ordinal=null){
       if(!permitted(ordinal))return Promise.resolve();
       for(const k of kinds){if(k===task || k==='pauses'&&!reason.startsWith('7A:'))dirty.add(k);const key=k+':'+ordinal;revisions[key]=(revisions[key]??0)+1;}
-      if(evaluationId)draftMessage();
+      if(evaluationId){delete message.dataset.savedKind;draftMessage();}
       return enqueue(()=>mutateEvaluation(evaluationId,e=>invalidateAttempt(e,attemptId,kinds,reason)));
     },
     save(kind,payload,file,capture=null,model=null,ordinal=null){
       if(!permitted(ordinal))return Promise.resolve();
-      if(context)message.textContent='Guardando resultado '+kind+' en la evaluación local…';
+      if(context){delete message.dataset.savedKind;message.textContent='Guardando resultado en la evaluación local…';}
       const copy=structuredClone(payload),key=kind+':'+ordinal,revision=revisions[key]??0;
       return enqueue(async()=>{
         if(revision!==(revisions[key]??0))return;
         if(!file)throw Error('Falta el WAV original.');
         await registerResult(evaluationId,attemptId,kind,copy,[{blob:file,role:'wav'},...(model?[{blob:model,role:'model'}]:[])],protocol,capture);
-        dirty.delete(kind);dirty.delete('save_failed');
+        dirty.delete(kind);dirty.delete('save_failed');await updateActions();window.dispatchEvent(new Event('motor-result-saved'));
         const reviewPending=kind==='ddk'?!copy.reviewed_result?.confirmed:kind==='phrase'?!copy.review?.confirmed:kind==='pauses'?copy.temporal_review?.status!=='confirmed':false;
-        message.textContent=`Resultado ${kind} guardado en esta evaluación · intento ${context.ordinal}.${reviewPending?' Revisión pendiente.':''}${dirty.size?' Quedan cambios sin confirmar en un borrador temporal.':''} El resumen utiliza solo el intento representativo elegido explícitamente.`;
+        message.dataset.savedKind=kind;message.textContent=`Resultado guardado · ${{vowel:'Vocal',ddk:'DDK',phrase:'Habla conectada',pauses:'Pausas',candidates:'Candidatos experimentales',prosody:'Prosodia'}[kind]} · evaluación activa · intento ${context.ordinal}.${reviewPending?' Revisión pendiente.':''}${dirty.size?' Quedan cambios sin confirmar en un borrador temporal.':''} El resumen utiliza solo el intento representativo elegido explícitamente.`;
       });
     },
     failed(kind,reason,ordinal=null){if(!permitted(ordinal))return Promise.resolve();return enqueue(()=>{
