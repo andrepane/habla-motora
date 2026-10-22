@@ -31,3 +31,30 @@ No se modifican backend, Praat, detectores, parámetros, fórmulas, protocolos, 
 No se afirma que la sesión clínica esté validada con usuarios humanos. La tabla DDK sigue siendo horizontal en móvil, ahora orientada y operable. El editor de intervalos abierto conserva su extensión para no quitar salvaguardas necesarias. Las capturas completas, finales de paso, tabla desplazada, borrador posterior, exportación y error de resumen se producen en el artefacto `visual-system-evidence` del CI; baseline comparativo y capturas locales acompañan la entrega. No se implementan P3 ni nuevas capacidades.
 
 La conclusión sobre CI se registra después de su ejecución terminal sobre el commit de código. Las escrituras de atributos visuales se realizan solo si cambia su valor, para mantener estable el observador de presentación.
+
+## Capturas conservadas
+
+Las imágenes JPEG son vistas de las capturas PNG originales; el manifiesto conserva ambos hashes y distingue las pruebas de presentación con datos simulados. Se usa exclusivamente audio sintético.
+
+| Recorrido | Móvil | Escritorio |
+|---|---|---|
+| Final de Vocal | [320 px](evidence/step-end-03-vocal-320.jpg) | [1440 px](evidence/step-end-03-vocal-1440.jpg) |
+| Final de DDK | [320 px](evidence/step-end-04-ddk-320.jpg) | [1440 px](evidence/step-end-04-ddk-1440.jpg) |
+| Editor de pausas antes de confirmar | [320 px](evidence/pauses-editing-320.jpg) · [390 px](evidence/pauses-editing-390.jpg) | [1440 px](evidence/pauses-editing-1440.jpg) |
+| Pausas confirmadas | [320 px](evidence/pauses-confirmed-320.jpg) | [1440 px](evidence/06-pausas-1440.jpg) |
+| DDK con tabla desplazada | [320 px](evidence/ddk-horizontal-320.jpg) | Todas las columnas disponibles en la regresión de escritorio |
+| Perfil y exportación | [320 px](evidence/08-perfil-320.jpg) | [1440 px](evidence/08-perfil-1440.jpg) |
+| Importación de resumen rechazada | [320 px](evidence/summary-import-error-320.jpg) | [1440 px](evidence/summary-import-error-1440.jpg) |
+
+Comparables anteriores sobre main: [Vocal](evidence/before-03-vocal-320.jpg), [DDK](evidence/before-04-ddk-320.jpg), [Pausas](evidence/before-06-pausas-320.jpg).
+
+## CI final confirmado
+
+Código validado: `9ed03cdd46ea796d67461359072d1490e04d2e3a`.
+[Workflow 39812293062](https://github.com/andrepane/habla-motora/actions/runs/39812293062): **completed / success**.
+
+Docker construye y ejecuta la suite Python completa dos veces: 639 passed / 6 xfailed en cada ejecución (339,42 y 342,05 s). Frontend 111/111; todas las regresiones de navegador, recorrido clínico, continuidad, 10.4A, módulos e importación/exportación pasan. Pasan las caracterizaciones sintéticas y verificaciones HTTP existentes.
+
+El ZIP del artefacto `milestone-5-docker-results` se ha descargado y verificado: SHA-256 `3c1b24b411895047f16af22c1572ded0d746b0c3511c41e6aeae5e1e6224b503`. Incluye 48 PNG; sus JSON confirman 98/98 comprobaciones P2, 32 casos visuales/axe sin overflow ni violaciones automáticas y 8 reflows. Los JSON `ci-*.json` provienen directamente de ese ZIP, no de la ejecución local. `validation.json` conserva el vínculo al código exacto, los pasos, los recuentos y el digest; `ci-log-extract.txt` contiene el extracto verificable de los logs.
+
+El commit posterior de evidencia solo contiene archivos bajo `reports/hito10_4b/`; conserva idéntico el código validado. No se abre PR.

@@ -1,0 +1,299 @@
+{
+  "phase": "H10.4B",
+  "branch": "feat/h10-4b-usability-polish",
+  "base": "79105ab82bce99aa7a85234ec2ca5b05e31f4c3a",
+  "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a",
+  "ci": {
+    "run_id": 39812293062,
+    "url": "https://github.com/andrepane/habla-motora/actions/runs/39812293062",
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "9ed03cdd46ea796d67461359072d1490e04d2e3a",
+    "job_id": 119941503573,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-22T16:14:29Z",
+        "completed_at": "2026-10-22T16:14:30Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-22T16:14:30Z",
+        "completed_at": "2026-10-22T16:14:36Z"
+      },
+      {
+        "name": "Build image including pytest",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-22T16:14:36Z",
+        "completed_at": "2026-10-22T16:20:43Z"
+      },
+      {
+        "name": "Praat version and duration",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-22T16:20:43Z",
+        "completed_at": "2026-10-22T16:20:44Z"
+      },
+      {
+        "name": "Repeat full pytest inside container",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-22T16:20:44Z",
+        "completed_at": "2026-10-22T16:26:27Z"
+      },
+      {
+        "name": "Synthetic pitch observations inside container",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-22T16:26:27Z",
+        "completed_at": "2026-10-22T16:26:32Z"
+      },
+      {
+        "name": "Synthetic jitter observations inside container",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-10-22T16:26:32Z",
+        "completed_at": "2026-10-22T16:26:54Z"
+      },
+      {
+        "name": "Synthetic shimmer observations inside container",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-10-22T16:26:54Z",
+        "completed_at": "2026-10-22T16:27:36Z"
+      },
+      {
+        "name": "Synthetic HNR observations inside container",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-10-22T16:27:36Z",
+        "completed_at": "2026-10-22T16:30:28Z"
+      },
+      {
+        "name": "DDK synthetic characterization",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-10-22T16:30:28Z",
+        "completed_at": "2026-10-22T16:30:33Z"
+      },
+      {
+        "name": "Start API and verify endpoints over HTTP",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-10-22T16:30:33Z",
+        "completed_at": "2026-10-22T16:30:35Z"
+      },
+      {
+        "name": "Verify pitch HTTP endpoint",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-22T16:30:35Z",
+        "completed_at": "2026-10-22T16:30:35Z"
+      },
+      {
+        "name": "Verify jitter HTTP endpoint",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-22T16:30:35Z",
+        "completed_at": "2026-10-22T16:30:36Z"
+      },
+      {
+        "name": "Verify shimmer HTTP endpoint",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-10-22T16:30:36Z",
+        "completed_at": "2026-10-22T16:30:38Z"
+      },
+      {
+        "name": "Verify HNR HTTP endpoint",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-10-22T16:30:38Z",
+        "completed_at": "2026-10-22T16:30:39Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-10-22T16:30:39Z",
+        "completed_at": "2026-10-22T16:30:40Z"
+      },
+      {
+        "name": "Frontend unit and browser checks",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-10-22T16:30:40Z",
+        "completed_at": "2026-10-22T16:33:18Z"
+      },
+      {
+        "name": "H10.4A critical continuity checks",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18,
+        "started_at": "2026-10-22T16:33:18Z",
+        "completed_at": "2026-10-22T16:33:51Z"
+      },
+      {
+        "name": "Visual system, responsive and accessibility checks",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-10-22T16:33:51Z",
+        "completed_at": "2026-10-22T16:34:20Z"
+      },
+      {
+        "name": "Container logs and cleanup",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-10-22T16:34:20Z",
+        "completed_at": "2026-10-22T16:34:20Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 21,
+        "started_at": "2026-10-22T16:34:20Z",
+        "completed_at": "2026-10-22T16:34:23Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 41,
+        "started_at": "2026-10-22T16:34:23Z",
+        "completed_at": "2026-10-22T16:34:23Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 42,
+        "started_at": "2026-10-22T16:34:23Z",
+        "completed_at": "2026-10-22T16:34:23Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 43,
+        "started_at": "2026-10-22T16:34:23Z",
+        "completed_at": "2026-10-22T16:34:23Z"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 12441986550,
+        "name": "milestone-5-docker-results",
+        "size_in_bytes": 13382596,
+        "url": "https://api.github.com/repos/andrepane/habla-motora/actions/artifacts/12441986550",
+        "archive_download_url": "https://api.github.com/repos/andrepane/habla-motora/actions/artifacts/12441986550/zip",
+        "expired": false,
+        "created_at": "2026-10-22T16:34:22Z",
+        "expires_at": "2027-01-20T16:14:26Z",
+        "updated_at": "2026-10-22T16:34:22Z",
+        "digest": "sha256:3c1b24b411895047f16af22c1572ded0d746b0c3511c41e6aeae5e1e6224b503",
+        "workflow_run": {
+          "id": 39812293062,
+          "repository_id": 1417183062,
+          "head_repository_id": 1417183062,
+          "head_branch": "feat/h10-4b-usability-polish",
+          "head_sha": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+        }
+      }
+    ],
+    "downloaded_artifact_sha256": "3c1b24b411895047f16af22c1572ded0d746b0c3511c41e6aeae5e1e6224b503",
+    "artifact_digest_verified": true
+  },
+  "tests": {
+    "python_image_build": {
+      "passed": 639,
+      "xfailed": 6,
+      "duration_s": 339.42
+    },
+    "python_repeat_container": {
+      "passed": 639,
+      "xfailed": 6,
+      "duration_s": 342.05
+    },
+    "frontend": {
+      "passed": 111,
+      "failed": 0
+    },
+    "browser": {
+      "vocal": 24,
+      "ddk": 35,
+      "phrase": 53,
+      "pauses": 60,
+      "candidates": 34,
+      "prosody": 55,
+      "profile": 50,
+      "continuity": 36,
+      "clinical_journey": 39,
+      "critical_continuity_10_4A": 102
+    },
+    "usability_p2": {
+      "passed": 98,
+      "failed": 0,
+      "by_width": {
+        "320": 30,
+        "390": 24,
+        "1024": 22,
+        "1440": 22
+      }
+    },
+    "visual": {
+      "cases": 32,
+      "widths": [
+        1440,
+        1024,
+        390,
+        320
+      ],
+      "page_overflows": 0,
+      "axe_violations": 0,
+      "reflow_200_percent_cases": 8,
+      "ci_png_captures": 48
+    }
+  },
+  "integrity": {
+    "protected_sources_identical_to_main": 168,
+    "display_only_adapters": [
+      "frontend/saved-task-view.js",
+      "frontend/motor-profile-ui.js",
+      "frontend/evaluation-ui.js"
+    ],
+    "frozen_prosody_sha256": "047fac7379b09dfae0f545569e21ec34463ab7227255507ceeba68f8c6b6a24c",
+    "algorithms_metrics_protocols_storage_and_formats_unchanged": true
+  },
+  "limitations": [
+    "DDK retains horizontal scrolling on narrow screens; all columns/actions remain available with sticky event identity and keyboard support.",
+    "Open interval editors retain necessary review safeguards and can remain long.",
+    "Automated Chromium/axe plus screenshot review is not a human usability study or a WCAG certification."
+  ],
+  "pull_request_opened": false,
+  "P3_implemented": false
+}

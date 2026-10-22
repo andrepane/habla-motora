@@ -1,0 +1,24 @@
+2026-10-22T16:20:42.0865512Z #12 339.9 639 passed, 6 xfailed, 1 warning in 339.42s (0:05:39)
+2026-10-22T16:26:26.8036327Z 639 passed, 6 xfailed, 1 warning in 342.05s (0:05:42)
+2026-10-22T16:30:42.3317283Z # tests 111
+2026-10-22T16:30:42.3317781Z # pass 111
+2026-10-22T16:31:33.0693567Z 35 DDK browser checks passed (real API, synthetic audio/microphone, audit, manual replay, exports, invalidation, mobile).
+2026-10-22T16:31:41.8455653Z 24 browser checks passed (real API, synthetic microphone, partial results, invalidation, export, mobile).
+2026-10-22T16:31:56.3701446Z 53 phrase browser checks passed (real API, two attempts, manual independent rates, models, invalidation, byte-identical WAV export, microphone, mobile).
+2026-10-22T16:32:00.4288103Z 60 7B.1 browser checks passed (real API, manual intervals, intraword safeguard, global interference blocking, exact samples, unchanged 7A, invalidation, two attempts, export, mobile).
+2026-10-22T16:32:07.9761285Z 7B.2 browser: 34 checks passed
+2026-10-22T16:32:45.2100867Z 55 Prosodia 8B browser checks passed (real frozen API, gap topology, units/reference, identity, independent pauses/export, partial/null/zero, failures and mobile).
+2026-10-22T16:33:00.2363865Z 50 motor profile browser checks passed (real task bridges/API, immutable local registry, explicit attempts, exact projection, completed/null, export/reconstruction, integrity, stale, desktop/mobile).
+2026-10-22T16:33:09.5397644Z Continuity browser: 36 checks passed
+2026-10-22T16:33:18.5246173Z Clinical journey: 39 checks passed
+2026-10-22T16:33:51.2200526Z H10.4A critical continuity: 102 checks passed
+2026-10-22T16:33:52.9840723Z Visual checkpoint 01-inicio: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:33:54.1923162Z Visual checkpoint 02-evaluacion: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:33:59.9022514Z Visual checkpoint 03-vocal: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:34:03.4649267Z Visual checkpoint 04-ddk: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:34:06.3507177Z Visual checkpoint 05-contenido: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:34:09.3644937Z Visual checkpoint 06-pausas: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:34:14.1619871Z Visual checkpoint 07-prosodia: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:34:18.8900502Z Visual checkpoint 08-perfil: 1440/1024/390/320, no page overflow, axe AA clear
+2026-10-22T16:34:20.1739551Z Clinical journey: 39 checks passed
+2026-10-22T16:34:23.3604869Z Artifact milestone-5-docker-results.zip successfully finalized. Artifact ID 12441986550
