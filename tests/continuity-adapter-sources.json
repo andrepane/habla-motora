@@ -1,0 +1,32 @@
+{
+  "phase": "H10.4A",
+  "base": "b26eb545bdae7e0b2c60dd9bb1b621de0aeaee6f",
+  "purpose": "Explicitly authorized continuity/UI adapter changes only; H10.3 manifest retained unchanged.",
+  "files": [
+    {
+      "path": "frontend/profile-bridge.js",
+      "baseline_sha256": "a31bb7e03336b7198ee998ae68441ae67033f5c57bba19813591a005c0f0150a",
+      "sha256": "708326c31678dc18bd18f41504d97597223e1f70517a118f7feb5f161c999e02"
+    },
+    {
+      "path": "frontend/saved-task-view.js",
+      "baseline_sha256": "1b4fe3e18a07002121a0d17622591316c699c08d0cd72edadab70fd8cc7e22cc",
+      "sha256": "fada37062ecad9e6bfd7cca5e2143edf96a4adc1fdb99b680f989ddc618367f2"
+    },
+    {
+      "path": "frontend/phrase.js",
+      "baseline_sha256": "60d632a3168f626b5cf8e6bec5283cf9d7029b460ef61f60fc653a3e3f4b9126",
+      "sha256": "51a503d77f92c98f00ce57d78b815608dab7a0bec939fc4d2e35bfa8de72317c"
+    },
+    {
+      "path": "frontend/ddk.js",
+      "baseline_sha256": "b32e9806e209a23ba5c267d41e8c127ccb3169c620f999221717e3af4ff71468",
+      "sha256": "dc64d018451d7fb6951e659955219ad588caee310687ae48050c5857d16d7838"
+    },
+    {
+      "path": "frontend/app.js",
+      "baseline_sha256": "767fdc8cb141f18d20b1d8405a3975f5e6b6fb79cf806db078090a1407ca8c65",
+      "sha256": "0d11c84fb79c6a239b35a3cae119f8125003b2d97bf2181c6e07207bba439e3d"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import {checkCompatibility} from './motor-profile.js';
 import {attemptSummary,taskNames} from './evaluation-flow.js';
 import {getEvaluation,mutateEvaluation,invalidateAttempt,registerResult,artifact,bind,loadSources} from './motor-profile-store.js';
 import {evaluationUrl,linkNavigation,rememberAttempt,commonNavigation,destination,activeAttempts} from './evaluation-navigation.js';
+import {exactAudioBuffer} from './recovered-audio.js';
 import {savedTaskView} from './saved-task-view.js';
 
 export function taskBridge(task){
@@ -14,6 +15,21 @@ export function taskBridge(task){
   const actions=document.createElement('section');actions.id='clinicalActions';actions.className='flow-actions';actions.hidden=!evaluationId;box.after(actions);
   let context=null,protocol=null,queue=Promise.resolve(),editable=!evaluationId,pending=0,bypass=false,consulting=false;
   const revisions={},dirty=new Set();
+  let controllerState='preparing',controllerError='';
+  const preparedActions=[];
+  const preparation=document.createElement('p'),retry=document.createElement('button');
+  preparation.dataset.controllerState='preparing';preparation.setAttribute('role','status');
+  retry.type='button';retry.textContent='Reintentar preparación';retry.hidden=true;
+  retry.onclick=()=>location.reload();box.append(preparation,retry);preparation.hidden=true;
+  function paintPreparation(){
+    for(const {button,label} of preparedActions){button.disabled=controllerState!=='ready';button.textContent=controllerState==='preparing'?'Preparando…':label;}
+    preparation.dataset.controllerState=controllerState;
+    preparation.hidden=controllerState==='ready'||!preparedActions.length&&controllerState!=='failed';
+    preparation.textContent=controllerState==='failed'?'No se pudo preparar la tarea. Puedes seguir consultando el resultado guardado o reintentar. '+controllerError:'Preparando…';
+    retry.hidden=controllerState!=='failed';
+  }
+  function preparedButton(label){const button=document.createElement('button');button.type='button';preparedActions.push({button,label});paintPreparation();return button;}
+
   const controls=()=>[...document.querySelector('main').children].filter(n=>n!==box && !['NAV','HEADER','SCRIPT'].includes(n.tagName)&&!['savedTask','clinicalActions'].includes(n.id));
   // Block task interactions while identity/source lookup is in progress.
   let originalHidden=new Map();
@@ -38,18 +54,31 @@ export function taskBridge(task){
       if(task==='phrase'){
         const loaded=await loadSources(e),parent=loaded[a.current.phrase]?.payload;
         if(parent?.context.selection_confirmed&&!a.invalid.phrase&&!a.errors.phrase&&!loaded[a.current.phrase]?.integrity_error&&!checkCompatibility('phrase',parent,protocol)){
-          const resume=document.createElement('button');resume.textContent='Continuar contenido, pausas o Prosodia';resume.type='button';resume.dataset.resumePhrase='true';box.append(resume);
+          const resume=preparedButton('Continuar contenido, pausas o Prosodia');resume.dataset.resumePhrase='true';box.append(resume);
           resume.onclick=async()=>{try{
             const ref=source.assets.find(x=>x.role==='wav'),wav=await artifact(ref.sha256),modelRef=source.assets.find(x=>x.role==='model'),model=modelRef?{...(await artifact(modelRef.sha256)),sha256:modelRef.sha256}:null;
             editable=true;consulting=false;unlock();view.hidden=true;
             const payloads=Object.fromEntries(['pauses','prosody'].filter(k=>a.current[k]&&!a.invalid[k]&&!a.errors[k]&&!loaded[a.current[k]]?.integrity_error&&!checkCompatibility(k,loaded[a.current[k]].payload,protocol)).map(k=>[k,loaded[a.current[k]].payload]));
-            await new Promise((resolve,reject)=>window.dispatchEvent(new CustomEvent('motor-phrase-resume',{detail:{source:parent,sources:payloads,bytes:wav.bytes,file:new File([wav.bytes],ref.name,{type:'audio/wav'}),model,resolve,reject}})));
+            await new Promise((resolve,reject)=>window.dispatchEvent(new CustomEvent('motor-phrase-resume',{detail:{source:parent,sources:payloads,bytes:exactAudioBuffer(wav.bytes),file:new File([wav.bytes],ref.name,{type:'audio/wav'}),model,resolve,reject}})));
             resume.hidden=true;message.textContent='Continuación de revisiones. Selección y contenido guardados permanecen bloqueados; editar la selección requiere Editar / Reanalizar.';
           }catch(x){message.textContent=x.message;}};
         }
       }
 
-      const button=document.createElement('button');button.type='button';button.textContent='Editar / Reanalizar';box.append(button);
+      if(task==='ddk'){
+        const loaded=await loadSources(e),original=loaded[a.current.ddk]?.payload;
+        if(original&&!original.reviewed_result?.confirmed&&!a.invalid.ddk&&!a.errors.ddk&&!checkCompatibility('ddk',original,protocol)){
+          const resume=preparedButton('Continuar revisión');resume.dataset.resumeDdk='true';box.append(resume);
+          resume.onclick=async()=>{try{
+            const ref=source.assets.find(x=>x.role==='wav'),wav=await artifact(ref.sha256);
+            editable=true;consulting=false;unlock();
+            await new Promise((resolve,reject)=>window.dispatchEvent(new CustomEvent('motor-ddk-resume',{detail:{source:original,bytes:exactAudioBuffer(wav.bytes),file:new File([wav.bytes],ref.name,{type:'audio/wav'}),capture:source.capture,resolve,reject}})));
+            editable=true;consulting=false;unlock();view.hidden=true;resume.hidden=true;
+            message.textContent='Revisión pendiente recuperada. No se ha vuelto a ejecutar la detección. Los cambios nuevos son un borrador temporal hasta guardar el cálculo de revisión.';
+          }catch(x){editable=false;consulting=true;lock();view.hidden=false;message.textContent='No se pudo continuar la revisión: '+x.message;}};
+        }
+      }
+      const button=preparedButton('Editar / Reanalizar');box.append(button);
       button.onclick=async()=>{
         const warning=task==='phrase'
           ? 'Iniciar la edición recuperará el WAV y requerirá confirmar de nuevo la selección y la revisión. Pausas, candidatos y Prosodia necesitarán actualizarse. El resultado anterior seguirá conservado en el historial. ¿Continuar?'
@@ -95,21 +124,23 @@ export function taskBridge(task){
   function permitted(ordinal){return editable&&(!evaluationId||context&&(ordinal===null||ordinal===context.ordinal));}
   function draftMessage(){message.textContent='Cambios sin confirmar: borrador temporal solo en esta pestaña. Al salir se perderán los cambios no guardados. Los resultados anteriores se conservan; las dependencias modificadas necesitan actualizarse.';}
   async function leave(event){
-    const a=event.target.closest('a');if(!a||event.defaultPrevented||a.download||!a.href||!evaluationId)return;
+    const a=event.target.closest('a');if(!a||event.defaultPrevented||a.download||!a.href||!evaluationId&&!independentContent())return;
     const target=new URL(a.href,location.href);if(target.origin!==location.origin||target.pathname===location.pathname&&target.search===location.search)return;
     // Modified clicks do not unload this editor. The new page still carries context.
     if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey||a.target==='_blank')return;
     event.preventDefault();await ready;await queue;
-    if(dirty.size&&!window.confirm('Hay cambios sin confirmar en un borrador temporal. Se perderán al salir. Los resultados guardados y el historial se conservan. ¿Salir?'))return;
+    if((evaluationId?dirty.size:independentContent())&&!window.confirm(evaluationId?'Hay cambios sin confirmar en un borrador temporal. Se perderán al salir. Los resultados guardados y el historial se conservan. ¿Salir?':'Hay audio o cambios temporales en esta tarea independiente. Se perderán al salir. No se guardan automáticamente. ¿Salir?'))return;
     bypass=true;location.href=a.href;
   }
   document.addEventListener('click',leave);
   document.addEventListener('click',event=>{
     if(evaluationId&&editable&&event.target.closest('#record, .record')){dirty.add(task);draftMessage();}
   });
-  window.addEventListener('beforeunload',event=>{if(evaluationId&&!bypass&&(dirty.size||pending)){event.preventDefault();event.returnValue='';}});
+  function independentContent(){return [...document.querySelectorAll('main input[type="file"]')].some(n=>n.files?.length)||!!document.querySelector('main audio[src^="blob:"],#stop:not(:disabled),.stop:not(:disabled)');}
+  window.addEventListener('beforeunload',event=>{if(!bypass&&(evaluationId?(dirty.size||pending):independentContent())){event.preventDefault();event.returnValue='';}});
   window.addEventListener('pageshow',event=>{if(event.persisted&&evaluationId)location.reload();});
   return {
+    controllerReady(){controllerState='ready';paintPreparation();},controllerFailed(error){controllerState='failed';controllerError=error.message||String(error);paintPreparation();},
     ready,context:()=>context,flush:()=>queue,isConsulting:()=>consulting,
     acceptsOrdinal:ordinal=>!evaluationId||context?.ordinal===ordinal,
     invalidate(kinds,reason,ordinal=null){
