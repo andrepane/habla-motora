@@ -19,7 +19,7 @@ function sampleControl(input,slot,label){
   seconds.addEventListener('input',()=>{const rate=rateOf(slot),value=seconds.value===''?null:sampleAtSeconds(Number(seconds.value),rate);if(value===null){seconds.setCustomValidity('Introduce un tiempo válido con audio disponible.');input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));update();return;}seconds.setCustomValidity('');input.value=String(value);input.dispatchEvent(new Event('input',{bubbles:true}));update();});
  }
  const rate=rateOf(slot),index=input.value===''?null:Number(input.value),value=secondsAt(index,rate);
- entry.seconds.disabled=input.disabled||!rate;
+ const disabled=input.disabled||!rate;if(entry.seconds.disabled!==disabled)entry.seconds.disabled=disabled;
  if(document.activeElement!==entry.seconds&&entry.seconds.value!==(value===null?'':String(value)))entry.seconds.value=value===null?'':String(value);
  const text=value===null?'Tiempo no disponible':`${index} muestras ÷ ${rate} Hz = ${value} s`;
  if(entry.equivalence.textContent!==text)entry.equivalence.textContent=text;
@@ -37,7 +37,7 @@ function paint(){
   const cards=document.querySelector('#reviewedCards');if(cards){const original=[...cards.querySelectorAll(':scope > .card')];foldCards(cards,n=>original.indexOf(n)<4,'Regularidad temporal · detalles');}
   const section=document.querySelector('#reviewSection');if(section){const d=details(section,'review-charts','Gráficos e intervalos revisados');for(const n of [document.querySelector('#eventChart'),document.querySelector('#intervalChart'),document.querySelector('#intervalTable')?.closest('.tableScroll')])if(n&&n.parentElement!==d)d.append(n);}
   if(!consult)placeAfter(actions,cards);
-  const table=document.querySelector('#editTable'),scroll=table?.closest('.tableScroll');if(scroll){let hint=scroll.previousElementSibling;if(!hint?.classList.contains('table-hint')){hint=make('p','Desliza para ver más · el acontecimiento permanece fijo a la izquierda.');hint.className='table-hint';hint.id='ddk-scroll-help';scroll.before(hint);scroll.setAttribute('aria-describedby',hint.id);}hint.hidden=scroll.scrollWidth<=scroll.clientWidth+1;}
+  const table=document.querySelector('#editTable'),scroll=table?.closest('.tableScroll');if(scroll){let hint=scroll.previousElementSibling;if(!hint?.classList.contains('table-hint')){hint=make('p','Desliza para ver más · el acontecimiento permanece fijo a la izquierda.');hint.className='table-hint';hint.id='ddk-scroll-help';scroll.before(hint);scroll.setAttribute('aria-describedby',hint.id);}const hidden=scroll.scrollWidth<=scroll.clientWidth+1;if(hint.hidden!==hidden)hint.hidden=hidden;}
  }
  for(const slot of document.querySelectorAll('#attempts > section')){
   if(!slot.querySelector('.flow-nav'))continue;
@@ -60,7 +60,7 @@ function paint(){
    }
    if(rows)for(const d of rows.querySelectorAll(':scope > details[data-polish="reviewed-interval"]')){const row=d.querySelector('fieldset'),rate=rateOf(slot),a=Number(row.querySelector('[data-key="start_sample"]').value),b=Number(row.querySelector('[data-key="end_sample_exclusive"]').value),classification=row.querySelector('[data-key="classification"]'),text=`${row.querySelector('legend').textContent} · ${a/rate}–${b/rate} s · ${classification.selectedOptions[0].textContent}`;if(d.firstElementChild.textContent!==text)d.firstElementChild.textContent=text;}
    if(!reviewed&&rows)for(const d of rows.querySelectorAll(':scope > details[data-polish="reviewed-interval"]'))if(d.dataset.draft!=='true'){d.dataset.draft='true';d.open=true;}
-   const label=panel.querySelector('[data-p="status"]')?.closest('label');if(label){const d=details(panel,'pause-status','Opciones del borrador / no evaluable');if(label.parentElement!==d)d.append(label);const confirmed=saved?.temporal_review?.status==='confirmed';label.hidden=!!confirmed;let notice=panel.querySelector('.pause-result-state');if(!notice){notice=make('p');notice.className='pause-result-state';notice.setAttribute('role','status');panel.querySelector('[data-p="state"]').after(notice);}const text=pauseDisplay(audit);if(notice.textContent!==text)notice.textContent=text;}}
+   const label=panel.querySelector('[data-p="status"]')?.closest('label');if(label){const d=details(panel,'pause-status','Opciones del borrador / no evaluable');if(label.parentElement!==d)d.append(label);const confirmed=saved?.temporal_review?.status==='confirmed';if(label.hidden!==!!confirmed)label.hidden=!!confirmed;if(d.hidden!==!!confirmed)d.hidden=!!confirmed;let notice=panel.querySelector('.pause-result-state');if(!notice){notice=make('p');notice.className='pause-result-state';notice.setAttribute('role','status');panel.querySelector('[data-p="state"]').after(notice);}const text=pauseDisplay(audit);if(notice.textContent!==text)notice.textContent=text;}}
  }
  // Known display reasons only; never touch raw JSON, form values or source objects.
  for(const n of document.querySelectorAll('.metric small,.card small')){let text=displayUnit(n.textContent,n.parentElement.textContent);for(const [code,label]of Object.entries(reasonLabels))text=text.replaceAll(code,label);if(text!==n.textContent)n.textContent=text;}
