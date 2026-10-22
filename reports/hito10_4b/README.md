@@ -3,6 +3,8 @@
 Base: `79105ab82bce99aa7a85234ec2ca5b05e31f4c3a`, merge PR #14 (10.4A).
 Rama nueva: `feat/h10-4b-usability-polish`. Sin PR.
 
+La regresión nueva verifica también que consultar Vocal/DDK conserva las acciones fuera del editor oculto. Se corrigió una carrera de presentación al trasladar el CTA antes de terminar la reconstrucción asíncrona de la consulta; no cambia fuentes ni estados.
+
 ## Alcance
 
 - P2.1: se trasladan los nodos originales de acciones, sin duplicar botones/handlers. Vocal: después de resultados/avisos. DDK: después de métricas revisadas. Pausas: continuación junto a confirmación. Jitter/shimmer, gráficos DDK y tasas de referencia permanecen en detalles. Los intervalos de Pausas se pliegan solo tras obtener una revisión confirmada; conservan todos sus controles. Un borrador posterior permite seguir editándolos. Cabecera móvil más compacta.
@@ -16,7 +18,7 @@ Rama nueva: `feat/h10-4b-usability-polish`. Sin PR.
 - Python completa: **639 passed, 6 xfailed**, 406,51 s. Un warning previo Starlette/AnyIO.
 - Frontend: **111/111** (cuatro pruebas nuevas de presentación).
 - Regresiones navegador: Vocal 24, DDK 35, Frase 53, Pausas 60, candidatos 34, Prosodia 55, Perfil 50, continuidad 36, recorrido clínico 39; 10.4A 102.
-- P2: 94 comprobaciones en el recorrido real con API y audio sintético; controles exactos, accesibilidad de detalles, proximidad/ausencia de duplicados, tabla con teclado/columna fija, estados y rechazo orientativo de resumen sin escrituras.
+- P2: 98 comprobaciones en el recorrido real con API y audio sintético; controles exactos, accesibilidad de detalles, proximidad/ausencia de duplicados, tabla con teclado/columna fija, estados y rechazo orientativo de resumen sin escrituras.
 - Visual: ocho pantallas × 1440/1024/390/320, sin overflow de página; cero violaciones automáticas axe AA. Ocho comprobaciones de reflow al 200 %. Los casos incompletos de axe requieren revisión humana; esto no es certificación WCAG.
 - Comparación reproducida sobre una copia temporal de main y esta rama, con los mismos WAV sintéticos. `positions.json` registra posiciones absolutas, no tiempos de interacción. A 320 px: Vocal 3173→2572, DDK 4539→3607, Pausas 4943→2761 px. Las posiciones dependen del contenido; la garantía probada es proximidad a cierre y acceso a todos los datos.
 

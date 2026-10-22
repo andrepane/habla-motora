@@ -17,6 +17,14 @@ export async function usabilityCheckpoint(page,name,width){
   const details=page.locator('details[data-polish="metrics"]');
   check(await details.count()>0,'secondary metrics retained in disclosure');
   await details.locator('summary').click();check(await details.locator('.card,.metric').count()>0,'secondary values still accessible');await details.locator('summary').click();
+  if(width===320){
+   const stored=await page.evaluate(async()=>JSON.stringify(await(await import('/static/motor-profile-store.js')).getEvaluation(new URL(location.href).searchParams.get('evaluation_id'))));
+   const consult=await page.context().newPage();await consult.goto(page.url());await consult.locator('#savedTask').waitFor();await consult.locator('#clinicalActions').waitFor();
+   check(await consult.locator('#clinicalActions').evaluate(n=>n.parentElement===document.querySelector('main')),'consultation actions stay outside hidden editor');
+   check(await consult.evaluate(async()=>JSON.stringify(await(await import('/static/motor-profile-store.js')).getEvaluation(new URL(location.href).searchParams.get('evaluation_id'))))===stored,'consultation preserves immutable stored evaluation');
+   await consult.close();
+  }
+
  }
  if(name==='04-ddk'){
   const scroll=page.locator('#editTable').locator('..');

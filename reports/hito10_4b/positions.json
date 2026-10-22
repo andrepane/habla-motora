@@ -128,25 +128,25 @@
       "screen": "06-pausas",
       "width": 1440,
       "top": 2003.703125,
-      "height": 2798
+      "height": 2715
     },
     {
       "screen": "06-pausas",
       "width": 1024,
       "top": 2128.890625,
-      "height": 3039
+      "height": 2956
     },
     {
       "screen": "06-pausas",
       "width": 390,
       "top": 2586.703125,
-      "height": 3723
+      "height": 3640
     },
     {
       "screen": "06-pausas",
       "width": 320,
       "top": 2760.8125,
-      "height": 3937
+      "height": 3834
     }
   ]
 }

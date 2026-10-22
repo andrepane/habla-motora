@@ -96,6 +96,18 @@
     "passed": true
   },
   {
+    "screen": "03-vocal",
+    "width": 320,
+    "label": "consultation actions stay outside hidden editor",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 320,
+    "label": "consultation preserves immutable stored evaluation",
+    "passed": true
+  },
+  {
     "screen": "04-ddk",
     "width": 1440,
     "label": "single existing CTA immediately follows result/warnings",
@@ -273,6 +285,18 @@
     "screen": "04-ddk",
     "width": 320,
     "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "consultation actions stay outside hidden editor",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "consultation preserves immutable stored evaluation",
     "passed": true
   },
   {

@@ -28,6 +28,7 @@ function foldCards(container,keep,title){if(!container)return;const secondary=[.
 function paint(){
  // Move existing action nodes; never duplicate handlers or enable controls.
  const actions=document.querySelector('#clinicalActions'),consult=document.querySelector('#savedTask:not([hidden])');
+ if(consult&&actions&&actions.parentElement!==main){const footer=main.querySelector(':scope > footer');if(footer)footer.before(actions);else main.append(actions);}
  if(page==='vowel'){
   const cards=document.querySelector('#cards');foldCards(cards,n=>!/[Jj]itter|[Ss]himmer/.test(n.textContent),'Jitter y shimmer · medidas experimentales');
   const results=document.querySelector('#results'),charts=results?.querySelector('.charts');if(results&&charts&&!charts.closest('details')){const d=details(results,'curves','Curvas y soporte técnico');d.append(charts);}
