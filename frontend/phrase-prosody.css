@@ -1,27 +1,197 @@
-.prosodyPanel { border-top: 4px solid #086b76; }
-.prosodyPanel h3 { font-size: 1.5rem; margin: .3rem 0; }
-.prosodyPanel p { line-height: 1.6; }
-.prosody-note { color: #526b72; font-size: .94rem; }
-.prosody-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.prosody-toolbar label { margin: 6px 8px 6px 0; }
-.prosody-chart { height: auto; aspect-ratio: 900/310; min-height: 210px; touch-action: pan-y; }
-.prosody-chart text { font-family: system-ui,sans-serif; font-size: 12px; fill: #385862; }
-.prosody-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: .85rem; }
-.prosody-legend span::before { content: ''; display: inline-block; width: 12px; height: 12px; margin-right: 5px; border: 1px solid #b7c8ce; }
-.prosody-valid::before { background: #086b76; }
-.prosody-gap::before { background: #fae8c5; }
-.prosody-edge::before { background: #ccd6db; }
-.prosody-hover { min-height: 3rem; font-variant-numeric: tabular-nums; }
-.prosody-metrics { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(180px,100%),1fr)); gap: 10px; margin: 16px 0; }
-.prosody-metrics .metric { padding: 14px; }
-.prosody-warnings:has(li) { border-left: 3px solid #c2954b; background: #fff9ef; padding: 1px 14px; margin: 16px 0; }
-.prosody-warnings li { margin: 8px 0; overflow-wrap: anywhere; }
-.prosodyPanel details { border-top: 1px solid #d9e4e6; padding-top: 14px; }
-.prosodyPanel summary { cursor: pointer; color: #245b64; }
-.prosodyPanel input[type="range"] { width: min(100%,480px); display: block; padding: 0; }
-@media (max-width:600px) {
-  .prosody-chart text { font-size: 28px; }
-  .prosody-chart { min-height: 185px; }
-  .prosody-toolbar label { width: 100%; }
-  .prosody-toolbar select { width: 100%; }
+.prosodyPanel {
+  border-top: 3px solid var(--accent);
+}
+.prosodyPanel h3 {
+  font-size: 1.35rem;
+  margin: 0.3rem 0;
+}
+.prosodyPanel p {
+  line-height: 1.6;
+}
+.prosody-note {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+.prosody-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.prosody-toolbar label {
+  margin: 6px 8px 6px 0;
+}
+.prosody-chart {
+  height: auto;
+  aspect-ratio: 900/310;
+  min-height: 210px;
+  touch-action: pan-y;
+}
+.prosody-chart text {
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  fill: #385862;
+}
+.prosody-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+.prosody-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  border: 1px solid #b7c8ce;
+}
+.prosody-valid::before {
+  background: #086b76;
+}
+.prosody-gap::before {
+  background: #fae8c5;
+}
+.prosody-edge::before {
+  background: #ccd6db;
+}
+.prosody-hover {
+  min-height: 3rem;
+  font-variant-numeric: tabular-nums;
+}
+.prosody-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+.prosody-metrics .metric {
+  padding: 14px;
+}
+.prosody-warnings:has(li) {
+  border-left: 3px solid #c2954b;
+  background: #fff9ef;
+  padding: 1px 14px;
+  margin: 16px 0;
+}
+.prosody-warnings li {
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+.prosodyPanel details {
+  border-top: 1px solid #d9e4e6;
+  padding-top: 14px;
+}
+.prosodyPanel summary {
+  cursor: pointer;
+  color: #245b64;
+}
+.prosodyPanel input[type="range"] {
+  width: min(100%, 480px);
+  display: block;
+  padding: 0;
+}
+@media (max-width: 600px) {
+  .prosody-chart text {
+    font-size: 36px;
+  }
+  .prosody-chart {
+    min-height: 185px;
+  }
+  .prosody-toolbar label {
+    width: 100%;
+  }
+  .prosody-toolbar select {
+    width: 100%;
+  }
+}
+
+.prosody-toolbar {
+  gap: 8px;
+}
+.prosody-toolbar button {
+  font-size: 12px;
+  min-height: 40px;
+}
+.prosody-toolbar label {
+  font-size: 12px;
+}
+.prosody-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+.prosody-metrics .metric {
+  background: transparent;
+  border-left: 1px solid var(--line);
+  padding: 16px;
+}
+.prosody-metrics .metric:first-child {
+  border-left: 0;
+}
+.prosody-metrics .metric strong {
+  font-size: 28px;
+}
+.prosodyPanel [data-pr="run"] {
+  margin-bottom: 14px;
+}
+.prosodyPanel [data-pr="reference"] {
+  font-size: 12px;
+  color: var(--muted);
+}
+.prosodyPanel [data-pr="selection"] {
+  font-size: 12px;
+  color: var(--muted);
+}
+.prosody-chart {
+  border-radius: 5px;
+}
+.prosodyPanel details .prosody-metrics {
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+}
+.prosodyPanel details .metric {
+  background: var(--soft);
+  border: 0;
+  margin: 4px;
+}
+.prosodyPanel details .metric strong {
+  font-size: 21px;
+}
+@media (max-width: 700px) {
+  .prosody-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .prosody-metrics .metric {
+    padding: 12px;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .prosody-metrics .metric:nth-child(even) {
+    border-left: 1px solid var(--line);
+  }
+  .prosody-metrics .metric strong {
+    font-size: 25px;
+  }
+  .prosody-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .prosody-toolbar label {
+    grid-column: 1/-1;
+    margin: 0 0 8px;
+  }
+  .prosody-toolbar button {
+    width: 100%;
+    margin: 0;
+  }
+  .prosody-toolbar [data-pr="reset"] {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 420px) {
+  .prosody-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .prosody-metrics .metric:nth-child(even) {
+    border-left: 0;
+  }
 }

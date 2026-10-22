@@ -55,3 +55,49 @@ test("tiny finite measurements are not rounded to fake zeros", () => {
   assert.notEqual(metricText({ value: 0.0000002 }), "0");
   assert.notEqual(metricText({ value: -0.0000002 }), "0");
 });
+
+// Exercise the real presentation script with a minimal DOM, without invoking
+// controllers or altering their status/recommendation inputs.
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+import {recommended} from '../frontend/evaluation-flow.js';
+const visualScript=readFileSync(new URL('../frontend/visual-interface.js',import.meta.url),'utf8');
+function prosodyStepper(initial,current=false){
+  let observer;
+  const panel={dataset:{status:initial}},attrs=new Map(current?[['aria-current','step']]:[]);
+  let note;
+  const button={dataset:{phraseStep:'prosody'},disabled:false,
+    getAttribute:k=>attrs.get(k)??null,setAttribute:(k,v)=>attrs.set(k,v),
+    querySelector:()=>note,append:n=>{note=n;}};
+  const slot={querySelector:s=>s==='.prosodyPanel'?panel:null,querySelectorAll:()=>[button]};
+  const document={body:{dataset:{page:'phrase'}},querySelector:()=>null,
+    querySelectorAll:s=>s==='#attempts>section'?[slot]:[],createElement:()=>({textContent:''})};
+  vm.runInNewContext(visualScript,{document,location:{search:''},URLSearchParams,
+    MutationObserver:class{constructor(callback){observer=callback;}observe(){}},
+    requestAnimationFrame:callback=>callback()});
+  return {panel,button,label:()=>note.textContent,state:()=>attrs.get('data-visual-state'),
+    change:status=>{panel.dataset.status=status;observer();}};
+}
+test('Prosody completed is presented as Completado',()=>{
+  const view=prosodyStepper('completed');assert.equal(view.label(),'Completado');assert.equal(view.state(),'completed');
+});
+test('Prosody partial remains Parcial, including the active step and status changes',()=>{
+  const view=prosodyStepper('completed');view.change('partial');
+  assert.equal(view.label(),'Parcial');assert.equal(view.state(),'partial');
+  const active=prosodyStepper('partial',true);assert.equal(active.label(),'Paso actual · Parcial');
+  assert.ok(!active.label().includes('Completado'));assert.equal(active.panel.dataset.status,'partial');
+});
+test('Prosody not_evaluable retains its explicit meaning, also when active',()=>{
+  const view=prosodyStepper('not_evaluable');assert.equal(view.label(),'No evaluable');
+  assert.equal(view.state(),'not_evaluable');assert.ok(!view.label().includes('Completado'));
+  assert.equal(prosodyStepper('not_evaluable',true).label(),'Paso actual · No evaluable');
+});
+test('Stepper presentation leaves the existing 10.2 recommendation and source state unchanged',()=>{
+  for(const status of ['completed','partial','not_evaluable']){
+    const rows=['vowel','ddk','phrase'].map(task=>({attempt:{task,attempt_id:task,current:{[task]:'source'}},summary:{status:task==='phrase'?'partial':'completed',representative:true,eligible:true,domains:{pauses:{status:'completed'},prosody:{status}}}}));
+    const snapshot=structuredClone(rows),before=recommended({},rows),view=prosodyStepper(status);
+    view.change(status);assert.deepEqual(rows,snapshot);assert.deepEqual(recommended({},rows),before);
+    assert.equal(view.panel.dataset.status,status);
+    assert.equal(before.label,status==='partial'?'Analizar Prosodia':'Ver Perfil');
+  }
+});

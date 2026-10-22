@@ -11,9 +11,11 @@
     "test:phrase-prosody-browser": "node tests/phrase-prosody-browser.mjs",
     "test:motor-profile-browser": "node tests/motor-profile-browser.mjs",
     "test:continuity-browser": "node tests/evaluation-continuity-browser.mjs",
-    "test:journey-browser": "node tests/clinical-journey-browser.mjs"
+    "test:journey-browser": "node tests/clinical-journey-browser.mjs",
+    "test:visual-browser": "VISUAL_AUDIT=1 node tests/clinical-journey-browser.mjs"
   },
   "devDependencies": {
+    "axe-core": "^4.10.3",
     "playwright": "1.51.1"
   }
 }

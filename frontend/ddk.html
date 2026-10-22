@@ -6,23 +6,24 @@
     <title>DDK · pa-ta-ka</title>
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="/static/ddk.css" />
-  <link rel="stylesheet" href="/static/evaluation-flow.css"></head>
-  <body>
-    <main>
+    <link rel="stylesheet" href="/static/evaluation-flow.css" />
+  </head>
+  <body data-page="ddk">
+    <a class="skip-link" href="#content">Saltar al contenido</a>
+    <main id="main">
       <nav aria-label="Batería">
-        <a href="/">Vocal sostenida</a> ·
-        <strong>DDK /pa-ta-ka/</strong> ·
+        <a href="/">Vocal sostenida</a> · <strong>DDK /pa-ta-ka/</strong> ·
         <a href="/phrase">Frase estandarizada</a>
       </nav>
-      <header>
+      <header id="content" tabindex="-1">
         <span class="brand">HABLA MOTORA</span
         ><span class="badge">Experimental</span>
         <h1>DDK · /pa-ta-ka/</h1>
         <p>Explora el ritmo. Escucha, revisa y conserva cada decisión.</p>
         <p class="notice">
           Validación técnica con señales controladas. Validación en habla humana
-          pendiente. No hay reconocimiento fonético automático ni
-          interpretación diagnóstica.
+          pendiente. No hay reconocimiento fonético automático ni interpretación
+          diagnóstica.
         </p>
       </header>
       <section>
@@ -163,52 +164,55 @@
           </table>
         </div>
       </section>
-      <details id="automaticDetails"><summary>Detalles del análisis automático</summary><section id="results" hidden>
-        <h2><span>03</span>Salida automática original</h2>
-        <p id="stageState"></p>
-        <div id="automaticCards" class="cards"></div>
-        <p class="muted">
-          Los marcadores son máximos de energía, no comienzos fonéticos. Tres
-          núcleos no demuestran un ciclo correcto.
-        </p>
-        <label
-          >Anclaje para tríadas candidatas
-          <select id="anchor">
-            <option value="">Sin anclaje</option>
-          </select></label
-        ><button id="group">Calcular agrupación candidata</button>
-        <p id="groupInfo"></p>
-        <div id="warnings"></div>
-        <svg
-          id="energyChart"
-          viewBox="0 0 900 220"
-          role="img"
-          aria-label="Energía, umbral y candidatos"
-        ></svg>
-        <p class="muted">
-          Verde: aceptado · rojo: rechazado · línea naranja: umbral. Selecciona
-          un marcador para escuchar su entorno.
-        </p>
-        <div class="tableScroll">
-          <table id="candidateTable">
-            <caption>
-              Candidatos originales, incluidos rechazados
-            </caption>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Tiempo (s)</th>
-                <th>Energía (dB digital)</th>
-                <th>Contraste (dB)</th>
-                <th>Decisión</th>
-                <th>Audio</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </section>
-      </details><section id="exportSection" hidden>
+      <details id="automaticDetails">
+        <summary>Detalles del análisis automático</summary>
+        <section id="results" hidden>
+          <h2><span>03</span>Salida automática original</h2>
+          <p id="stageState"></p>
+          <div id="automaticCards" class="cards"></div>
+          <p class="muted">
+            Los marcadores son máximos de energía, no comienzos fonéticos. Tres
+            núcleos no demuestran un ciclo correcto.
+          </p>
+          <label
+            >Anclaje para tríadas candidatas
+            <select id="anchor">
+              <option value="">Sin anclaje</option>
+            </select></label
+          ><button id="group">Calcular agrupación candidata</button>
+          <p id="groupInfo"></p>
+          <div id="warnings"></div>
+          <svg
+            id="energyChart"
+            viewBox="0 0 900 220"
+            role="img"
+            aria-label="Energía, umbral y candidatos"
+          ></svg>
+          <p class="muted">
+            Verde: aceptado · rojo: rechazado · línea naranja: umbral.
+            Selecciona un marcador para escuchar su entorno.
+          </p>
+          <div class="tableScroll">
+            <table id="candidateTable">
+              <caption>
+                Candidatos originales, incluidos rechazados
+              </caption>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tiempo (s)</th>
+                  <th>Energía (dB digital)</th>
+                  <th>Contraste (dB)</th>
+                  <th>Decisión</th>
+                  <th>Audio</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </details>
+      <section id="exportSection" hidden>
         <h2>Auditoría y exportación</h2>
         <div class="actions">
           <button id="copy">Copiar resumen</button
@@ -219,10 +223,9 @@
           <pre id="technical"></pre>
         </details>
       </section>
-      <footer>
-        Validación humana pendiente · Sin diagnóstico
-      </footer>
+      <footer>Validación humana pendiente · Sin diagnóstico</footer>
     </main>
     <script type="module" src="/static/ddk.js"></script>
+    <script type="module" src="/static/visual-interface.js"></script>
   </body>
 </html>

@@ -6,14 +6,16 @@
     <title>Habla conectada</title>
     <link rel="stylesheet" href="/static/phrase.css" />
     <link rel="stylesheet" href="/static/phrase-prosody.css" />
-  <link rel="stylesheet" href="/static/evaluation-flow.css"></head>
-  <body>
-    <main>
+    <link rel="stylesheet" href="/static/evaluation-flow.css" />
+  </head>
+  <body data-page="phrase">
+    <a class="skip-link" href="#content">Saltar al contenido</a>
+    <main id="main">
       <nav aria-label="Batería">
         <a href="/">Vocal sostenida</a> · <a href="/ddk">DDK /pa-ta-ka/</a> ·
         <strong>Frase estandarizada</strong>
       </nav>
-      <header>
+      <header id="content" tabindex="-1">
         <p class="eyebrow">Habla conectada · Revisión manual</p>
         <h1>Habla conectada</h1>
         <p>Duración y velocidad global con revisión manual del contenido.</p>
@@ -23,13 +25,16 @@
         diagnóstico ni baremos. La lectura y el seguimiento visual pueden
         afectar al tiempo medido.
       </p>
-      <p>
-        Un ensayo de familiarización y dos intentos independientes, con 20
-        segundos de descanso recomendado. Conserva ambos; no elijas
-        automáticamente el más rápido. Los recuentos 14 palabras / 25 sílabas
-        canónicas pertenecen al estímulo, sin sinalefas; no son detecciones
-        acústicas.
-      </p>
+      <details class="method-guide">
+        <summary>Preparación y condiciones de la tarea</summary>
+        <p>
+          Un ensayo de familiarización y dos intentos independientes, con 20
+          segundos de descanso recomendado. Conserva ambos; no elijas
+          automáticamente el más rápido. Los recuentos 14 palabras / 25 sílabas
+          canónicas pertenecen al estímulo, sin sinalefas; no son detecciones
+          acústicas.
+        </p>
+      </details>
       <div class="tabs" role="group" aria-label="Intento">
         <button id="tab1" aria-pressed="true">Intento 1</button
         ><button id="tab2" aria-pressed="false">Intento 2</button>
@@ -42,5 +47,6 @@
       <p id="globalStatus" role="status"></p>
     </main>
     <script type="module" src="/static/phrase.js"></script>
+    <script type="module" src="/static/visual-interface.js"></script>
   </body>
 </html>
