@@ -449,8 +449,8 @@ function play(t) {
     .catch(() => say("No se pudo reproducir el audio.", true));
   playbackTimer = setTimeout(() => $("player").pause(), 650);
 }
-function render() {
-  profileBridge.save('ddk', state.result, state.file, state.capture);
+function render(register = true) {
+  if (register) profileBridge.save('ddk', state.result, state.file, state.capture);
   for (const id of ["results", "reviewSection", "exportSection"])
     $(id).hidden = false;
   const r = state.result,
@@ -806,4 +806,23 @@ $("copy").onclick = async () => {
 };
 update();
 
-profileBridge.ready?.then(()=>mountTaskSteps('ddk',profileBridge));
+window.addEventListener('motor-ddk-resume',event=>{
+  const {source,bytes,file,capture,resolve,reject}=event.detail;
+  try{
+    const audio=parseWav(bytes),result=structuredClone(source);
+    state.generation++;state.controller?.abort();
+    if(state.url)URL.revokeObjectURL(state.url);
+    Object.assign(state,{audio,file,capture,url:URL.createObjectURL(file),result,
+      events:structuredClone(result.reviewed_result?.events??result.automatic_original.detection.events),
+      ops:structuredClone(result.manual_modifications?.operations??[]),busy:false,recording:false,controller:null});
+    $('player').src=state.url;$('player').hidden=false;
+    $('audioInfo').textContent=`${file.name} · ${audio.duration.toFixed(3)} s · ${audio.rate} Hz · PCM${audio.bits}`;
+    $('start').disabled=$('end').disabled=false;
+    $('start').value=result.analysis_interval.start_s;$('end').value=result.analysis_interval.end_s;
+    $('start').max=$('end').max=audio.duration;
+    $('confirmed').checked=!!result.reviewed_result?.confirmed;
+    $('absence').checked=!!result.reviewed_result?.confirm_absence;
+    render(false);update();resolve();
+  }catch(error){reject(error);}
+});
+profileBridge.ready?.then(()=>{mountTaskSteps('ddk',profileBridge);profileBridge.controllerReady();}).catch(error=>profileBridge.controllerFailed(error));

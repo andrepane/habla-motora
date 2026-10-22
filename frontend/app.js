@@ -526,4 +526,4 @@ $("json").onclick = () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 
-globalThis.hablaMotorProfileBridge?.ready?.then(()=>mountTaskSteps('vowel',globalThis.hablaMotorProfileBridge));
+globalThis.hablaMotorProfileBridge?.ready?.then(()=>{mountTaskSteps('vowel',globalThis.hablaMotorProfileBridge);globalThis.hablaMotorProfileBridge.controllerReady();});

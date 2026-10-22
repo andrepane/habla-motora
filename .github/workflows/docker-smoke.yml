@@ -115,6 +115,8 @@ jobs:
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" PROFILE_EVIDENCE_DIR="$PWD/motor-profile-evidence" npm run test:motor-profile-browser
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" npm run test:continuity-browser
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" JOURNEY_EVIDENCE_DIR="$PWD/clinical-journey-evidence" npm run test:journey-browser
+      - name: H10.4A critical continuity checks
+        run: PROFILE_FIXTURES="$PWD/profile-fixtures.json" npm run test:critical-continuity
       - name: Visual system, responsive and accessibility checks
         run: |
           PROFILE_FIXTURES="$PWD/profile-fixtures.json" VISUAL_EVIDENCE_DIR="$PWD/visual-system-evidence" npm run test:visual-browser

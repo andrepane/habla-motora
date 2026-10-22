@@ -7,7 +7,10 @@ import { mountPauses } from "./phrase-pauses.js";
 import { parseWav, metricText } from "./audio.js";
 import { PhraseRecorder } from "./phrase-recorder.js";
 import { AttemptState, parseEvents, changeFields } from "./phrase-state.js";
-const protocol = await fetch("/phrase-protocol").then((r) => r.json());
+const protocol = await fetch("/phrase-protocol").then((r) => {
+  if (!r.ok) throw Error('No se pudo cargar el protocolo de Habla conectada.');
+  return r.json();
+}).catch(error=>{profileBridge.controllerFailed(error);throw error;});
 const $ = (id) => document.getElementById(id);
 const slots = [];
 let active = 1;
@@ -609,7 +612,7 @@ profileBridge.ready.then(()=>{
   document.querySelector('.tabs').after(note);
 });
 
-profileBridge.ready.then(()=>mountPhraseSteps(slots,profileBridge));
+profileBridge.ready.then(()=>{mountPhraseSteps(slots,profileBridge);profileBridge.controllerReady();}).catch(error=>profileBridge.controllerFailed(error));
 
 window.addEventListener('motor-phrase-resume',async event=>{
  const {source,sources,bytes,file,model,resolve,reject}=event.detail;
