@@ -1,0 +1,566 @@
+[
+  {
+    "screen": "03-vocal",
+    "width": 1440,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 1440,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 1440,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 1440,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 1024,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 1024,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 1024,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 1024,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 390,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 390,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 390,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 390,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 320,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 320,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 320,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "width": 320,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "table keyboard focus retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "time-to-label keyboard tab order preserved",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "event identity sticky during horizontal scrolling",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1440,
+    "label": "manual label control retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "table keyboard focus retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "time-to-label keyboard tab order preserved",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "event identity sticky during horizontal scrolling",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 1024,
+    "label": "manual label control retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "table keyboard focus retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "native keyboard horizontal scroll works",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "time-to-label keyboard tab order preserved",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "event identity sticky during horizontal scrolling",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "manual label control retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 390,
+    "label": "horizontal scroll hint visible",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "single existing CTA immediately follows result/warnings",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "no duplicated clinical action block",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "secondary metrics retained in disclosure",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "secondary values still accessible",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "table keyboard focus retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "native keyboard horizontal scroll works",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "time-to-label keyboard tab order preserved",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "event identity sticky during horizontal scrolling",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "manual label control retained",
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "width": 320,
+    "label": "horizontal scroll hint visible",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1440,
+    "label": "confirmed result explicit",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1440,
+    "label": "draft selector never contradicts confirmed result",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1440,
+    "label": "Continue Prosody next to confirmation",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1440,
+    "label": "seconds display is exact sample/rate quotient",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1440,
+    "label": "exact interval samples preserved",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1440,
+    "label": "sample controls preserved in details",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1024,
+    "label": "confirmed result explicit",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1024,
+    "label": "draft selector never contradicts confirmed result",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1024,
+    "label": "Continue Prosody next to confirmation",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1024,
+    "label": "seconds display is exact sample/rate quotient",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1024,
+    "label": "exact interval samples preserved",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 1024,
+    "label": "sample controls preserved in details",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 390,
+    "label": "confirmed result explicit",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 390,
+    "label": "draft selector never contradicts confirmed result",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 390,
+    "label": "Continue Prosody next to confirmation",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 390,
+    "label": "seconds display is exact sample/rate quotient",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 390,
+    "label": "exact interval samples preserved",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 390,
+    "label": "sample controls preserved in details",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "confirmed result explicit",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "draft selector never contradicts confirmed result",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "Continue Prosody next to confirmation",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "seconds display is exact sample/rate quotient",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "exact interval samples preserved",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "sample controls preserved in details",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "later draft distinct from retained confirmed result",
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "width": 320,
+    "label": "presentation of subsequent draft never writes sources",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1440,
+    "label": "summary purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1440,
+    "label": "recoverable purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1440,
+    "label": "summary import error gives recovery location",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1440,
+    "label": "summary rejected without changing evaluation",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1024,
+    "label": "summary purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1024,
+    "label": "recoverable purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1024,
+    "label": "summary import error gives recovery location",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 1024,
+    "label": "summary rejected without changing evaluation",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 390,
+    "label": "summary purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 390,
+    "label": "recoverable purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 390,
+    "label": "summary import error gives recovery location",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 390,
+    "label": "summary rejected without changing evaluation",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 320,
+    "label": "summary purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 320,
+    "label": "recoverable purpose explicit",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 320,
+    "label": "summary import error gives recovery location",
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "width": 320,
+    "label": "summary rejected without changing evaluation",
+    "passed": true
+  }
+]

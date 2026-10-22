@@ -1,0 +1,30 @@
+/* H10.4B: flow spacing and orientation only; no palette or clinical semantics. */
+.polish-details { margin: 12px 0; }
+.cards > .polish-details,.grid.results > .polish-details { grid-column:1/-1; }
+.secondary-metrics[open] > .card,.secondary-metrics[open] > .metric { margin:10px 0; }
+#clinicalActions { margin:12px 0; }
+.seconds-control { min-width:0; }
+.seconds-control small,.sample-details small { display:block; color:var(--muted);font-size:12px; }
+.sample-details { grid-column:1/-1; }
+.sample-details label { margin:10px 0; }
+.technical-times { display:none; }
+.table-hint { color:var(--muted);font-size:13px;margin:8px 0; }
+#editTable th:first-child,#editTable td:first-child { position:sticky;left:0;z-index:2;background:var(--paper);box-shadow:1px 0 var(--line); }
+#editTable th:first-child { z-index:3; }
+.pause-result-state { border-left:2px solid var(--accent);padding-left:10px; }
+.export-help { color:var(--muted);font-size:13px; }
+@media(max-width:600px){
+ main > header { margin:10px 0 12px;padding:0; }
+ main > header > p { margin:6px 0;font-size:14px;line-height:1.45; }
+ main > header h1 { margin:6px 0;font-size:25px; }
+ main > nav { margin-bottom:12px;padding-bottom:8px; }
+ .profile-bridge { margin:10px 0 !important;padding:8px 10px !important; }
+ .profile-bridge > p { margin:5px 0; }
+ .flow-context { margin:10px 0;font-size:12px; }
+ .tabs { margin:10px 0; }
+ .flow-nav { margin:10px 0; }
+ .flow-nav button { min-height:60px;padding-top:10px;padding-bottom:10px; }
+ .notice { padding:10px; }
+ .pausePanel > p:first-of-type { font-size:13px;line-height:1.5; }
+ #clinicalActions { padding:10px; }
+}

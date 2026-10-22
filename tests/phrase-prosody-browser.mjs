@@ -69,9 +69,12 @@ try {
   await p('reset').click();
   check(await f('start').inputValue()==='4800','zoom never changes 7A');
   await p('axis').selectOption('seconds');await p('unit').selectOption('hz');
+  await p('chart').scrollIntoViewIfNeeded();
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const chart=await p('chart').boundingBox();
   await page.mouse.move(chart.x+chart.width*.45,chart.y+chart.height*.4);
   check((await p('hover').textContent()).includes('frame'),'real-frame cursor');
+  await p('chart').click({position:{x:chart.width*.45,y:chart.height*.4}});
   await p('playCursor').click();
   const audioTime=await card.locator('.audio').evaluate(e=>e.currentTime);
   check(audioTime>=r.context.selection.start_sample/48000 && audioTime<=r.context.selection.end_sample_exclusive/48000,'contextual playback within 7A');
@@ -124,7 +127,7 @@ try {
   await load(partial);await confirm();await analyze('partial');
   const pr=await result();
   check(pr.metrics.f0_median_hz.value!==null && pr.metrics.robust_range_st.value===null,'partial valid/undefined separated');
-  check((await p('primary').locator('[data-metric="robust_range_st"]').textContent()).includes('insufficient_distributional_support'),'support reason visible');
+  check((await p('primary').locator('[data-metric="robust_range_st"]').textContent()).includes('No hay suficiente distribución temporal')&&pr.metrics.robust_range_st.reason==='insufficient_distributional_support','support reason translated, source code retained');
   check(await p('chart').locator('circle').count()>0,'partial curve retained');
   await page.setViewportSize({width:390,height:844});
   await p('chart').scrollIntoViewIfNeeded();

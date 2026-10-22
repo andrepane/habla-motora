@@ -1,0 +1,152 @@
+{
+  "baseline": "79105ab82bce99aa7a85234ec2ca5b05e31f4c3a",
+  "scenario": "Same synthetic clinical journey, default presentation, two confirmed pauses",
+  "before": [
+    {
+      "screen": "03-vocal",
+      "width": 1440,
+      "top": 1871.953125,
+      "height": 2100
+    },
+    {
+      "screen": "03-vocal",
+      "width": 1024,
+      "top": 1837.1875,
+      "height": 2065
+    },
+    {
+      "screen": "03-vocal",
+      "width": 390,
+      "top": 3174.53125,
+      "height": 3432
+    },
+    {
+      "screen": "03-vocal",
+      "width": 320,
+      "top": 3173.296875,
+      "height": 3427
+    },
+    {
+      "screen": "04-ddk",
+      "width": 1440,
+      "top": 3134.640625,
+      "height": 3363
+    },
+    {
+      "screen": "04-ddk",
+      "width": 1024,
+      "top": 2965.3125,
+      "height": 3194
+    },
+    {
+      "screen": "04-ddk",
+      "width": 390,
+      "top": 4392.65625,
+      "height": 4631
+    },
+    {
+      "screen": "04-ddk",
+      "width": 320,
+      "top": 4538.9375,
+      "height": 4773
+    },
+    {
+      "screen": "06-pausas",
+      "width": 1440,
+      "top": 3157.890625,
+      "height": 3422
+    },
+    {
+      "screen": "06-pausas",
+      "width": 1024,
+      "top": 3468.453125,
+      "height": 3732
+    },
+    {
+      "screen": "06-pausas",
+      "width": 390,
+      "top": 4677.984375,
+      "height": 4977
+    },
+    {
+      "screen": "06-pausas",
+      "width": 320,
+      "top": 4942.640625,
+      "height": 5235
+    }
+  ],
+  "after": [
+    {
+      "screen": "03-vocal",
+      "width": 1440,
+      "top": 1483.765625,
+      "height": 1928
+    },
+    {
+      "screen": "03-vocal",
+      "width": 1024,
+      "top": 1502.75,
+      "height": 1947
+    },
+    {
+      "screen": "03-vocal",
+      "width": 390,
+      "top": 2511.90625,
+      "height": 3039
+    },
+    {
+      "screen": "03-vocal",
+      "width": 320,
+      "top": 2572.1875,
+      "height": 3091
+    },
+    {
+      "screen": "04-ddk",
+      "width": 1440,
+      "top": 1981.40625,
+      "height": 2618
+    },
+    {
+      "screen": "04-ddk",
+      "width": 1024,
+      "top": 1999.15625,
+      "height": 2635
+    },
+    {
+      "screen": "04-ddk",
+      "width": 390,
+      "top": 3460.3125,
+      "height": 4149
+    },
+    {
+      "screen": "04-ddk",
+      "width": 320,
+      "top": 3607.265625,
+      "height": 4287
+    },
+    {
+      "screen": "06-pausas",
+      "width": 1440,
+      "top": 2003.703125,
+      "height": 2798
+    },
+    {
+      "screen": "06-pausas",
+      "width": 1024,
+      "top": 2128.890625,
+      "height": 3039
+    },
+    {
+      "screen": "06-pausas",
+      "width": 390,
+      "top": 2586.703125,
+      "height": 3723
+    },
+    {
+      "screen": "06-pausas",
+      "width": 320,
+      "top": 2760.8125,
+      "height": 3937
+    }
+  ]
+}

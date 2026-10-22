@@ -1,3 +1,4 @@
+import {usabilityCheckpoint} from './usability-checks.mjs';
 import fs from "node:fs";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
@@ -105,6 +106,7 @@ export async function checkpoint(page, name) {
       0,
       `${name} ${width}: axe ${JSON.stringify(violations)}`,
     );
+    await usabilityCheckpoint(page,name,width);
     // Exercise native keyboard disclosure; restore its initial presentation state.
     const summary = page.locator("details>summary:visible").first();
     if (await summary.count()) {

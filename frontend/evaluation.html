@@ -6,6 +6,7 @@
     <title>Evaluación de habla motora</title>
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="/static/evaluation-flow.css" />
+    <link rel="stylesheet" href="/static/usability.css" />
   </head>
   <body data-page="evaluation">
     <a class="skip-link" href="#content">Saltar al contenido</a>
@@ -48,8 +49,9 @@
             accept=".json,application/json"
         /></label>
         <p>
-          Se guarda en este navegador. Exporta la evaluación para conservar una
-          copia recuperable.
+          Se guarda en este navegador. Para importar, elige la copia completa
+          recuperable que se obtiene en Perfil. El resumen de resultados no
+          permite continuar la evaluación.
         </p>
         <details>
           <summary>Analizar una tarea sin crear una evaluación</summary>
@@ -80,5 +82,6 @@
       <script type="module" src="/static/evaluation-ui.js"></script>
     </main>
     <script type="module" src="/static/visual-interface.js"></script>
+    <script type="module" src="/static/usability-interface.js"></script>
   </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "phase": "H10.4B",
+  "base": "79105ab82bce99aa7a85234ec2ca5b05e31f4c3a",
+  "purpose": "Presentation labels/messages only; original and H10.4A manifests retained unchanged.",
+  "files": [
+    {
+      "path": "frontend/saved-task-view.js",
+      "baseline_sha256": "fada37062ecad9e6bfd7cca5e2143edf96a4adc1fdb99b680f989ddc618367f2",
+      "sha256": "6622a091191d759decbf7840952c5c19dba81a3afde4825ec31a48b74feb57f8"
+    },
+    {
+      "path": "frontend/motor-profile-ui.js",
+      "baseline_sha256": "5a891a9162ddc4becd6f8db643e71c1458b60069abf35766eee0196ab2adbc09",
+      "sha256": "3fcc876083e96c6abc3bbded0e51db7233fb5d0a31298f31b4104476b955817d"
+    },
+    {
+      "path": "frontend/evaluation-ui.js",
+      "baseline_sha256": "1b11b616af1daf939499b43724d9fad70ca62b34d0d0a4a26cd1229f3c3d2888",
+      "sha256": "8f03dd277728dbb3d3af104154e9af36b34d6aeb187c0236ced956bc86cb5ae2"
+    }
+  ]
+}

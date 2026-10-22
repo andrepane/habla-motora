@@ -1,3 +1,4 @@
+import {importMessage} from './usability-labels.js';
 import {createEvaluation,saveEvaluation,listEvaluations,getEvaluation,mutateEvaluation,addAttempt,bind,loadSources,importBundle} from './motor-profile-store.js';
 import {attemptSummary,recommended,taskNames} from './evaluation-flow.js';
 import {evaluationUrl,linkNavigation} from './evaluation-navigation.js';
@@ -31,6 +32,6 @@ async function render(){const version=++revision;try{
 }catch(e){$('next').replaceChildren();message(e.message);}}
 $('new').onclick=async()=>{try{const e=createEvaluation();await saveEvaluation(e);id=e.evaluation_id;history.pushState(null,'','/evaluation?evaluation_id='+id);await render();}catch(e){message(e.message);}};
 $('evaluations').onchange=()=>location.href=$('evaluations').value?'/evaluation?evaluation_id='+encodeURIComponent($('evaluations').value):'/evaluation';
-$('import').onchange=async()=>{try{const f=$('import').files[0];if(!f||f.size>150000000)throw Error('Paquete ausente o superior a 150 MB.');const e=await importBundle(JSON.parse(await f.text()),protocol);id=e.evaluation_id;history.pushState(null,'','/evaluation?evaluation_id='+id);await render();message('Evaluación importada y verificada.');}catch(e){message(e.message);}};
+$('import').onchange=async()=>{let importedData;try{const f=$('import').files[0];if(!f||f.size>150000000)throw Error('Paquete ausente o superior a 150 MB.');const e=await importBundle(importedData=JSON.parse(await f.text()),protocol);id=e.evaluation_id;history.pushState(null,'','/evaluation?evaluation_id='+id);await render();message('Evaluación importada y verificada.');}catch(e){message(importMessage(e,importedData));}};
 for(const [field,key]of [['case','case_ref'],['session','session_at']])$(field).onchange=async()=>{try{const v=$(field).value;if(key==='session_at'&&!v)return;await mutateEvaluation(id,e=>e[key]=key==='session_at'?new Date(v).toISOString():v);await render();}catch(e){message(e.message);}};
 window.addEventListener('popstate',()=>{id=new URLSearchParams(location.search).get('evaluation_id');render();});window.addEventListener('focus',render);await render();
