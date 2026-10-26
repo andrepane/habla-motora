@@ -91,10 +91,10 @@ try {
   await page.locator("#end").fill("6");
   await page.locator("#analyze").click();
   await page.locator("#results").waitFor({ state: "visible" });
-  check((await page.locator(".card").nth(4).textContent()).includes("-10"));
+  check((await page.locator(".card").filter({has:page.getByRole("heading",{name:"HNR medio",exact:true})}).textContent()).includes("-10"));
   check((await page.locator(".card").nth(1).textContent()).includes("0"));
   check(
-    (await page.locator(".card").nth(2).textContent()).includes(
+    (await page.locator(".card").filter({has:page.getByRole("heading",{name:"Jitter local",exact:true})}).textContent()).includes(
       "No calculable",
     ),
   );
@@ -111,7 +111,7 @@ try {
   await page.locator("#results").waitFor({ state: "visible" });
   check((await page.locator("#resultState").textContent()).includes("parcial"));
   check(
-    (await page.locator(".card").nth(4).textContent()).includes(
+    (await page.locator(".card").filter({has:page.getByRole("heading",{name:"HNR medio",exact:true})}).textContent()).includes(
       "Módulo hnr fallido",
     ),
   );

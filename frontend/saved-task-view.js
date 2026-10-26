@@ -1,3 +1,4 @@
+import {displayReason,displayUnit} from './usability-labels.js';
 import {stateLabels} from './evaluation-flow.js';
 import {project,pointer} from './motor-profile.js';
 import {loadSources,artifact} from './motor-profile-store.js';
@@ -18,7 +19,7 @@ export async function savedTaskView(e,a,protocol){
         const raw=pointer(sources[m.source_ref].payload,m.source_pointer);
         if(raw&&Object.hasOwn(raw,'value'))m={...m,...raw};
       }
-      list.append(node('dt',m.label),node('dd',`${metricText(m)}${m.value!==null?' '+m.unit:' · '+m.reason}`));
+      list.append(node('dt',m.label),node('dd',`${metricText(m)}${m.value!==null?' '+displayUnit(m.unit,m.label):' · '+displayReason(m.reason)}`));
     }
     host.append(list);
     for(const w of d.warnings)host.append(node('p',w.message||w.code));

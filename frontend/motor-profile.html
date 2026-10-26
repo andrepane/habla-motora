@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="/static/motor-profile.css" />
     <link rel="stylesheet" href="/static/evaluation-flow.css" />
+    <link rel="stylesheet" href="/static/usability.css" />
   </head>
   <body data-page="profile">
     <a class="skip-link" href="#content">Saltar al contenido</a>
@@ -59,9 +60,10 @@
           <p id="snapshot" role="status"></p>
           <p id="completeness"></p>
           <div class="actions">
-            <button id="export">Exportar resumen JSON</button
-            ><button id="bundle">Exportar paquete recuperable</button>
+            <button id="export">Resumen para consultar o archivar</button
+            ><button id="bundle">Copia completa para recuperar esta evaluación</button>
           </div>
+          <p class="export-help">El resumen contiene resultados, pero no reconstruye la evaluación. La copia completa conserva los datos necesarios para continuar y es el archivo que debes usar en Importar evaluación.</p>
           <details>
             <summary>Intentos y vinculación de tareas</summary>
             <div id="attempts"></div>
@@ -104,5 +106,6 @@
       <script type="module" src="/static/motor-profile-ui.js"></script>
     </main>
     <script type="module" src="/static/visual-interface.js"></script>
+    <script type="module" src="/static/usability-interface.js"></script>
   </body>
 </html>

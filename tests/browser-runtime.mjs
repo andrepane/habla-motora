@@ -8,6 +8,7 @@ export const chromium={...engine,launch:options=>engine.launch({...options,
 export async function technicalTaskView(page){
  await page.addInitScript(()=>{
   new MutationObserver(()=>{
+   for(const detail of document.querySelectorAll('details[data-polish]'))detail.open=true;
    const d=document.querySelector('#automaticDetails');if(d)d.open=true;
    const b=document.querySelector('.showAllSteps');if(b&&!b.dataset.regressionOpen){b.dataset.regressionOpen='true';b.click();}
   }).observe(document,{childList:true,subtree:true});

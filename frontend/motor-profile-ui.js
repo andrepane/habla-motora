@@ -1,3 +1,4 @@
+import {importMessage,displayReason,displayUnit} from './usability-labels.js';
 import {linkNavigation,commonNavigation} from './evaluation-navigation.js';
 import {attemptSummary} from './evaluation-flow.js';
 import {DOMAIN_NAMES,TASKS,project} from './motor-profile.js';
@@ -28,7 +29,7 @@ async function listing(){const evaluations=await listEvaluations();$('evaluation
 const taskOf=d=>d==='phonation'?'vowel':d==='ddk'?'ddk':'phrase';
 function taskUrl(task,attemptId){return `${TASKS[task]}?evaluation_id=${encodeURIComponent(id)}&attempt_id=${encodeURIComponent(attemptId)}`;}
 function metricCard(m){const n=el('div',undefined,'profile-metric');n.dataset.metric=m.key;n.append(el('span',m.label.replace(/\b7A\b/g,'confirmada')),el('strong',metricText(m)),
-  el('small',m.value!==null?m.unit:`${reasonLabels[m.reason]??'No disponible; consulta los detalles técnicos'}`),
+  el('small',m.value!==null?displayUnit(m.unit,m.label):`${displayReason(m.reason)!==m.reason?displayReason(m.reason):reasonLabels[m.reason]??'No disponible; consulta los detalles técnicos'}`),
   el('small',`${m.acquisition==='manual_reviewed'?'Revisada':m.acquisition==='versioned_reference'?'Referencia del estímulo':m.acquisition==='manual_selection'?'Selección manual':'Automática'}${m.experimental?' · Experimental':''}`));return n;}
 function miniCurve(host,p){
   if(!p?.frames?.length)return;
@@ -122,7 +123,7 @@ for(const [input,field]of [['case','case_ref'],['notes','notes'],['intelligibili
 $('session').onchange=async()=>{if(!$('session').value)return;await mutateEvaluation(id,e=>{e.session_at=new Date($('session').value).toISOString();});await render();};
 $('export').onclick=async()=>{try{await refreshProtocol();const p=await buildProfile(id,protocol);download(p,'perfil-habla-motora.json');await render();}catch(x){message(x.message);}};
 $('bundle').onclick=async()=>{try{await refreshProtocol();download(await exportBundle(id,protocol),'evaluacion-habla-motora-paquete.json');}catch(x){message(x.message);}};
-$('import').onchange=async()=>{try{const file=$('import').files[0];if(!file||file.size>150000000)throw Error('Paquete ausente o superior a 150 MB.');await refreshProtocol();const e=await importBundle(JSON.parse(await file.text()),protocol);id=e.evaluation_id;history.replaceState(null,'','/profile?evaluation_id='+id);await render();message('Paquete verificado y resumen reconstruido desde resultados originales.');}catch(x){message(x.message);}};
+$('import').onchange=async()=>{let importedData;try{const file=$('import').files[0];if(!file||file.size>150000000)throw Error('Paquete ausente o superior a 150 MB.');await refreshProtocol();const e=await importBundle(importedData=JSON.parse(await file.text()),protocol);id=e.evaluation_id;history.replaceState(null,'','/profile?evaluation_id='+id);await render();message('Paquete verificado y resumen reconstruido desde resultados originales.');}catch(x){message(importMessage(x,importedData));}};
 window.addEventListener('focus',async()=>{await refreshProtocol();await render();});
 document.addEventListener('visibilitychange',async()=>{if(!document.hidden){await refreshProtocol();await render();}});
 await refreshProtocol();await render();

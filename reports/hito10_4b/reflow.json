@@ -1,0 +1,58 @@
+[
+  {
+    "screen": "01-inicio",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  },
+  {
+    "screen": "02-evaluacion",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  },
+  {
+    "screen": "03-vocal",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  },
+  {
+    "screen": "04-ddk",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  },
+  {
+    "screen": "05-contenido",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  },
+  {
+    "screen": "06-pausas",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  },
+  {
+    "screen": "07-prosodia",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  },
+  {
+    "screen": "08-perfil",
+    "zoom": "200% CSS zoom",
+    "viewport": 640,
+    "document": 640,
+    "passed": true
+  }
+]

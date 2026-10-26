@@ -1,0 +1,132 @@
+[
+  {
+    "path": "reports/hito10_4b/evidence/step-end-03-vocal-320.jpg",
+    "original_png_sha256": "f58624a74063efbc69c996c1e2404537148e76237e45a2b9bae68323e97abdc2",
+    "sha256": "633debede24dc82467edde74798f31493248959ffa8db1d2b1c0dcec891ebb59",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/step-end-04-ddk-320.jpg",
+    "original_png_sha256": "fbec882f5c50262fc354130b08ee8e47146b51996701d5df5e379fd43089dafc",
+    "sha256": "9cd17fde46b41b4d10b7954ef2f79c48f0df6518155f4abc8a92109a593dec19",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/06-pausas-320.jpg",
+    "original_png_sha256": "1b2910e7bcac640e9f149da89dc05bef18c0036a35a1d9e91818b51fc71ffde7",
+    "sha256": "12250d93079f139c17835bbf43e87a01e51521a885db41d9c267ab73e133fc20",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/pauses-confirmed-320.jpg",
+    "original_png_sha256": "1b2910e7bcac640e9f149da89dc05bef18c0036a35a1d9e91818b51fc71ffde7",
+    "sha256": "12250d93079f139c17835bbf43e87a01e51521a885db41d9c267ab73e133fc20",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/pauses-later-draft-320.jpg",
+    "original_png_sha256": "1ef7e9a30e173d0cce5c03dfe039fdfb6d7f0ca01a88a0d7d30a90c470fb2f5b",
+    "sha256": "c9e948ea9eb5510475005904ef55a7a2c594bd6929e1ea90e1eb545e8611ab1f",
+    "origin": "Presentation-only audit DOM fixture for subsequent draft; stored evaluation verified unchanged. JPEG preview.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/ddk-horizontal-320.jpg",
+    "original_png_sha256": "4ade1cfd70adb65346b7da178056936ad79fc1f203188145dfae111bcd2dac55",
+    "sha256": "8944f02a74f1b0fd694a81b7a45c76e8bbc5c45fb12b86c78efa8cdcbeba4f40",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/08-perfil-320.jpg",
+    "original_png_sha256": "8c214edbf9a81f1be1d81e0e3de9b70d0c7d869a9dce480968f2f8fb474beb38",
+    "sha256": "65d7180509ab6ddb853001cc2373747f881121ea2cb50743812726f6f27e1d3c",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/summary-import-error-320.jpg",
+    "original_png_sha256": "f799baf077838805e13bc3145e6cc9ebcb360942ef6a06cd7c591ff9a252b527",
+    "sha256": "5d626d179f8b7c4fd8e53fe7d76ae33ee896e2330ea1cd7de31129a7b9dd41bd",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/step-end-03-vocal-1440.jpg",
+    "original_png_sha256": "2b8ac96583b5294a1e639b53d9b75d2a832cdd7451acfb4750b8895c2c9bbf32",
+    "sha256": "97e36ebe9d3ce4a684bdd06bbd2463101b0c0a0999e551039509b8823d3c5736",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/step-end-04-ddk-1440.jpg",
+    "original_png_sha256": "49373aee09c64501618748d71da50fece013cfa1fec0396c3e32d3141bc59d6c",
+    "sha256": "7d934a78f37ce59fff8dcd5b9ecba3ef9dce2bb8bfb42446a69f83ba09905f7f",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/06-pausas-1440.jpg",
+    "original_png_sha256": "8f84c31d6f49bcc56b8306aac054b14aab75be8da9109b331e2ebe7a7eefaf9d",
+    "sha256": "84a6cd3c767dc08f7bd8fcd592a86c2f7eb488f284e524ccdbc49e48c563fd2e",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/08-perfil-1440.jpg",
+    "original_png_sha256": "1846d318f05ff0e50b3a603e98feff19d0b033fc0ac1495fa1ad87d2f253b144",
+    "sha256": "ca908e14b611633545553f4e511ee0a475ba9946dcf428bf8fc278ef994758ad",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/summary-import-error-1440.jpg",
+    "original_png_sha256": "664516863db3f12901304dff4ace51db894555ea0ec1915f09388fe2b70a2381",
+    "sha256": "7b2aa9d03b22010a87152112bbcacd39eb1b532c5898ea06e76311b28008f557",
+    "origin": "Local default clinical journey, synthetic audio; JPEG preview. Original PNG captured locally; CI reproduces the same scenario with its own timestamps, not identical screenshot bytes.",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/before-03-vocal-320.jpg",
+    "original_png_sha256": "36e41edb76d30257ed3c5344797798e156949d6cc0a4cc82f6dc5b846e6d6b20",
+    "sha256": "6e801e8f28ff15c3ccef38fac21a0a317d04e38d2e37cb2f2e0bf5072f588ded",
+    "origin": "Baseline main 79105ab, temporary archive; same synthetic journey; JPEG preview."
+  },
+  {
+    "path": "reports/hito10_4b/evidence/before-04-ddk-320.jpg",
+    "original_png_sha256": "f0f2b17468322a5c1ad0344ec6c21f456df8c6bb88c43e194d7794df9136da94",
+    "sha256": "120a0ca6e1e4475a599a20692b76551e28facb9da34642acaa23c9c953dd27de",
+    "origin": "Baseline main 79105ab, temporary archive; same synthetic journey; JPEG preview."
+  },
+  {
+    "path": "reports/hito10_4b/evidence/before-06-pausas-320.jpg",
+    "original_png_sha256": "6504e1928d1b91b3951a68778d99c123529ffa935fbedcad8ae08efcd9fb09d3",
+    "sha256": "54f6ec7c7644f8f65f4658f239b8fae47131b0f3ff4b7150f8a08b4d33c32253",
+    "origin": "Baseline main 79105ab, temporary archive; same synthetic journey; JPEG preview."
+  },
+  {
+    "path": "reports/hito10_4b/evidence/pauses-editing-320.jpg",
+    "origin": "Actual unconfirmed interval editor in the same synthetic journey, before manual confirmation; JPEG preview.",
+    "original_png_sha256": "a93653a5aff39c2e59425e23d036b88bef611034fa8db6eec4175860268c9a83",
+    "sha256": "e088f522857228cb9ea881a91ae6d48c070bb4712bc5c3b0ed2bc67bbf467172",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/pauses-editing-390.jpg",
+    "origin": "Actual unconfirmed interval editor in the same synthetic journey, before manual confirmation; JPEG preview.",
+    "original_png_sha256": "3189e674664fc527139b8cd9a44af5af10b9e7a319250605f1c8d4d6c7f8675b",
+    "sha256": "25eb067e1858f3219bf5fe7c6bbd2cb1466727b65d1360fc54a4d8fba9c3d8f6",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  },
+  {
+    "path": "reports/hito10_4b/evidence/pauses-editing-1440.jpg",
+    "origin": "Actual unconfirmed interval editor in the same synthetic journey, before manual confirmation; JPEG preview.",
+    "original_png_sha256": "18763aef0dff607eee8b8c39fdf2472d6c8522a6e75b10d25d806973ae9375cd",
+    "sha256": "b5646d0374800e80318705849b22e035dea65707aaa7120c53a3d767e4453201",
+    "code_commit": "9ed03cdd46ea796d67461359072d1490e04d2e3a"
+  }
+]
